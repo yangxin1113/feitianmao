@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.feitianmao.app.widget.MyTitleBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mtb_title"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="@color/colorPrimaryDark" >
+    ></cn.feitianmao.app.widget.MyTitleBar>

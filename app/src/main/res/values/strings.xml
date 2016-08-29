@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">feitianmao</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="home_search_txt">没有我不知道，只有你想不到</string>
+    <string name="bottom_tuijian_tex">推荐</string>
+    <string name="bottom_shouye_txt">首页</string>
+    <string name="bottom_faxian_txt">发现</string>
+    <string name="bottom_wode_txt">我的</string>
+
+</resources>
