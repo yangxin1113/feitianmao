@@ -10,6 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +27,14 @@ import java.util.Map;
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
+import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.TwoQuit;
-import cn.feitianmao.app.view.MeFragment.MeFragment;
+import cn.feitianmao.app.view.me.MeFragment;
+import cn.feitianmao.app.view.application.MyAplication;
 import cn.feitianmao.app.view.find.FindFragment;
 import cn.feitianmao.app.view.home.HomeFragment;
 import cn.feitianmao.app.view.tuijian.TuijainFragment;
+import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016/8/29 0029.
@@ -75,7 +87,10 @@ public class IndexActivity extends BaseFragmentActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.framelayout, mHomeFragment).commitAllowingStateLoss();
         oldIndex = 0;
+        
+        loadApis();
     }
+
 
     @Override
     protected void initEvent() {
@@ -188,6 +203,51 @@ public class IndexActivity extends BaseFragmentActivity {
         viewList.add(item1);
         viewList.add(item2);
         viewList.add(item3);
+    }
+
+    /**
+     * 加载Apis
+     */
+    private void loadApis() {
+        OkHttpUtils.post()
+                .url(getResources().getString(R.string.apis))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        LSUtils.showToast(IndexActivity.this, "请求错误");
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(s);
+                            if(jsonObject.getBoolean("status")){
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                setApis(data);
+                            }else {
+                                LSUtils.showToast(IndexActivity.this, "请求错误");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                });
+    }
+
+    /**
+     * 将Apis保存本地
+     * @param data
+     */
+    private void setApis(JSONObject data) throws JSONException {
+        Gson gson = new Gson();
+        Type type = new TypeToken<Map<String, Object>>() {}.getType();
+        Map<String, Object> mapApis = gson.fromJson(data.toString(), type);
+        ((MyAplication)getApplication()).setApis(mapApis);
+        LSUtils.i("zzz",((MyAplication)getApplication()).getApis().get("Host").toString());
     }
 
 

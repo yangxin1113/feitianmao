@@ -24,9 +24,12 @@ public class HomeScrollView extends ScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         if (t != 0) {
+
             swipeRefreshLayout.setEnabled(false);
         } else {
+
             swipeRefreshLayout.setEnabled(true);
         }
     }
+
 }

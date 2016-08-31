@@ -4,10 +4,34 @@
     <color name="colorPrimary">#697a9c</color>
 
     <color name="text_color1">#E6E8ED</color>
+    <color name="text_color2">#989CA6</color>
+    <color name="text_color3">#333333</color>
     <color name="text_bottom_true">#9AABCD</color>
     <color name="text_bottom_false">#999999</color>
     <color name="line_color1">#f2f2f2</color>
     <color name="line_color2">#e8e8e8</color>
+
+    <color name="border_line">#ccc</color>
+    <color name="bt_nomal">#47AFEF</color>
+    <color name="verification_code">#8D9094</color>
+    <color name="main_color">#000000</color>
+    <color name="lost_pwd_color">#92979B</color>
+    <color name="bottom_background">#F8F8F8</color>
+    <color name="view_status_bar">#f68623</color>
+    <color name="center">#e37b20</color>
+    <color name="press_color">#cc6e1d</color>
+    <color name="press_color_bg">#d9d9d9</color>
+    <color name="main_bg">#F2F2F2</color>
+    <color name="text_nomal">#333333</color>
+    <color name="line_color">#D8D8D8</color>
+    <color name="text_gray">#666666</color>
+    <color name="text_gray1">#999999</color>
+    <color name="text_gray2">#CCCCCC</color>
+    <color name="text_gray3">#2b81e1</color>
+    <color name="login_press">#c56b1c</color>
+    <color name="unable_press_bg">#f0f0f0</color>
+    <color name="unable_press_text">#bdbdbd</color>
+
     <color name="white">#ffffff</color>
     
 </resources>

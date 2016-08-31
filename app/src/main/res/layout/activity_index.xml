@@ -149,7 +149,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="4dp"
                                 android:text="@string/bottom_wode_txt"
-                                android:textColor="@color/text_bottom_true"
+                                android:textColor="@color/text_bottom_false"
                                 android:textSize="@dimen/text_dimens_10"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -168,7 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bt_tiwen"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="6dp"
                         android:layout_alignBottom="@+id/bottom_guide"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
