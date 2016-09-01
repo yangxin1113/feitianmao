@@ -1,12 +1,15 @@
 package cn.feitianmao.app.view.me;
 
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -17,20 +20,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mob.tools.utils.UIHandler;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 
 import cn.feitianmao.app.R;
+import cn.feitianmao.app.http.Contants;
+import cn.feitianmao.app.http.UpLoadListener;
+import cn.feitianmao.app.utils.FileUtil;
 import cn.feitianmao.app.utils.LSUtils;
-import cn.feitianmao.app.view.application.MyAplication;
+import cn.feitianmao.app.utils.MyUtils;
+import cn.feitianmao.app.utils.SaveListObject;
+import cn.feitianmao.app.utils.UploadManager;
+import cn.feitianmao.app.view.application.MyApplication;
 import cn.sharesdk.framework.Platform;
 import butterknife.BindView;
 
@@ -68,6 +81,8 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     @BindView(R.id.ll_weibo)
     LinearLayout ll_weibo;
 
+    Map<String, String> params;
+
     //状态
     private static final int MSG_USERID_FOUND = 1;
     private static final int MSG_LOGIN = 2;
@@ -85,6 +100,30 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     @Override
     protected void setInitData() {
 
+        //download();
+        FileUtil.picassoImg(LoginActivity.this, "http://avatar.csdn.net/7/F/4/1_ashqal.jpg");
+        //UploadManager.getInstance().uploadImage();
+       /* UploadManager.getInstance().setUpLoadListener(new UpLoadListener() {
+            @Override
+            public void upLoading(long currentSize, long totalSize) {
+
+            }
+
+            @Override
+            public void upLoadSuccess(Object result, String uploadPath) {
+                LSUtils.d("zzz",  " uploadPath:" + uploadPath);
+            }
+
+            @Override
+            public void upLoadSuccess(Object result, String thumbnailPath, String uploadPath) {
+                LSUtils.d("zzz", "thumbnailPath:" + thumbnailPath + "   uploadPath:" + uploadPath);
+            }
+
+            @Override
+            public void upLoadError(String msg) {
+
+            }
+        });*/
     }
 
     @Override
@@ -138,8 +177,8 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
 
     //登录
     private void login(Map<String, String> params) {
-         final String LOGIN_URL = ((MyAplication)getApplication()).getApis().get("Host").toString()+
-                 ((MyAplication)getApplication()).getApis().get("UserLogin").toString();
+         final String LOGIN_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
+                 ((MyApplication)getApplication()).getApis().get("UserLogin").toString();
 
         OkHttpUtils.post()
                 .url(LOGIN_URL)
@@ -173,7 +212,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
             String userId = plat.getDb().getUserId();
             if (!TextUtils.isEmpty(userId)) {
                 UIHandler.sendEmptyMessage(MSG_USERID_FOUND, this);
-                login(plat.getName(), userId, null);
+                login(plat, userId, null);
                 return;
             }
         }
@@ -186,11 +225,27 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                            HashMap<String, Object> res) {
         if (action == Platform.ACTION_USER_INFOR) {
             UIHandler.sendEmptyMessage(MSG_AUTH_COMPLETE, this);
-            login(platform.getName(), platform.getDb().getUserId(), res);
+            login(platform, platform.getDb().getUserId(), res);
         }
         System.out.println(res);
-        System.out.println("------User Name ---------" + platform.getDb().getUserName());
+
+        params = new HashMap<String, String>();
+        params.put("key", platform.getDb().getUserId());
+        params.put("username", platform.getDb().getUserName());
+        params.put("avator", platform.getDb().getUserName());
+        params.put("type", "Android");
+        /*System.out.println("------User Name ---------" + platform.getDb().getUserName());
         System.out.println("------User ID ---------" + platform.getDb().getUserId());
+        System.out.println("------UserIcon ---------" + platform.getDb().getUserIcon());
+        System.out.println("------Token ---------" + platform.getDb().getToken());
+        System.out.println("------UserGender ---------" + platform.getDb().getUserGender());
+        System.out.println("------TokenSecret ---------" + platform.getDb().getTokenSecret());
+        System.out.println("------Secret ---------" + platform.getDb().getTokenSecret());
+        System.out.println("------ExpiresIn ---------" + platform.getDb().getExpiresIn());
+        System.out.println("------ExpiresTime ---------" + platform.getDb().getExpiresTime());
+        System.out.println("------PlatformVersion ---------" + platform.getDb().getPlatformVersion());*/
+        System.out.println("------Name ---------" + platform.getName());
+
     }
 
     public void onError(Platform platform, int action, Throwable t) {
@@ -206,7 +261,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
         }
     }
 
-    private void login(String plat, String userId, HashMap<String, Object> userInfo) {
+    private void login(Platform plat, String userId, HashMap<String, Object> userInfo) {
         Message msg = new Message();
         msg.what = MSG_LOGIN;
         msg.obj = plat;
@@ -216,7 +271,8 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     public boolean handleMessage(Message msg) {
         switch(msg.what) {
             case MSG_USERID_FOUND: {
-                Toast.makeText(this, R.string.userid_found, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.userid_found +(String)msg.obj, Toast.LENGTH_SHORT).show();
+
             }
             break;
             case MSG_LOGIN: {
@@ -225,32 +281,29 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                 Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
                 System.out.println("---------------");
 
-//				Builder builder = new Builder(this);
-//				builder.setTitle(R.string.if_register_needed);
-//				builder.setMessage(R.string.after_auth);
-//				builder.setPositiveBu萨达萨达是打发打发
-// tton(R.string.ok, null);
-//				builder.create().show();
             }
             break;
             case MSG_AUTH_CANCEL: {
-                Toast.makeText(this, R.string.auth_cancel, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.auth_cancel+(String)msg.obj, Toast.LENGTH_SHORT).show();
                 System.out.println("-------MSG_AUT实打实的H_CANCEL--------");
             }
             break;
             case MSG_AUTH_ERROR: {
-                Toast.makeText(this, R.string.auth_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.auth_error+(String)msg.obj, Toast.LENGTH_SHORT).show();
                 System.out.println("-------MSG_AUTH_ERROR--------");
             }
             break;
             case MSG_AUTH_COMPLETE: {
-                Toast.makeText(this, R.string.auth_complete, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.auth_complete+(String)msg.obj, Toast.LENGTH_SHORT).show();
                 System.out.println("--------MSG_AUTH_COMPLETE-------");
+
             }
             break;
         }
         return false;
     }
+
+
 
     /**
      * 输入框为空时,登录按钮不可点击
@@ -309,5 +362,54 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
             e.printStackTrace();
         }
         return result;
+    }
+
+
+
+    private void download() {
+
+        final String imageName = System.currentTimeMillis() + ".jpg";
+        //Target
+            Target target = new Target(){
+
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                /*imageName[0] = System.currentTimeMillis() + ".jpg";*/
+
+                    /*File dcimFile = FileUtil
+                            .saveFile(FileUtil.PATH_PHOTOGRAPH, imageName);*/
+                File dcimFile = MyUtils.getInstance().getCache(getApplicationContext(),
+                                Contants.USER_PATH_PRIVATE, imageName,
+                                false);
+
+                FileOutputStream ostream = null;
+                try {
+                    ostream = new FileOutputStream(dcimFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+                    ostream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                LSUtils.i("2222:", dcimFile.toString());
+
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
+        //Picasso下载
+        Picasso.with(this).load("http://avatar.csdn.net/7/F/4/1_ashqal.jpg").into(target);
+        Log.i("path", getApplicationContext().getExternalCacheDir().getPath() + "/"
+                + Contants.USER_PATH_IMAGE+"/"+imageName);
     }
 }

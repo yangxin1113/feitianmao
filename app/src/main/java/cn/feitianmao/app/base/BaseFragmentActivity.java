@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import java.util.Map;
-
 import butterknife.ButterKnife;
 import cn.feitianmao.app.utils.MyUtils;
-import cn.feitianmao.app.view.application.MyAplication;
 
 import static android.view.View.OnClickListener;
 

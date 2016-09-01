@@ -19,7 +19,7 @@ import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
 import cn.feitianmao.app.utils.InputUtils;
 import cn.feitianmao.app.utils.LSUtils;
-import cn.feitianmao.app.view.application.MyAplication;
+import cn.feitianmao.app.view.application.MyApplication;
 import okhttp3.Call;
 
 /**
@@ -158,8 +158,8 @@ public class RegisterActivity extends BaseFragmentActivity {
 
     //判断用户是否存在
     private boolean isUserExit() {
-        final String ISEXIST_URL = ((MyAplication)getApplication()).getApis().get("Host").toString()+
-                ((MyAplication)getApplication()).getApis().get("VerifyPhone").toString();
+        final String ISEXIST_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
+                ((MyApplication)getApplication()).getApis().get("VerifyPhone").toString();
         LSUtils.i("dsa",ed_phone.getText().toString()+ISEXIST_URL);
         boolean isExit = false;
         OkHttpUtils.post()

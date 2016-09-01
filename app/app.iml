@@ -95,6 +95,7 @@
     <orderEntry type="library" exported="" name="SMSSDK-2.1.1-" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="okio-1.9.0" level="project" />
+    <orderEntry type="library" exported="" name="aliyun-oss-sdk-android-2.2.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-8.1.0" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-ShortMessage-2.7.4" level="project" />

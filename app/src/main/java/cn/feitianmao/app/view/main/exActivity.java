@@ -29,7 +29,7 @@ import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.TwoQuit;
-import cn.feitianmao.app.view.application.MyAplication;
+import cn.feitianmao.app.view.application.MyApplication;
 import cn.feitianmao.app.view.find.FindFragment;
 import cn.feitianmao.app.view.home.HomeFragment;
 import cn.feitianmao.app.view.me.MeFragment;
@@ -246,8 +246,8 @@ public class exActivity extends BaseFragmentActivity {
         Gson gson = new Gson();
         Type type = new TypeToken<Map<String, Object>>() {}.getType();
         Map<String, Object> mapApis = gson.fromJson(data.toString(), type);
-        ((MyAplication)getApplication()).setApis(mapApis);
-        LSUtils.i("zzz",((MyAplication)getApplication()).getApis().get("Host").toString());
+        ((MyApplication)getApplication()).setApis(mapApis);
+        LSUtils.i("zzz",((MyApplication)getApplication()).getApis().get("Host").toString());
     }
 
 

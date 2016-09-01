@@ -1,6 +1,9 @@
 package cn.feitianmao.app.view.me;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,13 +13,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
-import cn.feitianmao.app.utils.InputUtils;
+import cn.feitianmao.app.http.MyCountTimer;
+import cn.feitianmao.app.http.ReadSmsContent;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.view.application.MyApplication;
+import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016/8/31 0031.
@@ -39,29 +55,49 @@ public class SetPwdActivity extends BaseFragmentActivity {
     Button bt_submit;
 
     private String phone;
+    private ReadSmsContent readSmsContent;
+    private MyCountTimer count;
+
+    private static final int CODE_ING = 1;   //已发送，倒计时
+    private static final int CODE_REPEAT = 2;  //重新发送
+    private static final int SMSDDK_HANDLER = 3;  //短信回调
+    private int TIME = 60;//倒计时60s
+    private EventHandler eventHandler;
 
     @Override
     protected void init(Bundle arg0) {
         setContentView(R.layout.activity_reg2);
         SMSSDK.initSDK(this, "155f27b5ec9f4", "854f43251eed598914b34b0cc7408e69");
-        /*ed_code = (EditText) findViewById(R.id.ed_code);
-        readSmsContent = new ReadSmsContent(new Handler(), this, ed_code);
-        //注册短信内容监听
-        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, readSmsContent);*/
+
+        eventHandler = new EventHandler() {
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+                Message msg = new Message();
+                msg.arg1 = event;
+                msg.arg2 = result;
+                msg.obj = data;
+                msg.what = SMSDDK_HANDLER;
+                handler.sendMessage(msg);
+            }
+        };
+        // 注册回调监听接口
+        SMSSDK.registerEventHandler(eventHandler);
 
         Bundle bundle = getIntent().getExtras();
         phone = bundle.getString("phone");
+
+
+
     }
 
     @Override
     protected void setInitData() {
 
-
-        //readSmsContent = new ReadSmsContent(new Handler(), this, ed_code);
+        readSmsContent = new ReadSmsContent(new Handler(), this, ed_code);
         //注册短信内容监听
-        //this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, readSmsContent);
+        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, readSmsContent);
 
-        //getMsg();
+        getMsg();
 
         tv_phone.setText(phone);
     }
@@ -81,15 +117,24 @@ public class SetPwdActivity extends BaseFragmentActivity {
                 onKeyDown(KeyEvent.KEYCODE_BACK, null);
                 break;
             case R.id.bt_submit:
-                /*if (isNext()){
-                    utils.showToast(getApplicationContext(),"注册成功");
-                }*/
+                if (isNext()){
+                    SMSSDK.submitVerificationCode("86", tv_phone.getText().toString(), ed_code.getText().toString());//对验证码进行验证->回调函数
+                }
                 break;
             case R.id.bt_code:
-                //getMsg();
+                getMsg();
                 break;
 
         }
+    }
+
+
+    //获取验证码
+    private void getMsg() {
+        count = new MyCountTimer(bt_code,getResources().getColor(R.color.text_gray),getResources().getColor(R.color.text_gray2));
+        count.start();
+        cn.smssdk.SMSSDK.getVerificationCode("86", phone);
+
     }
 
     @Override
@@ -133,7 +178,7 @@ public class SetPwdActivity extends BaseFragmentActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!InputUtils.getInstance().isMobileNO(s.toString())){
+            if(TextUtils.isEmpty(s.toString())){
                 bt_submit.setBackgroundResource(R.color.unable_press_bg);
                 bt_submit.setTextColor(getResources().getColor(R.color.unable_press_text));
             }else{
@@ -156,4 +201,123 @@ public class SetPwdActivity extends BaseFragmentActivity {
         }
 
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterEventHandler(eventHandler);
+    }
+
+
+
+    Handler handler = new Handler()
+    {
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what)
+            {
+                case CODE_ING://已发送,倒计时
+                    bt_code.setText("重新发送("+--TIME+"s)");
+                    break;
+                case CODE_REPEAT://重新发送
+                    bt_code.setText("获取验证码");
+                    bt_code.setClickable(true);
+                    break;
+                case SMSDDK_HANDLER:
+                    int event = msg.arg1;
+                    int result = msg.arg2;
+                    Object data = msg.obj;
+                    //回调完成
+                    if (result == SMSSDK.RESULT_COMPLETE)
+                    {
+                        //验证码验证成功
+                        if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE)
+                        {
+                            Toast.makeText(SetPwdActivity.this, "验证成功", Toast.LENGTH_LONG).show();
+                            register();
+                        }
+                        //已发送验证码
+                        else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE)
+                        {
+                            Toast.makeText(getApplicationContext(), "验证码已经发送",
+                                    Toast.LENGTH_SHORT).show();
+                        } else
+                        {
+                            ((Throwable) data).printStackTrace();
+                        }
+                    }
+                    if(result==SMSSDK.RESULT_ERROR)
+                    {
+                        try {
+                            Throwable throwable = (Throwable) data;
+                            throwable.printStackTrace();
+                            JSONObject object = new JSONObject(throwable.getMessage());
+                            String des = object.optString("detail");//错误描述
+                            int status = object.optInt("status");//错误代码
+                            if (status > 0 && !TextUtils.isEmpty(des)) {
+                                Toast.makeText(getApplicationContext(), des, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (Exception e) {
+                            //do something
+                        }
+                    }
+                    break;
+               /* case R.id.register_status:
+                    String result_code = msg.getData().getString("result").toString();
+                    if("1".equals(result_code))
+                    {
+                        Toast.makeText(SetPwdActivity.this, "注册成功", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ActivityMessageRegister.this,LoginActivity.class);
+                        intent.putExtra("userPhone", userPhone);
+                        ActivityMessageRegister.this.setResult(RESULE_CODE, intent);
+                        //startActivity(intent);
+                        finish();
+                    }else
+                    {
+                        Toast.makeText(ActivityMessageRegister.this, "注册失败", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                case R.id.check_phone_exist://手机号是否已存在
+                    String result_code_2 = msg.getData().getString("result").toString();
+                    if("1".equals(result_code_2))
+                    {
+                        errPhoneText.setText("手机号码已经注册，请换用其他号码");
+                        resultMap.put("phone", false);
+                    }
+                    else
+                    {
+                        errPhoneText.setText("");
+                        resultMap.put("phone", true);
+                    }
+                    break;*/
+            }
+        }
+    };
+
+    //注册
+    private void register() {
+        final String REG_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
+                ((MyApplication)getApplication()).getApis().get("UserSignup").toString();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", tv_phone.getText().toString());
+        params.put("password", ed_pwd1.getText().toString());
+        params.put("again", ed_pwd2.getText().toString());
+        params.put("from", "Android");
+        OkHttpUtils.post()
+                .url(REG_URL)
+                .params(params)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+                        LSUtils.showToast(getApplicationContext(),s);
+                    }
+                });
+    }
 }
