@@ -2,10 +2,9 @@ package cn.feitianmao.app.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -15,6 +14,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -75,7 +78,7 @@ public class FileUtil {
 
     public static String picassoImg( final Context context, String url){
 
-        final String imageName = System.currentTimeMillis() + ".jpg";
+        final String imageName = "temphead.jpg";
 
         Target target = new Target(){
 
@@ -114,8 +117,42 @@ public class FileUtil {
         //Picasso下载
         Picasso.with(context).load(url).into(target);
         LSUtils.i("image", imageName);
-        return context.getExternalCacheDir().getPath() + "/"
+
+        String img_url = context.getExternalCacheDir().getPath() + "/"
                 + Contants.USER_PATH_IMAGE+"/"+imageName;
+        //FileUtil.returnBitmap(img_url);
+        return img_url;
+
+    }
+
+    /**
+     * 根据图片的url路径获得Bitmap对象
+     * @param url
+     * @return
+     */
+    private static Bitmap returnBitmap(String url) {
+
+        URL fileUrl = null;
+        Bitmap bitmap = null;
+
+        try {
+            fileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            HttpURLConnection conn = (HttpURLConnection) fileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
 
     }
 }

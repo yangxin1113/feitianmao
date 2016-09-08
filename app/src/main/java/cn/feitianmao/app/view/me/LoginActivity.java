@@ -100,30 +100,6 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     @Override
     protected void setInitData() {
 
-        //download();
-        FileUtil.picassoImg(LoginActivity.this, "http://avatar.csdn.net/7/F/4/1_ashqal.jpg");
-        //UploadManager.getInstance().uploadImage();
-       /* UploadManager.getInstance().setUpLoadListener(new UpLoadListener() {
-            @Override
-            public void upLoading(long currentSize, long totalSize) {
-
-            }
-
-            @Override
-            public void upLoadSuccess(Object result, String uploadPath) {
-                LSUtils.d("zzz",  " uploadPath:" + uploadPath);
-            }
-
-            @Override
-            public void upLoadSuccess(Object result, String thumbnailPath, String uploadPath) {
-                LSUtils.d("zzz", "thumbnailPath:" + thumbnailPath + "   uploadPath:" + uploadPath);
-            }
-
-            @Override
-            public void upLoadError(String msg) {
-
-            }
-        });*/
     }
 
     @Override
@@ -155,6 +131,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                 bundle.putString("title","忘记密码");
                 showItemActivity(bundle, RegisterActivity.class);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                regAndLogin();
                 break;
             case R.id.bt_login:
                 Map<String, String> params = new HashMap<String, String>();
@@ -365,51 +342,54 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     }
 
 
-
-    private void download() {
-
-        final String imageName = System.currentTimeMillis() + ".jpg";
-        //Target
-            Target target = new Target(){
-
+    /**
+     * 第三方登录上传信息至服务器
+     */
+    private void regAndLogin() {
+        String avator_url = params.get("avator");
+        String urlpath = FileUtil.picassoImg(LoginActivity.this, avator_url);
+        UploadManager.getInstance().uploadImage(urlpath);
+        UploadManager.getInstance().setUpLoadListener(new UpLoadListener() {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                /*imageName[0] = System.currentTimeMillis() + ".jpg";*/
-
-                    /*File dcimFile = FileUtil
-                            .saveFile(FileUtil.PATH_PHOTOGRAPH, imageName);*/
-                File dcimFile = MyUtils.getInstance().getCache(getApplicationContext(),
-                                Contants.USER_PATH_PRIVATE, imageName,
-                                false);
-
-                FileOutputStream ostream = null;
-                try {
-                    ostream = new FileOutputStream(dcimFile);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
-                    ostream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-                LSUtils.i("2222:", dcimFile.toString());
+            public void upLoading(long currentSize, long totalSize) {
 
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+            public void upLoadSuccess(Object result, String uploadPath) {
+                LSUtils.d("zzz",  " uploadPath:" + uploadPath);
+                params.put("avator",uploadPath);
+
+                final String REANDLOGIN_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
+                        ((MyApplication)getApplication()).getApis().get("UserSignup").toString();
+
+                OkHttpUtils.post()
+                        .url(REANDLOGIN_URL)
+                        .params(params)
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int i) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String s, int i) {
+                                LSUtils.i("SignUp",s);
+                            }
+                        });
 
             }
 
             @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            public void upLoadSuccess(Object result, String thumbnailPath, String uploadPath) {
+                LSUtils.d("zzz", "thumbnailPath:" + thumbnailPath + "   uploadPath:" + uploadPath);
+            }
+
+            @Override
+            public void upLoadError(String msg) {
 
             }
-        };
-
-        //Picasso下载
-        Picasso.with(this).load("http://avatar.csdn.net/7/F/4/1_ashqal.jpg").into(target);
-        Log.i("path", getApplicationContext().getExternalCacheDir().getPath() + "/"
-                + Contants.USER_PATH_IMAGE+"/"+imageName);
+        });
     }
 }

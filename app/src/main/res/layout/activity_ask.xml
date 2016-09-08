@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="44dp"
+           >
+
+           <ImageView
+               android:id="@+id/iv_left"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentLeft="true"
+               android:layout_centerVertical="true"
+               android:src="@drawable/bt_cancle"
+               android:layout_marginLeft="15dp"/>
+
+           <TextView
+               android:id="@+id/tv_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+               android:gravity="center"
+               android:text="提问"
+               android:textColor="@color/text_nomal"
+               android:textSize="@dimen/text_dimens_18" />
+
+           <TextView
+               android:id="@+id/tv_right"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"
+               android:gravity="center"
+               android:text="完成"
+               android:textColor="@color/text_gray"
+               android:textSize="@dimen/text_dimens_16"
+               android:layout_marginRight="15dp"/>
+       </RelativeLayout>
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="40dp"
+           android:layout_marginLeft="15dp"
+           android:layout_marginRight="15dp"
+           android:orientation="vertical">
+           
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="问题"
+                   android:textColor="@color/text_nomal"
+                   android:textSize="16sp"/>
+               
+               <EditText
+                   android:id="@+id/ed_account"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="输入账号名"
+                   android:textColorHint="@color/text_gray2"
+                   android:layout_marginLeft="15dp"
+                   android:background="@null"
+                   android:textSize="16sp"
+                   android:textColor="@color/text_gray"
+                   android:textCursorDrawable="@null"/>
+               </LinearLayout>
+
+           <View
+               style="@style/line_thin"
+               android:layout_marginTop="10dp"></View>
+           </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_marginLeft="15dp"
+           android:layout_marginRight="15dp"
+           android:orientation="vertical">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="话题"
+                   android:textColor="@color/text_nomal"
+                   android:textSize="16sp"/>
+
+               <EditText
+                   android:id="@+id/ed_pwd"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="输入密码"
+                   android:inputType="textPassword"
+                   android:textColorHint="@color/text_gray2"
+                   android:layout_marginLeft="15dp"
+                   android:background="@null"
+                   android:textSize="16sp"
+                   android:textColor="@color/text_gray"
+                   android:textCursorDrawable="@null"/>
+           </LinearLayout>
+
+           <View
+               style="@style/line_thin"
+               android:layout_marginTop="10dp"></View>
+       </LinearLayout>
+
+
+
+
+
+
+       </LinearLayout>
+
+
+</LinearLayout>

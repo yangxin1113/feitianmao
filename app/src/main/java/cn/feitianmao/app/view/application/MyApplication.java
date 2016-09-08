@@ -21,7 +21,8 @@ import cn.feitianmao.app.utils.SaveListObject;
 public class MyApplication extends BaseApplication{
 
     private static MyApplication myApplication = null;
-    private Map<String, Object> apis;// 用户资料
+    private Map<String, Object> apis;// apis
+    //oss阿里云存储
     private static final String accessKeyId = "1B7sjWW5nwg6srnv";
     private static final String accessKeySecret = "qLcYJD8sUnehCXeVY6hjbrsGFyIyEX";
     public static final String bucketName = "flycat";

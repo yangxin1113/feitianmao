@@ -78,7 +78,7 @@ public class RegisterActivity extends BaseFragmentActivity {
                     }
                     else{
                         if(isUserExit()){
-                            showItemActivity(bundle,FortgetPwdActivity.class);
+                            showItemActivity(bundle,ForgetPwdActivity.class);
                         }
 
                     }

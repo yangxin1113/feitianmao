@@ -47,6 +47,7 @@ public class IndexActivity extends BaseFragmentActivity {
     ImageView iv_home;
     @BindView(R.id.tv_home)
     TextView tv_home;
+
     @BindView(R.id.ll_tuijian)
     LinearLayout ll_tuijain;
     @BindView(R.id.iv_tuijian)
@@ -67,6 +68,9 @@ public class IndexActivity extends BaseFragmentActivity {
     ImageView iv_me;
     @BindView(R.id.tv_me)
     TextView tv_me;
+
+    @BindView(R.id.ll_ask)
+    LinearLayout ll_ask;
 
     private TwoQuit mTwoQuit;
     private List<Fragment> fragmentList ;
@@ -118,6 +122,9 @@ public class IndexActivity extends BaseFragmentActivity {
             case R.id.ll_me:
                 //我的
                 addOrShowFragment(3);
+                break;
+            case R.id.ll_ask:
+
                 break;
         }
     }
