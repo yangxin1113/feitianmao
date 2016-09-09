@@ -8,7 +8,7 @@
         android:id="@+id/choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:src="@drawable/tianjia"
         android:onClick="addImage"
         />
 
@@ -21,18 +21,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <cn.feitianmao.app.widget.imgandtext.MyEditext
                 android:id="@+id/et"
-                android:hint="分享身边新鲜事......"
+                android:hint="详细提问内容......"
                 android:layout_width="match_parent"
                 android:inputType="textMultiLine"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:gravity="start"
                 android:cursorVisible="true"
                 android:textColor="#999999"
                 android:textSize="14sp"
-                android:textCursorDrawable="@color/primary_material_dark"
-                style="@style/AppTheme"
+                android:minLines="50"
+                android:textCursorDrawable="@null"
+                style="@style/AppBaseTheme"
                 />
         </LinearLayout>
 

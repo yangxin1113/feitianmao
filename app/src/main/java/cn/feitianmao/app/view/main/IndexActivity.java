@@ -102,6 +102,7 @@ public class IndexActivity extends BaseFragmentActivity {
         ll_tuijain.setOnClickListener(this);
         ll_find.setOnClickListener(this);
         ll_me.setOnClickListener(this);
+        ll_ask.setOnClickListener(this);
     }
 
     @Override
@@ -124,7 +125,7 @@ public class IndexActivity extends BaseFragmentActivity {
                 addOrShowFragment(3);
                 break;
             case R.id.ll_ask:
-
+                showItemActivity(AskQueActivity.class);
                 break;
         }
     }

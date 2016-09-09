@@ -17,64 +17,65 @@ import cn.feitianmao.app.R;
 
 /**
  * All rights Reserved, Designed By GeofferySun 
- * @Title: 	SelectPicPopupWindow.java 
- * @Package sun.geoffery.uploadpic 
- * @Description:´Óµ×²¿µ¯³ö»ò»¬³öÑ¡Ôñ²Ëµ¥»ò´°¿Ú
- * @author:	GeofferySun   
- * @date:	2015Äê1ÔÂ15ÈÕ ÉÏÎç1:21:01 
+ * @Title: 	SelectPicPopupWindow.java
+ * @Package sun.geoffery.uploadpic
+ * @Description:ä»åº•éƒ¨å¼¹å‡ºæˆ–æ»‘å‡ºé€‰æ‹©èœå•æˆ–çª—å£
+ * @author:	GeofferySun
+ * @date:	2015å¹´1æœˆ15æ—¥ ä¸Šåˆ1:21:01 
  * @version	V1.0
  */
 public class SelectPicPopupWindow extends PopupWindow {
 
-	private Button takePhotoBtn, pickPhotoBtn, cancelBtn;
-	private View mMenuView;
+    private Button takePhotoBtn, pickPhotoBtn, cancelBtn;
+    private View mMenuView;
 
-	@SuppressLint("InflateParams")
-	public SelectPicPopupWindow(Context context, OnClickListener itemsOnClick) {
-		super(context);
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mMenuView = inflater.inflate(R.layout.layout_dialog_pic, null);
-		takePhotoBtn = (Button) mMenuView.findViewById(R.id.takePhotoBtn);
-		pickPhotoBtn = (Button) mMenuView.findViewById(R.id.pickPhotoBtn);
-		cancelBtn = (Button) mMenuView.findViewById(R.id.cancelBtn);
-		// ÉèÖÃ°´Å¥¼àÌı
-		cancelBtn.setOnClickListener(itemsOnClick);
-		pickPhotoBtn.setOnClickListener(itemsOnClick);
-		takePhotoBtn.setOnClickListener(itemsOnClick);
-		
-		// ÉèÖÃSelectPicPopupWindowµÄView
-		this.setContentView(mMenuView);
-		// ÉèÖÃSelectPicPopupWindowµ¯³ö´°ÌåµÄ¿í
-		this.setWidth(LayoutParams.MATCH_PARENT);
-		// ÉèÖÃSelectPicPopupWindowµ¯³ö´°ÌåµÄ¸ß
-		this.setHeight(LayoutParams.WRAP_CONTENT);
-		// ÉèÖÃSelectPicPopupWindowµ¯³ö´°Ìå¿Éµã»÷
-		this.setFocusable(true);
-		// ÉèÖÃSelectPicPopupWindowµ¯³ö´°Ìå¶¯»­Ğ§¹û
-		this.setAnimationStyle(R.style.PopupAnimation);
-		// ÊµÀı»¯Ò»¸öColorDrawableÑÕÉ«Îª°ëÍ¸Ã÷
-		ColorDrawable dw = new ColorDrawable(0x80000000);
-		// ÉèÖÃSelectPicPopupWindowµ¯³ö´°ÌåµÄ±³¾°
-		this.setBackgroundDrawable(dw);
-		// mMenuViewÌí¼ÓOnTouchListener¼àÌıÅĞ¶Ï»ñÈ¡´¥ÆÁÎ»ÖÃÈç¹ûÔÚÑ¡Ôñ¿òÍâÃæÔòÏú»Ùµ¯³ö¿ò
-		mMenuView.setOnTouchListener(new OnTouchListener() {
+    @SuppressLint("InflateParams")
+    public SelectPicPopupWindow(Context context, OnClickListener itemsOnClick) {
+        super(context);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mMenuView = inflater.inflate(R.layout.layout_dialog_pic, null);
+        takePhotoBtn = (Button) mMenuView.findViewById(R.id.takePhotoBtn);
+        pickPhotoBtn = (Button) mMenuView.findViewById(R.id.pickPhotoBtn);
+        cancelBtn = (Button) mMenuView.findViewById(R.id.cancelBtn);
+        // è®¾ç½®æŒ‰é’®ç›‘å¬
+        cancelBtn.setOnClickListener(itemsOnClick);
+        pickPhotoBtn.setOnClickListener(itemsOnClick);
+        takePhotoBtn.setOnClickListener(itemsOnClick);
 
-			@Override
-			@SuppressLint("ClickableViewAccessibility")
-			public boolean onTouch(View v, MotionEvent event) {
+        // è®¾ç½®SelectPicPopupWindowçš„View
+        this.setContentView(mMenuView);
+        // è®¾ç½®SelectPicPopupWindowå¼¹å‡ºçª—ä½“çš„å®½
+        this.setWidth(LayoutParams.MATCH_PARENT);
+        // è®¾ç½®SelectPicPopupWindowå¼¹å‡ºçª—ä½“çš„é«˜
+        this.setHeight(LayoutParams.WRAP_CONTENT);
+        // è®¾ç½®SelectPicPopupWindowå¼¹å‡ºçª—ä½“å¯ç‚¹å‡»
+        this.setFocusable(true);
+        // è®¾ç½®SelectPicPopupWindowå¼¹å‡ºçª—ä½“åŠ¨ç”»æ•ˆæœ
+        this.setAnimationStyle(R.style.PopupAnimation);
+        // å®ä¾‹åŒ–ä¸€ä¸ªColorDrawableé¢œè‰²ä¸ºåŠé€æ˜
+        ColorDrawable dw = new ColorDrawable(0x80000000);
+        // è®¾ç½®SelectPicPopupWindowå¼¹å‡ºçª—ä½“çš„èƒŒæ™¯
+        this.setBackgroundDrawable(dw);
+        // mMenuViewæ·»åŠ OnTouchListenerç›‘å¬åˆ¤æ–­è·å–è§¦å±ä½ç½®å¦‚æœåœ¨é€‰æ‹©æ¡†å¤–é¢åˆ™é”€æ¯å¼¹å‡ºæ¡†
+        mMenuView.setOnTouchListener(new OnTouchListener() {
 
-				int height = mMenuView.findViewById(R.id.pop_layout).getTop();
-				int y = (int) event.getY();
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					if (y < height) {
-						dismiss();
-					}
-				}
-				return true;
-			}
-		});
+            @Override
+            @SuppressLint("ClickableViewAccessibility")
+            public boolean onTouch(View v, MotionEvent event) {
 
-	}
+                int height = mMenuView.findViewById(R.id.pop_layout).getTop();
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (y < height) {
+                        dismiss();
+                    }
+                }
+                return true;
+            }
+        });
+
+    }
 
 }
+	

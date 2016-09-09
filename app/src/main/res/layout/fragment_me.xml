@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/mainLayout"
+    android:background="@color/main_bg"
     >
 
     <LinearLayout
@@ -17,21 +17,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:background="@color/colorPrimary">
+            android:layout_height="100dp"
+            android:background="@color/white">
 
             <cn.feitianmao.app.widget.CircleImageView
                 android:id="@+id/iv_head"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/lena"
                 app:border_color="@color/white"
                 app:border_width="2dp" />
 
             <LinearLayout
-                android:visibility="gone"
+
                 android:id="@+id/ll_logined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,30 +46,30 @@
                     android:id="@+id/tv_nick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Michelle Scott"
-                    android:textColor="@color/white"
-
-                    android:textSize="@dimen/text_dimens_16" />
+                    android:text="神奇的五花肉"
+                    android:textColor="@color/Textcolor"
+                    android:textSize="@dimen/text_dimens_16"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="账号:"
-                        android:textColor="@color/white"
+                        android:text="一句话怎么介绍自己"
+                        android:textColor="@color/text_gray1"
                         android:textSize="@dimen/text_dimens" />
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="13515311351"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp" />-->
 
                 </LinearLayout>
 
@@ -77,6 +77,7 @@
 
                 <TextView
                     android:id="@+id/tv_login"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/iv_head"
@@ -85,12 +86,13 @@
                     android:layout_toEndOf="@+id/iv_head"
                     android:layout_toRightOf="@+id/iv_head"
                     android:text="登录/注册"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_dimens_16" />
 
 
+<!--
             <LinearLayout
-                android:visibility="gone"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -111,11 +113,275 @@
 
 
             </LinearLayout>
-
+-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="15dp"
+                android:src="@drawable/xiangyoujiantou" />
 
         </RelativeLayout>
 
 
+        <View style="@style/line_thin" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/main_bg"></View>
+
+        <View style="@style/line_thin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_bg"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/select_bg"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_xiaoxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:clickable="true"
+                    android:src="@drawable/icon_xiaoxi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@+id/iv_xiaoxi"
+                    android:text="消息"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_dimens_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="15dp"
+                    android:src="@drawable/xiangyoujiantou" />
+            </RelativeLayout>
+
+
+            <View style="@style/line_thin" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/main_bg"></View>
+
+            <View style="@style/line_thin" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/select_bg"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_chengjiu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_chengjiu" />
+
+                <TextView
+                    android:id="@+id/tv_chengjiu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@+id/iv_chengjiu"
+                    android:text="我的成就"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_dimens_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/icon_youjiantou1" />
+
+                <View
+                    style="@style/line_thin"
+                    android:layout_alignLeft="@+id/tv_chengjiu"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/tv_chengjiu"></View>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/select_bg"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_guanzhu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_guanzhu" />
+
+                <TextView
+                    android:id="@+id/tv_guanzhu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@+id/iv_guanzhu"
+                    android:text="我的关注"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_dimens_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/xiangyoujiantou" />
+
+                <View
+                    style="@style/line_thin"
+                    android:layout_alignLeft="@+id/tv_guanzhu"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/tv_guanzhu"></View>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/select_bg"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_shoucang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_shoucang" />
+
+                <TextView
+                    android:id="@+id/tv_shoucang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@+id/iv_shoucang"
+                    android:text="我的收藏"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_dimens_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/xiangyoujiantou" />
+
+                <View
+                    style="@style/line_thin"
+                    android:layout_alignLeft="@+id/tv_shoucang"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/tv_shoucang"></View>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/select_bg"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_caogao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_caogao" />
+
+                <TextView
+                    android:id="@+id/tv_caogao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@+id/iv_caogao"
+                    android:text="我的草稿"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_dimens_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/xiangyoujiantou" />
+
+                <View
+                    style="@style/line_thin"
+                    android:layout_alignLeft="@+id/tv_caogao"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/tv_caogao"></View>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/select_bg"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_shezhi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_shezhi" />
+
+                <TextView
+                    android:id="@+id/tv_shezhi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@+id/iv_shezhi"
+                    android:text="设置"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_dimens_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/xiangyoujiantou" />
+
+            </RelativeLayout>
+            <View style="@style/line_thin" />
+
+          </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

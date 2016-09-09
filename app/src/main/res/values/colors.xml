@@ -33,5 +33,10 @@
     <color name="unable_press_text">#bdbdbd</color>
 
     <color name="white">#ffffff</color>
-    
+
+
+
+    <color name="Textcolor">#333333</color>
+    <color name="black">#000000</color>
+
 </resources>

@@ -6,6 +6,17 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- 打电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- SD卡读取权限，用户写入离线定位数据 ,（这个权限无法获取） -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 视频拍摄权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 6.0要查询本机相册数据必须要添加的权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!--mob分享-->
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -81,6 +92,7 @@
         <activity android:name=".view.me.LoginActivity"></activity>
         <activity android:name=".view.me.RegisterActivity"></activity>
         <activity android:name=".view.me.SetPwdActivity"></activity>
+        <activity android:name=".view.main.AskQueActivity"></activity>
     </application>
 
 </manifest>

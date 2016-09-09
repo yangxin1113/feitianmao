@@ -66,7 +66,11 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void setInitData() {
-        myTitleBar.setText("个人中心");
+        myTitleBar.setText("我的");
+        myTitleBar.setLeftVisibility(View.GONE);
+        myTitleBar.setRightImage(R.drawable.select_xinxi0);
+        myTitleBar.setRightImgClickable(true);
+
     }
 
     @Override
