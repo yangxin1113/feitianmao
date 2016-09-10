@@ -21,7 +21,7 @@ import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
 import cn.feitianmao.app.http.MyCountTimer;
 import cn.feitianmao.app.http.ReadSmsContent;
-import cn.feitianmao.app.utils.InputUtils;
+import cn.feitianmao.app.utils.RegulaUtils;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -171,7 +171,7 @@ public class ForgetPwdActivity extends BaseFragmentActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!InputUtils.getInstance().isMobileNO(s.toString())){
+            if(!RegulaUtils.getInstance().isMobileNO(s.toString())){
                 bt_submit.setBackgroundResource(R.color.unable_press_bg);
                 bt_submit.setTextColor(getResources().getColor(R.color.unable_press_text));
             }else{

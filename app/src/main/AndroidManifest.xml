@@ -93,6 +93,7 @@
         <activity android:name=".view.me.RegisterActivity"></activity>
         <activity android:name=".view.me.SetPwdActivity"></activity>
         <activity android:name=".view.main.AskQueActivity"></activity>
+        <activity android:name=".view.home.AnswerActivity"></activity>
     </application>
 
 </manifest>

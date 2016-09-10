@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,15 +21,22 @@ public class UrlImageGetter implements Html.ImageGetter {
 
     Context c;
     TextView container;
-    int width;
+    int width ;
 
-    public UrlImageGetter(TextView t, Context c){
+    /**
+     *
+     * @param t
+     * @param c
+     */
+    public UrlImageGetter(TextView t, Context c) {
         this.c = c;
         this.container = t;
         width = c.getResources().getDisplayMetrics().widthPixels;
     }
+
     @Override
     public Drawable getDrawable(String source) {
+        Log.e("ImageLoader","dsadasdas");
         final UrlDrawable urlDrawable = new UrlDrawable();
         ImageLoader.getInstance().loadImage(source, new SimpleImageLoadingListener() {
             @Override
@@ -44,17 +52,19 @@ public class UrlImageGetter implements Html.ImageGetter {
                 urlDrawable.setBounds(0, 0, loadedImage.getWidth(), loadedImage.getHeight());
                 container.invalidate();
                 container.setText(container.getText()); // 解决图文重叠
+
             }
         });
         return urlDrawable;
     }
 
-    public class UrlDrawable extends BitmapDrawable{
+    @SuppressWarnings("deprecation")
+    public class UrlDrawable extends BitmapDrawable {
         protected Bitmap bitmap;
-
         @Override
         public void draw(Canvas canvas) {
-            if(bitmap != null){
+            // override the draw to facilitate refresh function later
+            if (bitmap != null) {
                 canvas.drawBitmap(bitmap, 0, 0, getPaint());
             }
         }

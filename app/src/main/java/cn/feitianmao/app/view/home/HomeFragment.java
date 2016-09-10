@@ -1,5 +1,6 @@
 package cn.feitianmao.app.view.home;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -163,11 +164,15 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void showQuestion(View view, int position) {
                 LSUtils.showToast(getContext(),"点击了我"+ homeDatas.get(position).getQuestion());
+                Intent i = new Intent(getActivity(), AnswerActivity.class);
+                startActivity(i);
             }
 
             @Override
             public void showAnswer(View view, int position) {
                 LSUtils.showToast(getContext(),"点击了我"+ homeDatas.get(position).getAnswer());
+                Intent i = new Intent(getActivity(), AnswerActivity.class);
+                startActivity(i);
             }
 
             @Override

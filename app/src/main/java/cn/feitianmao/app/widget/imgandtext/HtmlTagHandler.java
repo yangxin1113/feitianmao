@@ -17,30 +17,29 @@ import java.util.Vector;
 /**
  * Created by Administrator on 2016/9/8 0008.
  */
-public class HtmlTagHandler implements Html.TagHandler{
+public class HtmlTagHandler implements Html.TagHandler {
 
     private int mListItemCount = 0;
     private final Vector<String> mListParents = new Vector<String>();
 
-    private static class Code{
-
+    private static class Code {
     }
 
-    private static class Center{
-
+    private static class Center {
     }
+
     @Override
-    public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-        if(opening){
-            //opening tag
-            if(tag.equalsIgnoreCase("ul") || tag.equalsIgnoreCase("ol")
-                    || tag.equalsIgnoreCase("dd")){
+    public void handleTag(final boolean opening, final String tag, Editable output,
+                          final XMLReader xmlReader) {
+        if (opening) {
+            // opening tag
+            if (tag.equalsIgnoreCase("ul") || tag.equalsIgnoreCase("ol")
+                    || tag.equalsIgnoreCase("dd")) {
                 mListParents.add(tag);
                 mListItemCount = 0;
-
-            }else if(tag.equalsIgnoreCase("code")){
+            } else if (tag.equalsIgnoreCase("code")) {
                 start(output, new Code());
-            }else if (tag.equalsIgnoreCase("center")) {
+            } else if (tag.equalsIgnoreCase("center")) {
                 start(output, new Center());
             }
         } else {
@@ -60,27 +59,33 @@ public class HtmlTagHandler implements Html.TagHandler{
         }
     }
 
-
-    private void start(Editable output, Object mark){
+    /**
+     * Mark the opening tag by using private classes
+     *
+     * @param output
+     * @param mark
+     */
+    private void start(Editable output, Object mark) {
         int len = output.length();
-        output.setSpan(mark, len, len, Spanned.SPAN_MARK_MARK);
+        output.setSpan(mark, len, len, Spannable.SPAN_MARK_MARK);
     }
 
-    private void end(Editable output, Class kind, Object repl, boolean paragraphStytle){
+    private void end(Editable output, Class kind, Object repl, boolean paragraphStyle) {
         Object obj = getLast(output, kind);
-        //start of the tag
+        // start of the tag
         int where = output.getSpanStart(obj);
-        //end of the tag
+        // end of the tag
         int len = output.length();
 
         output.removeSpan(obj);
 
-        if(where != len){
-            if(paragraphStytle){
+        if (where != len) {
+            // paragraph styles like AlignmentSpan need to end with a new line!
+            if (paragraphStyle) {
                 output.append("\n");
                 len++;
             }
-            output.setSpan(repl, where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            output.setSpan(repl, where, len, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 

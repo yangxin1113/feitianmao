@@ -6,6 +6,7 @@
     <color name="text_color1">#E6E8ED</color>
     <color name="text_color2">#989CA6</color>
     <color name="text_color3">#333333</color>
+    <color name="text_color4">#ef7476</color>
     <color name="text_bottom_true">#9AABCD</color>
     <color name="text_bottom_false">#999999</color>
     <color name="line_color1">#f2f2f2</color>
@@ -28,6 +29,7 @@
     <color name="text_gray1">#999999</color>
     <color name="text_gray2">#CCCCCC</color>
     <color name="text_gray3">#2b81e1</color>
+    <color name="text_gray4">#AAAAAA</color>
     <color name="login_press">#c56b1c</color>
     <color name="unable_press_bg">#f0f0f0</color>
     <color name="unable_press_text">#bdbdbd</color>
@@ -36,7 +38,6 @@
 
 
 
-    <color name="Textcolor">#333333</color>
     <color name="black">#000000</color>
 
 </resources>

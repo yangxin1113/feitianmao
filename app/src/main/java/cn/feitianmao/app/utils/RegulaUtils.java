@@ -6,18 +6,18 @@ import java.util.regex.Pattern;
 /**
  * Created by Administrator on 2016/7/25 0025.
  */
-public class InputUtils {
+public class RegulaUtils {
 
-    private static InputUtils check;
+    private static RegulaUtils check;
 
-    private InputUtils(){
+    private RegulaUtils(){
 
     }
 
-    public static InputUtils getInstance(){
+    public static RegulaUtils getInstance(){
 
         if(check == null)
-            check = new InputUtils();
+            check = new RegulaUtils();
         return check;
     }
 
@@ -57,5 +57,17 @@ public class InputUtils {
         Pattern p =  Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
         Matcher m = p.matcher(email);
         return m.matches();
+    }
+
+
+    public static Integer getDigit(String s){
+        if(s == null || s.equals("")){
+            return 0;
+        }
+        String regEx = "[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(s);
+        int result = Integer.valueOf(m.replaceAll("").trim());
+        return result;
     }
 }

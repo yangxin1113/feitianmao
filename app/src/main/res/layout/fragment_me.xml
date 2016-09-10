@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/main_bg"
+    android:id="@+id/mainLayout"
     >
 
     <LinearLayout
@@ -47,14 +48,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="神奇的五花肉"
-                    android:textColor="@color/Textcolor"
+                    android:textColor="@color/text_nomal"
                     android:textSize="@dimen/text_dimens_16"
                     android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -62,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:text="一句话怎么介绍自己"
                         android:textColor="@color/text_gray1"
-                        android:textSize="@dimen/text_dimens" />
+                        android:textSize="@dimen/text_dimens_12" />
 
                     <!--<TextView
                         android:layout_width="wrap_content"
@@ -215,7 +216,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:src="@drawable/icon_youjiantou1" />
+                    android:src="@drawable/xiangyoujiantou" />
 
                 <View
                     style="@style/line_thin"

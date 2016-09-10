@@ -191,6 +191,10 @@ activity#cn.feitianmao.app.view.main.AskQueActivity
 ADDED from AndroidManifest.xml:95:9
 	android:name
 		ADDED from AndroidManifest.xml:95:19
+activity#cn.feitianmao.app.view.home.AnswerActivity
+ADDED from AndroidManifest.xml:96:9
+	android:name
+		ADDED from AndroidManifest.xml:96:19
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:appcompat-v7:23.4.0:21:5

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+
+            <ImageView
+                android:id="@+id/iv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/icon_fanhui" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="回答"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_dimens_18" />
+
+            <!-- <TextView
+                 android:id="@+id/tv_right"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:gravity="center"
+                 android:text="发布"
+                 android:textColor="@color/text_gray"
+                 android:textSize="@dimen/text_dimens_16"
+                 android:layout_marginRight="15dp"/>-->
+        </RelativeLayout>
+
+        <View style="@style/line_thin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:text="《守望先锋》你最想分享的事是什么?"
+            android:textColor="@color/text_nomal"
+            android:textSize="@dimen/text_dimens_16"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <cn.feitianmao.app.widget.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/lena"
+                app:border_color="@color/white"
+                app:border_width="2dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_logined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/iv_head"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/iv_head"
+                android:layout_toRightOf="@+id/iv_head"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="神奇的五花肉"
+                    android:textColor="@color/text_nomal"
+                    android:textSize="@dimen/text_dimens_14" />
+
+                <TextView
+                    android:id="@+id/tv_qianming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="没有我不知道的，只有你想不到的"
+                    android:textColor="@color/text_gray1"
+                    android:textSize="@dimen/text_dimens_12"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_guanzhu"
+                android:layout_width="67dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bt_guanzhu"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_alignBottom="@+id/tv_qianming">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_guanzhu1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="关注"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_dimens_14" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <cn.feitianmao.app.widget.imgandtext.HtmlTextView
+        android:id="@+id/tv_content"
+        android:layout_below="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <View
+       android:layout_above="@+id/ll_bottom"
+       style="@style/line_thin"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/ll_zantong"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/iv_zantong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_zantong" />
+
+            <TextView
+                android:id="@+id/tv_zantong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="赞同(201)"
+                android:textColor="@color/text_gray4"
+                android:textSize="@dimen/text_dimens_11"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shoucang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/iv_shoucang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_shoucang_selected" />
+
+            <TextView
+                android:id="@+id/tv_shoucang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="收藏"
+                android:textColor="@color/text_gray4"
+                android:textSize="@dimen/text_dimens_11"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fenxaing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/iv_fenxaing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_fenxiang" />
+
+            <TextView
+                android:id="@+id/tv_fenxaing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="分享"
+                android:textColor="@color/text_gray4"
+                android:textSize="@dimen/text_dimens_11" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_pinglun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/iv_pinglun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_pinglun" />
+
+            <TextView
+                android:id="@+id/tv_pinglun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="评论(30)"
+                android:textColor="@color/text_gray4"
+                android:textSize="@dimen/text_dimens_11" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

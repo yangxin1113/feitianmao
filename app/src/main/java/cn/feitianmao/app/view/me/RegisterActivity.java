@@ -17,7 +17,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
-import cn.feitianmao.app.utils.InputUtils;
+import cn.feitianmao.app.utils.RegulaUtils;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.view.application.MyApplication;
 import okhttp3.Call;
@@ -114,7 +114,7 @@ public class RegisterActivity extends BaseFragmentActivity {
 
     private boolean isnext(){
         boolean isNext = true;
-        if(!InputUtils.getInstance().isMobileNO(ed_phone.getText().toString())){
+        if(!RegulaUtils.getInstance().isMobileNO(ed_phone.getText().toString())){
             LSUtils.showToast(getApplicationContext(), getResources().getString(R.string.input_phone_no_error_zh));
             isNext = false;
         }else if(iv_check.getTag() == false){
@@ -132,7 +132,7 @@ public class RegisterActivity extends BaseFragmentActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(!InputUtils.getInstance().isMobileNO(s.toString())){
+            if(!RegulaUtils.getInstance().isMobileNO(s.toString())){
                 bt_next.setBackgroundResource(R.color.unable_press_bg);
                 bt_next.setTextColor(getResources().getColor(R.color.unable_press_text));
             }else{

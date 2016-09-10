@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,6 +31,7 @@ import cn.feitianmao.app.utils.CropHelper;
 import cn.feitianmao.app.utils.CropParams;
 import cn.feitianmao.app.utils.GetUri;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.utils.StatusBarUtil;
 import cn.feitianmao.app.utils.UploadManager;
 import cn.feitianmao.app.widget.imgandtext.HtmlEditText;
 import cn.feitianmao.app.widget.imgandtext.HtmlFile;
@@ -74,7 +76,7 @@ public class AskQueActivity extends BaseFragmentActivity implements CropHandler 
 
     @Override
     protected void setInitData() {
-
+        StatusBarUtil.setStatusBarColor(AskQueActivity.this,  R.color.white);//设置状态栏颜色
     }
 
     @Override
