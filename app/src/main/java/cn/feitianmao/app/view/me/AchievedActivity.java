@@ -17,8 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mob.tools.utils.UIHandler;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;

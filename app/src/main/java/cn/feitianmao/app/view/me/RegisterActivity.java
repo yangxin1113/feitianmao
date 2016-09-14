@@ -11,9 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
-
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
@@ -162,7 +159,7 @@ public class RegisterActivity extends BaseFragmentActivity {
                 ((MyApplication)getApplication()).getApis().get("VerifyPhone").toString();
         LSUtils.i("dsa",ed_phone.getText().toString()+ISEXIST_URL);
         boolean isExit = false;
-        OkHttpUtils.post()
+        /*OkHttpUtils.post()
                 .url(ISEXIST_URL)
                 .addParams("phone", ed_phone.getText().toString())
                 .build()
@@ -176,7 +173,7 @@ public class RegisterActivity extends BaseFragmentActivity {
                     public void onResponse(String s, int i) {
                         LSUtils.showToast(getApplicationContext(), s);
                     }
-                });
+                });*/
         return isExit;
     }
 }

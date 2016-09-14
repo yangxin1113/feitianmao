@@ -18,13 +18,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.callback.StringCallback;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 import com.yanzhenjie.permission.Rationale;
 import com.yanzhenjie.permission.RationaleListener;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +47,7 @@ import cn.feitianmao.app.view.find.FindFragment;
 import cn.feitianmao.app.view.home.HomeFragment;
 import cn.feitianmao.app.view.tuijian.TuijainFragment;
 import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/8/29 0029.
@@ -108,10 +110,10 @@ public class IndexActivity extends BaseFragmentActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.framelayout, mHomeFragment).commitAllowingStateLoss();
         oldIndex = 0;
-        
+        LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
         loadApis();
+        LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
     }
-
 
     @Override
     protected void initEvent() {
@@ -236,7 +238,26 @@ public class IndexActivity extends BaseFragmentActivity {
      * 加载Apis
      */
     private void loadApis() {
-        OkHttpUtils.post()
+
+        OkHttpUtils.post(getResources().getString(R.string.apis))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(s);
+                            if(jsonObject.getBoolean("status")){
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                setApis(data);
+                            }else {
+                                LSUtils.showToast(IndexActivity.this, "请求错误");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        /*OkHttpUtils.post()
                 .url(getResources().getString(R.string.apis))
                 .build()
                 .execute(new StringCallback() {
@@ -262,7 +283,7 @@ public class IndexActivity extends BaseFragmentActivity {
                         }
                     }
 
-                });
+                });*/
     }
 
     /**

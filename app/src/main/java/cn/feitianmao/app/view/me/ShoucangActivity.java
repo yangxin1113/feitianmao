@@ -18,7 +18,7 @@ import cn.feitianmao.app.base.BaseFragmentActivity;
  * 我的成就
  * Created by Administrator on 2016/7/28 0028.
  */
-public class GuanZhuActivity extends BaseFragmentActivity {
+public class ShoucangActivity extends BaseFragmentActivity {
 
     @BindView(R.id.iv_left)
     ImageView ivleft;

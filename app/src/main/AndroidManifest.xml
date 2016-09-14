@@ -108,6 +108,10 @@
         <activity android:name=".view.main.AskQueActivity"></activity>
         <activity android:name=".view.home.AnswerActivity"></activity>
         <activity android:name=".view.me.AchievedActivity"></activity>
+        <activity android:name=".view.me.GuanZhuActivity"></activity>
+        <activity android:name=".view.me.ShoucangActivity"></activity>
+        <activity android:name=".view.me.ShezhiActivity"></activity>
+        <activity android:name=".view.me.XiaoxiActivity"></activity>
     </application>
 
 </manifest>

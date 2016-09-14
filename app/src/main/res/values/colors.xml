@@ -11,6 +11,7 @@
     <color name="text_bottom_false">#999999</color>
     <color name="line_color1">#f2f2f2</color>
     <color name="line_color2">#d8d8d8</color>
+    <color name="line_color3">#586a8c</color>
 
     <color name="border_line">#ccc</color>
     <color name="bt_nomal">#47AFEF</color>

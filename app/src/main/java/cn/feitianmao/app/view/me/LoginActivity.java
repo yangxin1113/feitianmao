@@ -24,24 +24,26 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.callback.FileCallback;
+import com.lzy.okhttputils.callback.StringCallback;
 import com.mob.tools.utils.UIHandler;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 
 import cn.feitianmao.app.R;
+import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.http.Contants;
 import cn.feitianmao.app.http.UpLoadListener;
 import cn.feitianmao.app.utils.FileUtil;
@@ -63,6 +65,7 @@ import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
 import okhttp3.Call;
 import okhttp3.Request;
+import okhttp3.Response;
 
 
 /**
@@ -112,7 +115,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
 
     @Override
     protected void setInitData() {
-
+        LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
     }
 
     @Override
@@ -169,8 +172,31 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
          final String LOGIN_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
                  ((MyApplication)getApplication()).getApis().get("UserLogin").toString();
 
+        OkHttpUtils.post(LOGIN_URL)
+                .params(params)
+                .execute(new StringDialogCallback(LoginActivity.this) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                        //intent.putExtra("userInfo",s);
+                        //cookie=response.header("Set-Cookie");
+                        //LSUtils.i("zyx", response.header("Set-Cookie"));
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            LSUtils.showToast(getApplicationContext(), json.get("alert").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        startActivityForResult(intent,USER_LOGIN );
+                    }
 
-        OkHttpUtils.post()
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+
+        /*OkHttpUtils.post()
                 .url(LOGIN_URL)
                 .params(params)
                 .build()
@@ -183,9 +209,9 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                     @Override
                     public void onResponse(String s, int i) {
                         LSUtils.showToast(getApplicationContext(), s);
-                        /*GsonBuilder gb = new GsonBuilder();
+                        *//*GsonBuilder gb = new GsonBuilder();
                         gb.registerTypeAdapter(String.class, new StringConverter());
-                        Gson json = gb.create();*/
+                        Gson json = gb.create();*//*
                         Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                         //intent.putExtra("userInfo",s);
 
@@ -198,7 +224,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                         startActivityForResult(intent,USER_LOGIN );
 
                     }
-                });
+                });*/
 
     }
 
@@ -360,7 +386,21 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
      */
     private void regAndLogin() {
         final String avator_url = params.get("avator");
-        OkHttpUtils//
+        OkHttpUtils.get(avator_url)
+                .execute(new FileCallback("head.jpg") {
+                    @Override
+                    public void onSuccess(File file, Call call, Response response) {
+                        //handleResponse(file, call, response);
+                        Log.e("path", "onResponse :" + file.getAbsolutePath());
+                        uploadHead(file.getAbsolutePath());
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+        /*OkHttpUtils//
                 .get()//
                 .url(avator_url)//
                 .build()//
@@ -377,7 +417,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                         Log.e("path", "onResponse :" + file.getAbsolutePath());
                         uploadHead(file.getAbsolutePath());
                     }
-                });
+                });*/
     }
 
     //第三方头像上传至阿里云存储并注册
@@ -416,7 +456,20 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
         final String SIGNUP_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
                 ((MyApplication)getApplication()).getApis().get("WxUserLogin").toString();
 
-        OkHttpUtils.post()
+        OkHttpUtils.post(SIGNUP_URL)
+                .params(params)
+                .execute(new StringDialogCallback(LoginActivity.this) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        LSUtils.i("signup", s);
+                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                        LSUtils.showToast(getApplicationContext(),"微信登录");
+                        //intent.putExtra("username","微信登录");
+                        startActivityForResult(intent, OTHER_LOGIN);
+                        LSUtils.i("zzz", response.header("HEAD_KEY_SET_COOKIE ").toString());
+                    }
+                });
+        /*OkHttpUtils.post()
                 .url(SIGNUP_URL)
                 .params(params)
                 .build()
@@ -434,6 +487,12 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                         startActivityForResult(intent, OTHER_LOGIN);
 
                     }
-                });
+                });*/
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag(this);
     }
 }

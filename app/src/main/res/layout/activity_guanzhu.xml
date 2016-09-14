@@ -39,7 +39,11 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable"
+        app:tabIndicatorColor="@color/line_color3"
+        app:tabSelectedTextColor="@color/text_nomal"
+        app:tabTextColor="@color/text_gray1"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
         />
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

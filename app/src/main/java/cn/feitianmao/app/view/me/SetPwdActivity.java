@@ -15,8 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
+
 
 import org.json.JSONObject;
 
@@ -304,7 +303,7 @@ public class SetPwdActivity extends BaseFragmentActivity {
         params.put("password", ed_pwd1.getText().toString());
         params.put("again", ed_pwd2.getText().toString());
         params.put("from", "Android");
-        OkHttpUtils.post()
+        /*OkHttpUtils.post()
                 .url(REG_URL)
                 .params(params)
                 .build()
@@ -318,6 +317,6 @@ public class SetPwdActivity extends BaseFragmentActivity {
                     public void onResponse(String s, int i) {
                         LSUtils.showToast(getApplicationContext(),s);
                     }
-                });
+                });*/
     }
 }

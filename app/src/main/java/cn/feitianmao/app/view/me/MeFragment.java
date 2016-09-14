@@ -121,6 +121,9 @@ public class MeFragment extends BaseFragment {
         iv_head.setOnClickListener(this);
         llChengjiu.setOnClickListener(this);
         llXiaoxi.setOnClickListener(this);
+        llGuanzhu.setOnClickListener(this);
+        llShoucang.setOnClickListener(this);
+        llShezhi.setOnClickListener(this);
     }
 
     @Override
@@ -129,6 +132,7 @@ public class MeFragment extends BaseFragment {
         myTitleBar.setLeftVisibility(View.GONE);
         myTitleBar.setRightImage(R.drawable.select_xinxi0);
         myTitleBar.setRightImgClickable(true);
+
     }
 
     @Override
@@ -140,7 +144,6 @@ public class MeFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.iv_head:
-
                 menuWindow = new SelectPicPopupWindow(getContext(), itemsOnClick);
                 menuWindow.showAtLocation(mainLayout,
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -154,7 +157,9 @@ public class MeFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.ll_guanzhu:
-
+                i = new Intent(getActivity(), GuanZhuActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.ll_shoucang:
 
