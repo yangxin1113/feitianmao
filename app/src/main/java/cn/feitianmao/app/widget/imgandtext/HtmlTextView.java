@@ -1,14 +1,20 @@
 package cn.feitianmao.app.widget.imgandtext;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.InputStream;
+
+import cn.feitianmao.app.bean.MessageSpan;
 
 /**
  * Created by Administrator on 2016/9/8 0008.
@@ -58,7 +64,27 @@ public class HtmlTextView extends TextView {
         setText(Html.fromHtml(html, imgGetter, new HtmlTagHandler()));
 
         // make links work
-        setMovementMethod(LinkMovementMethod.getInstance());
+
+        Handler handler = new Handler() {
+            public void handleMessage(Message msg) {
+                int what = msg.what;
+                if (what == 200) {
+                    MessageSpan ms = (MessageSpan) msg.obj;
+                    Object[] spans = (Object[]) ms.getObj();
+                    for (Object span : spans) {
+                        if (span instanceof ImageSpan) {
+                            Log.d(TAG, "点击了图片" + ((ImageSpan) span).getSource());
+                            //处理自己的逻辑
+                        }
+                    }
+                }
+            }
+        };
+        setMovementMethod(LinkMovementMethodExt.getInstance(handler, ImageSpan.class));
+
+        //setMovementMethod(LinkMovementMethod.getInstance());
         //setTextColor(getResources().getColor(android.R.color.secondary_text_dark_nodisable));
     }
+
+
 }

@@ -18,6 +18,19 @@
     <!-- 6.0要查询本机相册数据必须要添加的权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="andrWRITE_CALENDARoid.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+
     <!--mob分享-->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -94,6 +107,7 @@
         <activity android:name=".view.me.SetPwdActivity"></activity>
         <activity android:name=".view.main.AskQueActivity"></activity>
         <activity android:name=".view.home.AnswerActivity"></activity>
+        <activity android:name=".view.me.AchievedActivity"></activity>
     </application>
 
 </manifest>

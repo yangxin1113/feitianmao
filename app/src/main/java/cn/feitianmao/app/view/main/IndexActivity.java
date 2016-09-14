@@ -1,17 +1,28 @@
 package cn.feitianmao.app.view.main;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -78,6 +89,12 @@ public class IndexActivity extends BaseFragmentActivity {
     private List<Map<String, Object>> viewList ;
 
     private HomeFragment mHomeFragment;//首页
+    private MeFragment mMeFragment;
+
+    //登录
+    private static final int USER_LOGIN = 0;
+    private static final int OTHER_LOGIN = 1;
+
 
     @Override
     protected void init(Bundle arg0) {
@@ -125,7 +142,8 @@ public class IndexActivity extends BaseFragmentActivity {
                 addOrShowFragment(3);
                 break;
             case R.id.ll_ask:
-                showItemActivity(AskQueActivity.class);
+                requestContactSMSPermission();
+
                 break;
         }
     }
@@ -182,10 +200,11 @@ public class IndexActivity extends BaseFragmentActivity {
         fragmentList = new ArrayList<Fragment>();
         viewList = new ArrayList<Map<String, Object>>();// 所有底部图标与文字
         mHomeFragment = new HomeFragment();
+        mMeFragment = new MeFragment();
         fragmentList.add(mHomeFragment);
         fragmentList.add(new TuijainFragment());
         fragmentList.add(new FindFragment());
-        fragmentList.add(new MeFragment());
+        fragmentList.add(mMeFragment);
 
         Map<String, Object> item0 = new HashMap<String, Object>();
         item0.put("textView", tv_home);
@@ -280,4 +299,60 @@ public class IndexActivity extends BaseFragmentActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+    /**
+     * 申请联系人、短信、权限。
+     */
+    private void requestContactSMSPermission() {
+        AndPermission.with(this)
+                .requestCode(101)
+                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .rationale(rationaleListener)
+                .send();
+    }
+
+    @PermissionYes(101)
+    private void getMultiYes() {
+        Toast.makeText(IndexActivity.this, "获取SD卡权限成功", Toast.LENGTH_SHORT).show();
+        showItemActivity(AskQueActivity.class);
+    }
+
+    @PermissionNo(101)
+    private void getMultiNo() {
+        Toast.makeText(IndexActivity.this, "获取SD卡权限失败", Toast.LENGTH_SHORT).show();
+    }
+
+    private RationaleListener rationaleListener = new RationaleListener() {
+        @Override
+        public void showRequestPermissionRationale(int requestCode, final Rationale rationale) {
+            new AlertDialog.Builder(IndexActivity.this)
+                    .setTitle("友好提醒")
+                    .setMessage("您已拒绝过SD卡权限，没有SD卡权限正常使用提问功能获取图片！")
+                    .setPositiveButton("好，给你", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            rationale.resume();
+                        }
+                    })
+                    .setNegativeButton("我拒绝", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            rationale.cancel();
+                        }
+                    }).show();
+        }
+    };
+
+
+   @Override
+   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+       // 这个Activity中有Fragment，这句话不能注释，否则Fragment讲接受不到获取权限的通知。
+       super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+       AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+   }
+
 }

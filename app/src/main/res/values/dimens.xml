@@ -6,9 +6,10 @@
     <dimen name="text_dimens_10">10sp</dimen>
     <dimen name="text_dimens_16">16sp</dimen>
     <dimen name="text_dimens_18">18sp</dimen>
+    <dimen name="text_dimens_11">12sp</dimen>
     <dimen name="text_dimens_12">12sp</dimen>
-    <dimen name="text_dimens_11">11sp</dimen>
-
+    <dimen name="text_dimens_15">15sp</dimen>
+    <dimen name="text_dimens_13">13sp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="media_controller_text_size">14sp</dimen>
@@ -20,4 +21,5 @@
     <dimen name="media_controller_button_height">52dip</dimen>
     <dimen name="media_controller_button_width">71dip</dimen>
     <dimen name="titlebar_height">50dip</dimen>
+
 </resources>

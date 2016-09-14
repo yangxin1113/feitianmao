@@ -51,98 +51,113 @@
 
         <View style="@style/line_thin" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="20dp"
-            android:text="《守望先锋》你最想分享的事是什么?"
-            android:textColor="@color/text_nomal"
-            android:textSize="@dimen/text_dimens_16"
-            android:textStyle="bold" />
-
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-
-            <cn.feitianmao.app.widget.CircleImageView
-                android:id="@+id/iv_head"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/lena"
-                app:border_color="@color/white"
-                app:border_width="2dp" />
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/ll_logined"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/iv_head"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@+id/iv_head"
-                android:layout_toRightOf="@+id/iv_head"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
 
                 <TextView
-                    android:id="@+id/tv_nick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="神奇的五花肉"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="20dp"
+                    android:text="《守望先锋》你最想分享的事是什么?"
                     android:textColor="@color/text_nomal"
-                    android:textSize="@dimen/text_dimens_14" />
+                    android:textSize="@dimen/text_dimens_16"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_qianming"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="没有我不知道的，只有你想不到的"
-                    android:textColor="@color/text_gray1"
-                    android:textSize="@dimen/text_dimens_12"
-                    android:layout_marginTop="4dp"/>
+                    android:background="@color/white">
 
-            </LinearLayout>
+                    <cn.feitianmao.app.widget.CircleImageView
+                        android:id="@+id/iv_head"
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/lena"
+                        app:border_color="@color/white"
+                        app:border_width="2dp" />
 
-            <LinearLayout
-                android:id="@+id/ll_guanzhu"
-                android:layout_width="67dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/bt_guanzhu"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_alignBottom="@+id/tv_qianming">
+                    <LinearLayout
+                        android:id="@+id/ll_logined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/iv_head"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toEndOf="@+id/iv_head"
+                        android:layout_toRightOf="@+id/iv_head"
+                        android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tv_nick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="神奇的五花肉"
+                            android:textColor="@color/text_nomal"
+                            android:textSize="@dimen/text_dimens_14" />
+
+                        <TextView
+                            android:id="@+id/tv_qianming"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="没有我不知道的，只有你想不到的"
+                            android:textColor="@color/text_gray1"
+                            android:textSize="@dimen/text_dimens_12"
+                            android:layout_marginTop="4dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_guanzhu"
+                        android:layout_width="67dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/bt_guanzhu"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_alignBottom="@+id/tv_qianming">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_guanzhu1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="关注"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_dimens_14" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <cn.feitianmao.app.widget.imgandtext.HtmlTextView
+                    android:id="@+id/tv_content"
+                    android:layout_below="@+id/ll_top"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_guanzhu1" />
+                    android:layout_marginBottom="100dp"/>
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="关注"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_dimens_14" />
-            </LinearLayout>
-
-        </RelativeLayout>
+            </ScrollView>
 
     </LinearLayout>
 
-    <cn.feitianmao.app.widget.imgandtext.HtmlTextView
-        android:id="@+id/tv_content"
-        android:layout_below="@+id/ll_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+
 
     <View
        android:layout_above="@+id/ll_bottom"

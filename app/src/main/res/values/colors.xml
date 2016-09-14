@@ -10,7 +10,7 @@
     <color name="text_bottom_true">#9AABCD</color>
     <color name="text_bottom_false">#999999</color>
     <color name="line_color1">#f2f2f2</color>
-    <color name="line_color2">#e8e8e8</color>
+    <color name="line_color2">#d8d8d8</color>
 
     <color name="border_line">#ccc</color>
     <color name="bt_nomal">#47AFEF</color>
@@ -35,6 +35,7 @@
     <color name="unable_press_text">#bdbdbd</color>
 
     <color name="white">#ffffff</color>
+    <color name="white_bg">#80ffffff</color>
 
 
 

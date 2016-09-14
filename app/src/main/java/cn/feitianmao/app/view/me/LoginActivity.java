@@ -1,9 +1,12 @@
 package cn.feitianmao.app.view.me;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -19,10 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mob.tools.utils.UIHandler;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
@@ -42,8 +48,10 @@ import cn.feitianmao.app.utils.FileUtil;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.MyUtils;
 import cn.feitianmao.app.utils.SaveListObject;
+import cn.feitianmao.app.utils.StringConverter;
 import cn.feitianmao.app.utils.UploadManager;
 import cn.feitianmao.app.view.application.MyApplication;
+import cn.feitianmao.app.view.main.IndexActivity;
 import cn.sharesdk.framework.Platform;
 import butterknife.BindView;
 
@@ -54,6 +62,7 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
 import okhttp3.Call;
+import okhttp3.Request;
 
 
 /**
@@ -89,6 +98,10 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     private static final int MSG_AUTH_CANCEL = 3;
     private static final int MSG_AUTH_ERROR= 4;
     private static final int MSG_AUTH_COMPLETE = 5;
+
+    //登录
+    private static final int USER_LOGIN = 0;
+    private static final int OTHER_LOGIN = 1;
 
 
     @Override
@@ -131,7 +144,6 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                 bundle.putString("title","忘记密码");
                 showItemActivity(bundle, RegisterActivity.class);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                regAndLogin();
                 break;
             case R.id.bt_login:
                 Map<String, String> params = new HashMap<String, String>();
@@ -157,6 +169,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
          final String LOGIN_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
                  ((MyApplication)getApplication()).getApis().get("UserLogin").toString();
 
+
         OkHttpUtils.post()
                 .url(LOGIN_URL)
                 .params(params)
@@ -170,8 +183,23 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                     @Override
                     public void onResponse(String s, int i) {
                         LSUtils.showToast(getApplicationContext(), s);
+                        /*GsonBuilder gb = new GsonBuilder();
+                        gb.registerTypeAdapter(String.class, new StringConverter());
+                        Gson json = gb.create();*/
+                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                        //intent.putExtra("userInfo",s);
+
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            LSUtils.showToast(getApplicationContext(), json.get("alert").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        startActivityForResult(intent,USER_LOGIN );
+
                     }
                 });
+
     }
 
     @Override
@@ -209,7 +237,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
         params = new HashMap<String, String>();
         params.put("key", platform.getDb().getUserId());
         params.put("username", platform.getDb().getUserName());
-        params.put("avator", platform.getDb().getUserName());
+        params.put("avator", platform.getDb().getUserIcon());
         params.put("type", "Android");
         /*System.out.println("------User Name ---------" + platform.getDb().getUserName());
         System.out.println("------User ID ---------" + platform.getDb().getUserId());
@@ -222,6 +250,12 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
         System.out.println("------ExpiresTime ---------" + platform.getDb().getExpiresTime());
         System.out.println("------PlatformVersion ---------" + platform.getDb().getPlatformVersion());*/
         System.out.println("------Name ---------" + platform.getName());
+
+        /*Intent i = new Intent(LoginActivity.this, IndexActivity.class);
+        i.putExtra("key", platform.getDb().getUserId());
+        i.putExtra("username", platform.getDb().getUserId());
+        startActivityForResult(i, OTHER_LOGIN);*/
+        regAndLogin();
 
     }
 
@@ -239,6 +273,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     }
 
     private void login(Platform plat, String userId, HashMap<String, Object> userInfo) {
+
         Message msg = new Message();
         msg.what = MSG_LOGIN;
         msg.obj = plat;
@@ -248,30 +283,31 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     public boolean handleMessage(Message msg) {
         switch(msg.what) {
             case MSG_USERID_FOUND: {
-                Toast.makeText(this, R.string.userid_found +(String)msg.obj, Toast.LENGTH_SHORT).show();
-
+                LSUtils.i("MSG_USERID_FOUND", R.string.userid_found + (String) msg.obj);
             }
             break;
             case MSG_LOGIN: {
 
                 String text = getString(R.string.loginingMob, msg.obj);
-                Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+                LSUtils.i("MSG_LOGIN", text);
+
                 System.out.println("---------------");
 
             }
             break;
             case MSG_AUTH_CANCEL: {
-                Toast.makeText(this, R.string.auth_cancel+(String)msg.obj, Toast.LENGTH_SHORT).show();
+                LSUtils.i("MSG_AUTH_CANCEL", R.string.auth_cancel + (String) msg.obj);
                 System.out.println("-------MSG_AUT实打实的H_CANCEL--------");
             }
             break;
             case MSG_AUTH_ERROR: {
-                Toast.makeText(this, R.string.auth_error+(String)msg.obj, Toast.LENGTH_SHORT).show();
+                LSUtils.i("MSG_AUTH_ERROR", R.string.auth_error + (String) msg.obj);
                 System.out.println("-------MSG_AUTH_ERROR--------");
             }
             break;
             case MSG_AUTH_COMPLETE: {
-                Toast.makeText(this, R.string.auth_complete+(String)msg.obj, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, R.string.auth_complete+(String)msg.obj, Toast.LENGTH_SHORT).show();
+                LSUtils.i( "MSG_AUTH_COMPLETE",R.string.auth_complete+(String)msg.obj);
                 System.out.println("--------MSG_AUTH_COMPLETE-------");
 
             }
@@ -317,38 +353,38 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     };
 
 
-    /**
-     * 要判断 key value 是否存在，不要因为不存在报错， 做一个 json解析入口的数据统一处理， null数据解析成 0
-     * @param userInfo
-     * @return
-     */
-    public String  checkUserInfo(String userInfo){
-        String result = "";
-        try {
-            JSONObject json = new JSONObject(userInfo);
-            Iterator it = json.keys();
-            while(it.hasNext()){
-                String key = (String)it.next();
-                String value = json.getString(key);
-                if(value==null || value.equals("")){
-                    json.put(key,"0");
-                }
-            }
-            result = json.toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
 
     /**
      * 第三方登录上传信息至服务器
      */
     private void regAndLogin() {
-        String avator_url = params.get("avator");
-        String urlpath = FileUtil.picassoImg(LoginActivity.this, avator_url);
-        UploadManager.getInstance().uploadImage(urlpath);
+        final String avator_url = params.get("avator");
+        OkHttpUtils//
+                .get()//
+                .url(avator_url)//
+                .build()//
+                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "userIcon.jpg")//
+                {
+
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+
+                    }
+
+                    @Override
+                    public void onResponse(File file, int i) {
+                        Log.e("path", "onResponse :" + file.getAbsolutePath());
+                        uploadHead(file.getAbsolutePath());
+                    }
+                });
+    }
+
+    //第三方头像上传至阿里云存储并注册
+    private void uploadHead(final String path) {
+
+
+        UploadManager.getInstance().uploadImage(path);
         UploadManager.getInstance().setUpLoadListener(new UpLoadListener() {
             @Override
             public void upLoading(long currentSize, long totalSize) {
@@ -357,33 +393,16 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
 
             @Override
             public void upLoadSuccess(Object result, String uploadPath) {
-                LSUtils.d("zzz",  " uploadPath:" + uploadPath);
-                params.put("avator",uploadPath);
-
-                final String REANDLOGIN_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
-                        ((MyApplication)getApplication()).getApis().get("UserSignup").toString();
-
-                OkHttpUtils.post()
-                        .url(REANDLOGIN_URL)
-                        .params(params)
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int i) {
-
-                            }
-
-                            @Override
-                            public void onResponse(String s, int i) {
-                                LSUtils.i("SignUp",s);
-                            }
-                        });
-
+                LSUtils.d("zzz", " uploadPath:" + uploadPath);
+                params.put("avator", uploadPath);
+                signUp();
             }
 
             @Override
             public void upLoadSuccess(Object result, String thumbnailPath, String uploadPath) {
+
                 LSUtils.d("zzz", "thumbnailPath:" + thumbnailPath + "   uploadPath:" + uploadPath);
+
             }
 
             @Override
@@ -391,5 +410,30 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
 
             }
         });
+    }
+
+    private void signUp() {
+        final String SIGNUP_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
+                ((MyApplication)getApplication()).getApis().get("WxUserLogin").toString();
+
+        OkHttpUtils.post()
+                .url(SIGNUP_URL)
+                .params(params)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+                        LSUtils.i("signup", s);
+                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                        intent.putExtra("username","微信登录");
+                        startActivityForResult(intent, OTHER_LOGIN);
+
+                    }
+                });
     }
 }

@@ -59,11 +59,7 @@ public class HomeFragment extends BaseFragment {
     protected void initEvent() {
         //RecycleView中item布局中每个控件的点击事件
         itemOnClickListenner();
-
-
     }
-
-
 
     @Override
     protected void setInitData() {

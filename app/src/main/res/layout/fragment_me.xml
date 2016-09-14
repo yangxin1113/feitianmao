@@ -32,7 +32,7 @@
                 app:border_width="2dp" />
 
             <LinearLayout
-
+                android:visibility="gone"
                 android:id="@+id/ll_logined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
 
                 <TextView
                     android:id="@+id/tv_login"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/iv_head"
@@ -142,6 +142,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/ll_xiaoxi"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"
@@ -186,6 +187,7 @@
             <View style="@style/line_thin" />
 
             <RelativeLayout
+                android:id="@+id/ll_chengjiu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"
@@ -226,6 +228,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/ll_guanzhu"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"
@@ -267,6 +270,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/ll_shoucang"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"
@@ -307,6 +311,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/ll_caogao"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"
@@ -347,6 +352,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/ll_shezhi"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"

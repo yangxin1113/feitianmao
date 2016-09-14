@@ -78,7 +78,8 @@ public class AnswerActivity extends BaseFragmentActivity {
 
     @Override
     protected void setInitData() {
-        StatusBarUtil.setStatusBarColor(AnswerActivity.this, R.color.white);//设置状态栏颜色
+        //StatusBarUtil.setStatusBarColor(AnswerActivity.this, R.color.white);//设置状态栏颜色
+        //StatusBarUtil.StatusBarLightMode(AnswerActivity.this,3);
         regulaUtils = RegulaUtils.getInstance();
         llZantong.setTag(false);
         llShoucang.setTag(false);
@@ -144,7 +145,7 @@ public class AnswerActivity extends BaseFragmentActivity {
                 }
                 break;
             case R.id.ll_shoucang:
-                if(llShoucang.getTag() == true){
+                if(llShoucang.getTag() == false){
                     ivShoucang.setImageDrawable(ContextCompat.getDrawable(AnswerActivity.this, R.drawable.icon_shoucang_selected));
                     tvShoucang.setTextColor(ContextCompat.getColor(AnswerActivity.this, R.color.text_color4));
                     llShoucang.setTag(true);

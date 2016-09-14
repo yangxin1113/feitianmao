@@ -1,8 +1,15 @@
 package cn.feitianmao.app.base;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import cn.feitianmao.app.utils.MyUtils;
@@ -15,15 +22,35 @@ import static android.view.View.OnClickListener;
 public abstract class BaseFragmentActivity extends AppCompatActivity implements OnClickListener {
 
     protected MyUtils utils;
-
+    protected boolean isToken = false;// 是否检测更新
+    protected boolean isUserMapNull = false;// 是否已登录
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         init(arg0);
         ButterKnife.bind(this);
+        /*isUserMapNull = isUserMapNull();
+        isToken = isToken();*/
         setInitData();
         initEvent();
+
     }
+
+    /**
+     *
+     * 设置是否检测用户数据是否为空
+     *
+     * @return true为检测，false为不检测
+     */
+    //protected abstract boolean isUserMapNull();
+
+    /**
+     *
+     * 设置是否检测其它设备登录
+     *
+     * @return true为检测，false为不检测
+     */
+    //protected abstract boolean isToken();
 
     /**
      * 初始化布局
@@ -39,6 +66,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
      * 初始化控件事件
      */
     protected abstract void initEvent();
+
 
 
     /**
