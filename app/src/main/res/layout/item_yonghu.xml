@@ -4,7 +4,7 @@
     xmlns:app1="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    >
+    android:background="@color/white">
 
         <cn.feitianmao.app.widget.CircleImageView
             android:id="@+id/iv_head"
@@ -65,7 +65,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:background="@color/bg_color1"
+        android:background="@drawable/bg_gaunzhu1"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_alignBottom="@+id/tv_qianming">

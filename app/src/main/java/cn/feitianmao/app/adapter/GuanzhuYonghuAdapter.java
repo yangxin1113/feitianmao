@@ -1,6 +1,8 @@
 package cn.feitianmao.app.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import cn.feitianmao.app.callback.GuanzhuYonghuClickListenner;
 import static android.view.View.OnClickListener;
 
 /**
+ * 我关注的用户
  * Created by Administrator on 2016/8/30 0030.
  */
 public class GuanzhuYonghuAdapter extends RecyclerView.Adapter<GuanzhuYonghuAdapter.MyViewHolder> {
@@ -36,7 +39,7 @@ public class GuanzhuYonghuAdapter extends RecyclerView.Adapter<GuanzhuYonghuAdap
 
     }
 
-    public void setGuzhuWentiClickListenner(GuanzhuYonghuClickListenner guanzhuYonghuClickListenner){
+    public void setGuanzhuYonghuClickListenner(GuanzhuYonghuClickListenner guanzhuYonghuClickListenner){
         this.guanzhuYonghuClickListenner = guanzhuYonghuClickListenner;
     }
 
@@ -51,6 +54,7 @@ public class GuanzhuYonghuAdapter extends RecyclerView.Adapter<GuanzhuYonghuAdap
         return holder;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int i) {
 
@@ -64,11 +68,11 @@ public class GuanzhuYonghuAdapter extends RecyclerView.Adapter<GuanzhuYonghuAdap
         holder.tv_qianming.setTag(i);
         holder.tv_qianming.setOnClickListener(mOnClickListener);
         if (data.get(i).getIsGuanzhu() == 1){
-            holder.ll_guanzhu.setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color2));
+            holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu0));
             holder.iv_guanzhu.setVisibility(View.GONE);
             holder.tv_guanzhu.setText("已关注");
         }else {
-            holder.ll_guanzhu.setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color1));
+            holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu1));
             holder.iv_guanzhu.setVisibility(View.VISIBLE);
             holder.tv_guanzhu.setText("关注");
         }
@@ -77,12 +81,12 @@ public class GuanzhuYonghuAdapter extends RecyclerView.Adapter<GuanzhuYonghuAdap
             @Override
             public void onClick(View v) {
                 if(isGuanzhu == 1){
-                    holder.ll_guanzhu.setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color1));
+                    holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu1));
                     holder.iv_guanzhu.setVisibility(View.VISIBLE);
                     holder.tv_guanzhu.setText("关注");
                     data.get(i).setIsGuanzhu(0);
                 }else {
-                    holder.ll_guanzhu.setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color2));
+                    holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu0));
                     holder.iv_guanzhu.setVisibility(View.GONE);
                     holder.tv_guanzhu.setText("已关注");
                     data.get(i).setIsGuanzhu(1);

@@ -15,6 +15,8 @@ ADDED from AndroidManifest.xml:2:1
 		INJECTED from AndroidManifest.xml:0:0
 uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:5:5
+MERGED from com.lzy.net:okhttputils:1.8.0:11:5
+MERGED from com.lzy.net:okhttputils:1.8.0:11:5
 	android:name
 		ADDED from AndroidManifest.xml:5:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
@@ -23,6 +25,8 @@ ADDED from AndroidManifest.xml:6:5
 		ADDED from AndroidManifest.xml:6:22
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:7:5
+MERGED from com.lzy.net:okhttputils:1.8.0:13:5
+MERGED from com.lzy.net:okhttputils:1.8.0:13:5
 	android:name
 		ADDED from AndroidManifest.xml:7:22
 uses-permission#android.permission.CALL_PHONE
@@ -35,6 +39,8 @@ ADDED from AndroidManifest.xml:12:5
 		ADDED from AndroidManifest.xml:12:22
 uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
 ADDED from AndroidManifest.xml:14:5
+MERGED from com.lzy.net:okhttputils:1.8.0:14:5
+MERGED from com.lzy.net:okhttputils:1.8.0:14:5
 	android:name
 		ADDED from AndroidManifest.xml:14:22
 uses-permission#android.permission.RECORD_AUDIO
@@ -47,13 +53,15 @@ ADDED from AndroidManifest.xml:17:5
 		ADDED from AndroidManifest.xml:17:22
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:19:5
+MERGED from com.lzy.net:okhttputils:1.8.0:12:5
+MERGED from com.lzy.net:okhttputils:1.8.0:12:5
 	android:name
 		ADDED from AndroidManifest.xml:19:22
 uses-permission#android.permission.READ_CALENDAR
 ADDED from AndroidManifest.xml:23:5
 	android:name
 		ADDED from AndroidManifest.xml:23:22
-uses-permission#android.permission.WRITE_CALENDAR
+uses-permission#andrWRITE_CALENDARoid.permission.WRITE_CALENDAR
 ADDED from AndroidManifest.xml:24:5
 	android:name
 		ADDED from AndroidManifest.xml:24:22
@@ -111,27 +119,18 @@ ADDED from AndroidManifest.xml:46:5
 		ADDED from AndroidManifest.xml:46:22
 application
 ADDED from AndroidManifest.xml:49:5
-MERGED from com.android.support:appcompat-v7:23.4.0:25:5
-MERGED from com.android.support:animated-vector-drawable:23.4.0:7:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:7:5
-MERGED from com.android.support:support-v4:23.4.0:22:5
-MERGED from com.android.support:support-v4:23.4.0:22:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:7:5
+MERGED from com.android.support:appcompat-v7:23.1.1:22:5
 MERGED from com.android.support:support-v4:23.4.0:22:5
 MERGED from com.github.franmontiel:PersistentCookieJar:v1.0.0:12:5
 MERGED from com.android.support:design:23.1.1:22:5
-MERGED from com.android.support:appcompat-v7:23.4.0:25:5
-MERGED from com.android.support:animated-vector-drawable:23.4.0:7:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:7:5
-MERGED from com.android.support:support-v4:23.4.0:22:5
-MERGED from com.android.support:support-v4:23.4.0:22:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:7:5
+MERGED from com.android.support:appcompat-v7:23.1.1:22:5
 MERGED from com.android.support:support-v4:23.4.0:22:5
 MERGED from com.android.support:support-v4:23.4.0:22:5
 MERGED from com.android.support:support-v4:23.4.0:22:5
 MERGED from :SMSSDK-2.1.1::11:5
 MERGED from com.yanzhenjie:permission:1.0.0:9:5
 MERGED from com.android.support:support-v4:23.4.0:22:5
+MERGED from com.lzy.net:okhttpserver:1.0.2:11:5
 	android:supportsRtl
 		ADDED from com.yanzhenjie:permission:1.0.0:12:9
 	android:label
@@ -232,25 +231,38 @@ activity#cn.feitianmao.app.view.me.AchievedActivity
 ADDED from AndroidManifest.xml:110:9
 	android:name
 		ADDED from AndroidManifest.xml:110:19
+activity#cn.feitianmao.app.view.me.GuanZhuActivity
+ADDED from AndroidManifest.xml:111:9
+	android:name
+		ADDED from AndroidManifest.xml:111:19
+activity#cn.feitianmao.app.view.me.ShoucangActivity
+ADDED from AndroidManifest.xml:112:9
+	android:name
+		ADDED from AndroidManifest.xml:112:19
+activity#cn.feitianmao.app.view.me.ShezhiActivity
+ADDED from AndroidManifest.xml:113:9
+	android:name
+		ADDED from AndroidManifest.xml:113:19
+activity#cn.feitianmao.app.view.me.XiaoxiActivity
+ADDED from AndroidManifest.xml:114:9
+	android:name
+		ADDED from AndroidManifest.xml:114:19
+activity#cn.feitianmao.app.view.me.CaoGaoActivity
+ADDED from AndroidManifest.xml:115:9
+	android:name
+		ADDED from AndroidManifest.xml:115:19
+activity#cn.feitianmao.app.view.me.FriendsActivity
+ADDED from AndroidManifest.xml:116:9
+	android:name
+		ADDED from AndroidManifest.xml:116:19
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
-MERGED from com.android.support:appcompat-v7:23.4.0:21:5
-MERGED from com.android.support:animated-vector-drawable:23.4.0:5:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:5:5
+MERGED from com.android.support:appcompat-v7:23.1.1:20:5
 MERGED from com.android.support:support-v4:23.4.0:20:5
-MERGED from com.android.support:support-v4:23.4.0:20:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:5:5
-MERGED from com.android.support:support-v4:23.4.0:20:5
-MERGED from com.jakewharton:butterknife:8.1.0:5:5
-MERGED from com.zhy:okhttputils:2.6.2:7:5
+MERGED from com.jakewharton:butterknife:8.4.0:5:5
 MERGED from com.github.franmontiel:PersistentCookieJar:v1.0.0:8:5
 MERGED from com.android.support:design:23.1.1:20:5
-MERGED from com.android.support:appcompat-v7:23.4.0:21:5
-MERGED from com.android.support:animated-vector-drawable:23.4.0:5:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:5:5
-MERGED from com.android.support:support-v4:23.4.0:20:5
-MERGED from com.android.support:support-v4:23.4.0:20:5
-MERGED from com.android.support:support-vector-drawable:23.4.0:5:5
+MERGED from com.android.support:appcompat-v7:23.1.1:20:5
 MERGED from com.android.support:support-v4:23.4.0:20:5
 MERGED from com.android.support:recyclerview-v7:23.1.1:20:5
 MERGED from com.android.support:support-v4:23.4.0:20:5
@@ -258,11 +270,16 @@ MERGED from com.android.support:support-v4:23.4.0:20:5
 MERGED from :SMSSDK-2.1.1::7:5
 MERGED from com.yanzhenjie:permission:1.0.0:5:5
 MERGED from com.android.support:support-v4:23.4.0:20:5
+MERGED from com.lzy.net:okhttputils:1.8.0:7:5
+MERGED from com.lzy.net:okhttpserver:1.0.2:7:5
+MERGED from com.lzy.net:okhttputils:1.8.0:7:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:minSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	tools:overrideLibrary
-		ADDED from com.android.support:appcompat-v7:23.4.0:23:9
+service#com.lzy.okhttpserver.download.DownloadService
+ADDED from com.lzy.net:okhttpserver:1.0.2:12:9
+	android:name
+		ADDED from com.lzy.net:okhttpserver:1.0.2:12:18

@@ -112,6 +112,9 @@
         <activity android:name=".view.me.ShoucangActivity"></activity>
         <activity android:name=".view.me.ShezhiActivity"></activity>
         <activity android:name=".view.me.XiaoxiActivity"></activity>
+        <activity android:name=".view.me.CaoGaoActivity"></activity>
+        <activity android:name=".view.me.FriendsActivity"></activity>
+
     </application>
 
 </manifest>

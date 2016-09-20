@@ -61,7 +61,7 @@
                 android:layout_below="@+id/iv_top"/>
 
             <LinearLayout
-                android:id="@+id/ll_logined"
+                android:id="@+id/ll_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/iv_head"
@@ -91,6 +91,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_friends"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="656"
@@ -112,6 +113,7 @@
                         android:shadowDy="2"/>
 
                     <TextView
+                        android:id="@+id/tv_fans"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
@@ -171,6 +173,7 @@
                 android:background="#16000000">
 
                 <LinearLayout
+                    android:id="@+id/ll_zantong"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -183,6 +186,7 @@
                         android:src="@drawable/icon_dianzan_w" />
 
                     <TextView
+                        android:id="@+id/tv_zantong"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -197,6 +201,7 @@
                     android:background="#40ffffff"></View>
 
                 <LinearLayout
+                    android:id="@+id/ll_shoucang"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -210,6 +215,7 @@
                         android:layout_marginBottom="1dp"/>
 
                     <TextView
+                        android:id="@+id/tv_shoucang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -224,6 +230,7 @@
                     android:background="#40ffffff"></View>
 
                 <LinearLayout
+                    android:id="@+id/ll_fenxiang"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -236,6 +243,7 @@
                         android:src="@drawable/icon_fenxiang_w" />
 
                     <TextView
+                        android:id="@+id/tv_fenxaing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -281,6 +289,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_dongtaicount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
@@ -308,14 +317,14 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/ll_guanzhu"
+                android:id="@+id/ll_huida"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"
                 android:clickable="true">
 
                 <TextView
-                    android:id="@+id/tv_guanzhu"
+                    android:id="@+id/tv_huida"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -325,6 +334,7 @@
                     android:textSize="@dimen/text_dimens_16" />
 
                 <TextView
+                    android:id="@+id/tv_huidacount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="32"
@@ -345,21 +355,21 @@
 
                 <View
                     style="@style/line_thin"
-                    android:layout_alignLeft="@+id/tv_guanzhu"
+                    android:layout_alignLeft="@+id/tv_huida"
                     android:layout_alignParentBottom="true"
                     android:layout_alignStart="@+id/tv_guanzhu"></View>
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/ll_shoucang"
+                android:id="@+id/ll_tiwen"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/select_bg"
                 android:clickable="true">
 
                 <TextView
-                    android:id="@+id/tv_shoucang"
+                    android:id="@+id/tv_tiwen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -370,6 +380,7 @@
                     android:textSize="@dimen/text_dimens_16" />
 
                 <TextView
+                    android:id="@+id/tv_tiwencount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5"

@@ -1,25 +1,18 @@
 package cn.feitianmao.app.view.me;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
-import cn.feitianmao.app.adapter.GuanzhuWentiAdapter;
 import cn.feitianmao.app.adapter.GuanzhuYonghuAdapter;
 import cn.feitianmao.app.base.BaseFragment;
-import cn.feitianmao.app.bean.Question;
 import cn.feitianmao.app.bean.YonghuData;
-import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
 import cn.feitianmao.app.callback.GuanzhuYonghuClickListenner;
 import cn.feitianmao.app.utils.LSUtils;
 
@@ -27,7 +20,7 @@ import cn.feitianmao.app.utils.LSUtils;
  * 我关注的问题
  * Created by Administrator on 2016/8/29 0029.
  */
-public class GuanzhuYonghuFragment extends BaseFragment {
+public class FriendsListFragment extends BaseFragment {
 
 
     @BindView(R.id.rv_yonghu)

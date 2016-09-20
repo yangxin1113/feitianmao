@@ -124,7 +124,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
-                        android:background="@color/bg_color1"
+                        android:background="@drawable/bg_gaunzhu1"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:layout_alignBottom="@+id/tv_qianming">

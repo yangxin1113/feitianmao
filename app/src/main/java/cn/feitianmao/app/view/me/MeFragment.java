@@ -123,6 +123,7 @@ public class MeFragment extends BaseFragment {
         llXiaoxi.setOnClickListener(this);
         llGuanzhu.setOnClickListener(this);
         llShoucang.setOnClickListener(this);
+        llCaogao.setOnClickListener(this);
         llShezhi.setOnClickListener(this);
     }
 
@@ -162,13 +163,20 @@ public class MeFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.ll_shoucang:
+                i = new Intent(getActivity(), ShoucangActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
                 break;
             case R.id.ll_caogao:
-
+                i = new Intent(getActivity(), CaoGaoActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.ll_shezhi:
-
+                i = new Intent(getActivity(), ShezhiActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
         }
 

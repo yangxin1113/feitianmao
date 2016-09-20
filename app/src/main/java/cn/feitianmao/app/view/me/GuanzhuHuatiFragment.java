@@ -81,7 +81,7 @@ public class GuanzhuHuatiFragment extends BaseFragment {
      * 接口回调实现RecyclerView的item布局中每个控件的点击事件
      */
     private void itemOnClickListenner() {
-        guanzhuHuatiAdapter.setGuzhuWentiClickListenner(new GuanzhuHuatiClickListenner() {
+        guanzhuHuatiAdapter.setGuanzhuHuatiClickListenner(new GuanzhuHuatiClickListenner() {
 
             @Override
             public void showHuati(View view, int position) {

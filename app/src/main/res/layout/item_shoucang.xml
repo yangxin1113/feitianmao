@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app1="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/select_bg">
+
+        <View style="@style/line_thin" />
+
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:id="@+id/tv_shoucang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="游戏攻略"
+            android:textColor="@color/text_nomal"
+            android:lineSpacingExtra="3dp"
+            android:textSize="@dimen/text_dimens_16"
+            android:textStyle="bold" />
+
+    <TextView
+        android:layout_below="@+id/tv_shoucang"
+        android:layout_marginTop="12dp"
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="梦幻西游、守望先锋、征途游戏攻略"
+        android:textColor="@color/text_gray1"
+        android:lineSpacingExtra="3dp"
+        android:textSize="@dimen/text_dimens_14"
+        android:layout_marginBottom="14dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/iv_toright"
+        android:layout_marginRight="8dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignTop="@+id/tv_shoucang"
+        android:layout_toLeftOf="@+id/iv_toright"
+        android:layout_toStartOf="@+id/iv_toright"
+        android:layout_marginRight="15dp">
+
+        <TextView
+            android:id="@+id/tv_answercount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="305"
+            android:textColor="@color/text_color2"
+            android:textSize="@dimen/text_dimens_14"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个回答"
+            android:textColor="@color/text_color2"
+            android:textSize="@dimen/text_dimens_14"/>
+
+        </LinearLayout>
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/xiangyoujiantou"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:id="@+id/iv_toright" />
+
+    <View
+        android:id="@+id/line1"
+        style="@style/line_thin"
+        android:layout_below="@+id/tv_content"/>
+    
+    <View
+        android:layout_below="@+id/line1"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="@color/main_bg"/>
+
+</RelativeLayout>

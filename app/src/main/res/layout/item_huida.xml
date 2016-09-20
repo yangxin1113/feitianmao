@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app1="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        style="@style/line_thin"
+         />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="15dp">
+
+        <cn.feitianmao.app.widget.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="5dp"
+            app:border_width="0dp"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/iv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我回答了问题"
+            android:textSize="@dimen/text_dimens_14"
+            android:textColor="@color/text_color2"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_toLeftOf="@+id/tv_timetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textSize="@dimen/text_dimens_14"
+            android:textColor="@color/text_color2"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:id="@+id/tv_timetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小时前"
+            android:textSize="@dimen/text_dimens_14"
+            android:textColor="@color/text_color2"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《守望先锋》你最想分享的事是什么？"
+        android:textColor="@color/text_nomal"
+        android:textSize="@dimen/text_dimens_15"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_below="@+id/tv_question"
+        android:id="@+id/tv_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="你最想分享的事是什么？打扫打扫的范德萨的法案是飞洒发生的的范德萨范德萨范德萨发放大师傅的"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:lineSpacingExtra="3dp"
+        android:textColor="@color/text_gray5"
+        android:textSize="@dimen/text_dimens_14"
+         />
+
+    <LinearLayout
+        android:layout_below="@+id/tv_content"
+        android:id="@+id/ll_shanchu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_agreecount"
+            android:layout_toLeftOf="@+id/tv_zantong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.2K"
+            android:textSize="@dimen/text_dimens_14"
+            android:textColor="@color/text_color2"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_zantong"
+            android:layout_toLeftOf="@+id/iv_dian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="赞同"
+            android:textSize="@dimen/text_dimens_14"
+            android:textColor="@color/text_color2"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageView
+            android:id="@+id/iv_dian"
+            android:layout_toLeftOf="@+id/tv_talkcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/dian"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_talkcount"
+            android:layout_toLeftOf="@+id/tv_pinglun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="156"
+            android:textSize="@dimen/text_dimens_14"
+            android:textColor="@color/text_color2"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:id="@+id/tv_pinglun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论"
+            android:textSize="@dimen/text_dimens_14"
+            android:textColor="@color/text_color2"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+
+        <ImageView
+            android:layout_below="@+id/ll_shanchu"
+            style="@style/line_thin"
+           />
+        </LinearLayout>
+
+</LinearLayout>

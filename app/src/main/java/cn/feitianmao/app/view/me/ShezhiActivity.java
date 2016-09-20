@@ -1,17 +1,19 @@
 package cn.feitianmao.app.view.me;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
-import cn.feitianmao.app.adapter.ViewPagerAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
+import cn.feitianmao.app.widget.MyTitleBar;
 
 
 /**
@@ -20,46 +22,63 @@ import cn.feitianmao.app.base.BaseFragmentActivity;
  */
 public class ShezhiActivity extends BaseFragmentActivity {
 
-    @BindView(R.id.iv_left)
-    ImageView ivleft;
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-
+    @BindView(R.id.mtb_title)
+    MyTitleBar mtbTitle;
+    @BindView(R.id.tv_account)
+    TextView tvAccount;
+    @BindView(R.id.ll_account)
+    RelativeLayout llAccount;
+    @BindView(R.id.tv_tongzhi)
+    TextView tvTongzhi;
+    @BindView(R.id.ll_tongzhi)
+    RelativeLayout llTongzhi;
+    @BindView(R.id.tv_fankui)
+    TextView tvFankui;
+    @BindView(R.id.ll_fankui)
+    RelativeLayout llFankui;
+    @BindView(R.id.tv_us)
+    TextView tvUs;
+    @BindView(R.id.ll_us)
+    RelativeLayout llUs;
+    @BindView(R.id.tv_delete)
+    TextView tvDelete;
+    @BindView(R.id.tv_count)
+    TextView tvCount;
+    @BindView(R.id.iv_you)
+    ImageView ivYou;
+    @BindView(R.id.ll_delete)
+    RelativeLayout llDelete;
+    @BindView(R.id.main)
+    LinearLayout main;
 
     @Override
     protected void init(Bundle arg0) {
-        setContentView(R.layout.activity_guanzhu);
-
+        setContentView(R.layout.activity_shezhi);
     }
 
     @Override
     protected void setInitData() {
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+        mtbTitle.setText("设置");
+        mtbTitle.setLeftImage(R.drawable.icon_fanhui_w);
+        mtbTitle.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onKeyDown(KeyEvent.KEYCODE_BACK, null);
+            }
+        });
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new GuanzhuWentiFragment(), "问题");
-        adapter.addFragment(new GuanzhuHuatiFragment(), "话题");
-        adapter.addFragment(new GuanzhuYonghuFragment(), "用户");
-        viewPager.setAdapter(adapter);
-    }
 
     @Override
     protected void initEvent() {
-        ivleft.setOnClickListener(this);
+
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_left:
-                onKeyDown(KeyEvent.KEYCODE_BACK, null);
-                break;
+
 
         }
     }
@@ -73,13 +92,5 @@ public class ShezhiActivity extends BaseFragmentActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

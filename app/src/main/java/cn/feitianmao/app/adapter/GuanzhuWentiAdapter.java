@@ -17,6 +17,7 @@ import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
 import static android.view.View.OnClickListener;
 
 /**
+ * 我关注的问题
  * Created by Administrator on 2016/8/30 0030.
  */
 public class GuanzhuWentiAdapter extends RecyclerView.Adapter<GuanzhuWentiAdapter.MyViewHolder> {

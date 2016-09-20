@@ -13,26 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.CaogaoAdapter;
-import cn.feitianmao.app.adapter.ShoucangAdapter;
+import cn.feitianmao.app.adapter.HomeAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
 import cn.feitianmao.app.bean.CaogaoData;
-import cn.feitianmao.app.bean.ShoucangData;
 import cn.feitianmao.app.callback.CaogaoClickListenner;
-import cn.feitianmao.app.callback.ShoucangClickListenner;
 import cn.feitianmao.app.utils.LSUtils;
-import cn.feitianmao.app.widget.FullyLinearLayoutManager;
 import cn.feitianmao.app.widget.ListItemDecoration;
-
-import static android.support.v7.widget.RecyclerView.VERTICAL;
 
 
 /**
  * 我的成就
  * Created by Administrator on 2016/7/28 0028.
  */
-public class ShoucangActivity extends BaseFragmentActivity {
+public class CaoGaoActivity extends BaseFragmentActivity {
 
     @BindView(R.id.iv_left)
     ImageView ivleft;
@@ -43,26 +39,25 @@ public class ShoucangActivity extends BaseFragmentActivity {
     @BindView(R.id.rv_caogao)
     RecyclerView rvCaogao;
 
-    private ShoucangAdapter shoucangAdapter;
-    private List<ShoucangData> shoucangDatas;
-    private FullyLinearLayoutManager mLayoutManager;
+    private CaogaoAdapter caogaoAdapter;
+    private List<CaogaoData> caogaoDatas;
+
 
     @Override
     protected void init(Bundle arg0) {
-        setContentView(R.layout.activity_shoucang);
+        setContentView(R.layout.activity_caogao);
 
     }
 
     @Override
     protected void setInitData() {
 
-        mLayoutManager = new FullyLinearLayoutManager(getApplicationContext(), VERTICAL, false);
         //设置LinearLayoutManager布局管理器，实现ListView效果
-        rvCaogao.setLayoutManager(mLayoutManager);
+        rvCaogao.setLayoutManager(new LinearLayoutManager(CaoGaoActivity.this));
         rvCaogao.addItemDecoration(new ListItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
         getData();
-        shoucangAdapter = new ShoucangAdapter(ShoucangActivity.this, shoucangDatas);
-        rvCaogao.setAdapter(shoucangAdapter);
+        caogaoAdapter = new CaogaoAdapter(CaoGaoActivity.this, caogaoDatas);
+        rvCaogao.setAdapter(caogaoAdapter);
 
     }
 
@@ -82,30 +77,33 @@ public class ShoucangActivity extends BaseFragmentActivity {
     }
 
     private void itemOnClickListenner() {
-        shoucangAdapter.setShoucangClickListenner(new ShoucangClickListenner() {
-
+        caogaoAdapter.setCaogaoClickListenner(new CaogaoClickListenner() {
             @Override
-            public void onItemClick(View view, int position) {
-
+            public void showQuestion(View view, int position) {
+                LSUtils.showToast(getApplicationContext(), "问题");
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
+            public void showContent(View view, int position) {
+                LSUtils.showToast(getApplicationContext(), "内容");
+            }
 
+            @Override
+            public void showDelete(View view, int position) {
+                LSUtils.showToast(getApplicationContext(), "删除");
             }
         });
     }
 
 
     public void getData() {
-        shoucangDatas = new ArrayList<ShoucangData>();
+        caogaoDatas = new ArrayList<CaogaoData>();
         for(int i=0; i<10; i++){
-            ShoucangData shoucangData = new ShoucangData();
-            shoucangData.setId(i);
-            shoucangData.setShoucang("守望先锋" + i);
-            shoucangData.setContent("啥大事发生地方的水果卡卡将更好的风景谁更好的撒娇发");
-            shoucangData.setAnswercount(i*3+1*2);
-            shoucangDatas.add(shoucangData);
+            CaogaoData caogao = new CaogaoData();
+            caogao.setId(i);
+            caogao.setQuestion("梦幻西游是怎么做到让玩家粘性那么高的？"+i);
+            caogao.setContent("啥大事发生地方的水果卡卡将更好的风景谁更好的撒娇发货单上广东佛山将控股和大家谁空间按收费点卡收费就卡死的发送宽带房价");
+            caogaoDatas.add(caogao);
         }
     }
 
