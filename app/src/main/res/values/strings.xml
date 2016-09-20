@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="apis">https://www.feitianmao.cn/open/api/config</string>
+    <!--<string name="apis">https://www.feitianmao.cn/open/api/config</string>-->
+    <string name="apis">http://114.55.112.13/open/api/config</string>
+
     <string name="app_name">飞天猫</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

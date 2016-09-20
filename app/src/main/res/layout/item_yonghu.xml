@@ -6,17 +6,15 @@
     android:layout_height="80dp"
     >
 
-
-
         <cn.feitianmao.app.widget.CircleImageView
             android:id="@+id/iv_head"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/lena"
             app:border_color="@color/white"
-            app:border_width="2dp"
+            app:border_width="1dp"
             android:layout_centerVertical="true"/>
 
         <LinearLayout
@@ -24,10 +22,10 @@
             android:id="@+id/ll_logined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/iv_head"
+
             android:layout_marginLeft="10dp"
             android:layout_marginTop="9dp"
-            android:layout_toEndOf="@+id/iv_head"
+           android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_head"
             android:orientation="vertical">
 
@@ -37,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="神奇的五花肉"
                 android:textColor="@color/text_nomal"
-                android:textSize="@dimen/text_dimens_16"
+                android:textSize="@dimen/text_dimens_15"
                 android:textStyle="bold"/>
 
             <LinearLayout
@@ -47,6 +45,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_qianming"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="一句话怎么介绍自己"
@@ -66,20 +65,22 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:background="@drawable/bt_guanzhu"
+        android:background="@color/bg_color1"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_alignBottom="@+id/tv_qianming">
 
         <ImageView
+            android:id="@+id/iv_guanzhu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:src="@drawable/icon_guanzhu1" />
 
         <TextView
+            android:id="@+id/tv_guanzhu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:text="关注"
             android:textColor="@color/white"
             android:textSize="@dimen/text_dimens_14" />

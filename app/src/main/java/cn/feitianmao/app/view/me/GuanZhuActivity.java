@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.ViewPagerAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
+import cn.feitianmao.app.view.home.HomeFragment;
 
 
 /**
@@ -26,7 +27,6 @@ public class GuanZhuActivity extends BaseFragmentActivity {
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-
 
     @Override
     protected void init(Bundle arg0) {
@@ -73,13 +73,5 @@ public class GuanZhuActivity extends BaseFragmentActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

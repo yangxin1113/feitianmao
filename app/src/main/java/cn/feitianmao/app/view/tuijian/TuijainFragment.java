@@ -34,7 +34,6 @@ public class TuijainFragment extends BaseFragment {
     @BindView(R.id.rv_topic)
     RecyclerView rv_topic;
 
-
     private List<View> views = null;
     private List<HomeData> homeDatas = null;
     private HomeAdapter homeAdapter;
@@ -54,40 +53,10 @@ public class TuijainFragment extends BaseFragment {
     protected void setInitData() {
 
 
-        //scrollHome.setSwipeRefreshLayout(swipelayout);
-        swipelayout.setColorSchemeResources(
-                android.R.color.holo_blue_light,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        mLayoutManager = new FullyLinearLayoutManager(getActivity(),VERTICAL,false);
-        rv_topic.setLayoutManager(mLayoutManager);
-
-        getTopicData();
-        homeAdapter = new HomeAdapter(getContext(), homeDatas);
-        rv_topic.setAdapter(homeAdapter);
-        homeAdapter.notifyDataSetChanged();
 
     }
 
-    private void getTopicData() {
-        homeDatas = new ArrayList<HomeData>();
-        for (int i=1; i<=10; i++){
-            HomeData homeData= new HomeData();
-            homeData.setId(i);
-            homeData.setTopic("我有一个问题"+i);
-            homeData.setAnswer("我来回答"+i);
-            homeData.setTopicImg("http://img3.imgtn.bdimg.com/it/u=1245246407,2475689242&fm=21&gp=0.jpg");
-            homeData.setHeadImg("https://flycat.oss-cn-hangzhou.aliyuncs.com/CDN/image/201608171258258888.jpg");
-            homeData.setUsername("我是哈哈" + i);
-            homeData.setAgreecount("12"+i+"");
-            homeData.setTalkcount("25"+i+"");
-            homeDatas.add(homeData);
-        }
-
-    }
 
     @Override
     public void onClick(View v) {

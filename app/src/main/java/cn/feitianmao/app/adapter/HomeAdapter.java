@@ -2,7 +2,6 @@ package cn.feitianmao.app.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +13,19 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import cn.feitianmao.app.R;
+import cn.feitianmao.app.bean.HomeBean;
 import cn.feitianmao.app.bean.HomeData;
-
-import static android.view.View.OnClickListener;
+import cn.feitianmao.app.callback.HomeClickListenner;
 
 /**
  * Created by Administrator on 2016/8/30 0030.
  */
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
     private Context context;
-    private List<HomeData> data;
+    private HomeBean data;
     private HomeClickListenner homeClickListenner;
 
-    public HomeAdapter(Context context, List<HomeData> data){
+    public HomeAdapter(Context context, HomeBean data){
         this.context = context;
         this.data = data;
 
@@ -50,28 +49,28 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int i) {
 
-        holder.tv_topic.setText(data.get(i).getTopic());
+        holder.tv_topic.setText(data.getData().get(i).getTopic().toString());
         holder.tv_topic.setTag(i);
         holder.tv_topic.setOnClickListener(mOnClickListener);
-        holder.tv_question.setText(data.get(i).getQuestion());
+        holder.tv_question.setText(data.getData().get(i).getTitle());
         holder.tv_question.setTag(i);
         holder.tv_question.setOnClickListener(mOnClickListener);
-        holder.tv_answer.setText(data.get(i).getAnswer());
+        holder.tv_answer.setText(data.getData().get(i).getContent());
         holder.tv_answer.setTag(i);
         holder.tv_answer.setOnClickListener(mOnClickListener);
-        Picasso.with(context).load(data.get(i).getTopicImg()).into(holder.iv_topic_img);
+        Picasso.with(context).load(data.getData().get(i).getAvator()).into(holder.iv_topic_img);
         holder.iv_topic_img.setTag(i);
         holder.iv_topic_img.setOnClickListener(mOnClickListener);
-        Picasso.with(context).load(data.get(i).getHeadImg()).into(holder.iv_head);
+        Picasso.with(context).load(data.getData().get(i).getAvator()).into(holder.iv_head);
         holder.iv_head.setTag(i);
         holder.iv_head.setOnClickListener(mOnClickListener);
-        holder.tv_username.setText(data.get(i).getUsername());
+        holder.tv_username.setText(data.getData().get(i).getName());
         holder.tv_username.setTag(i);
         holder.tv_username.setOnClickListener(mOnClickListener);
-        holder.tv_agreecount.setText(data.get(i).getAgreecount());
+        holder.tv_agreecount.setText("200");
         holder.tv_agreecount.setTag(i);
         holder.tv_agreecount.setOnClickListener(mOnClickListener);
-        holder.tv_talkcount.setText(data.get(i).getTalkcount());
+        holder.tv_talkcount.setText("321");
         holder.tv_talkcount.setTag(i);
         holder.tv_talkcount.setOnClickListener(mOnClickListener);
 
@@ -80,7 +79,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.getData().size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{

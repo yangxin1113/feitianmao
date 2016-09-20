@@ -3,98 +3,103 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:app1="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    >
+    android:layout_height="80dp">
 
-        <cn.feitianmao.app.widget.CircleImageView
-            android:id="@+id/iv_head"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/lena"
-            app:border_color="@color/white"
-            app:border_width="2dp"
-            android:layout_centerVertical="true"/>
+    <cn.feitianmao.app.widget.CircleImageView
+        android:id="@+id/iv_huati"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/lena"
+        app:border_color="@color/white"
+        app:border_width="1dp" />
 
-        <LinearLayout
-            android:visibility="visible"
-            android:id="@+id/ll_logined"
+    <LinearLayout
+        android:id="@+id/ll_logined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="9dp"
+        android:layout_toRightOf="@+id/iv_huati"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_topic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/iv_head"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="9dp"
-            android:layout_toEndOf="@+id/iv_head"
-            android:layout_toRightOf="@+id/iv_head"
-            android:orientation="vertical">
+            android:text="神奇的五花肉"
+            android:textColor="@color/text_nomal"
+            android:textSize="@dimen/text_dimens_15"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_nick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="神奇的五花肉"
-                android:textColor="@color/text_nomal"
-                android:textSize="@dimen/text_dimens_16"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
-
-                <TextView
+                android:id="@+id/tv_guanzhucount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="6843"
                 android:textColor="@color/text_gray1"
                 android:textSize="@dimen/text_dimens_12" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="关注  / "
-                    android:textColor="@color/text_gray1"
-                    android:textSize="@dimen/text_dimens_12" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1521"
-                    android:textColor="@color/text_gray1"
-                    android:textSize="@dimen/text_dimens_12" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="问题"
-                    android:textColor="@color/text_gray1"
-                    android:textSize="@dimen/text_dimens_12" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关注  / "
+                android:textColor="@color/text_gray1"
+                android:textSize="@dimen/text_dimens_12" />
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_questioncount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1521"
+                android:textColor="@color/text_gray1"
+                android:textSize="@dimen/text_dimens_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="问题"
+                android:textColor="@color/text_gray1"
+                android:textSize="@dimen/text_dimens_12" />
 
         </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_guanzhu"
         android:layout_width="67dp"
         android:layout_height="30dp"
+        android:layout_alignBottom="@+id/tv_qianming"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:background="@drawable/bt_guanzhu"
+        android:background="@color/bg_color1"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_alignBottom="@+id/tv_qianming">
+        android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iv_guanzhu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:src="@drawable/icon_guanzhu1" />
 
         <TextView
+            android:id="@+id/tv_guanzhu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:text="关注"
             android:textColor="@color/white"
             android:textSize="@dimen/text_dimens_14" />
@@ -102,5 +107,5 @@
 
     <ImageView
         style="@style/line_thin"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

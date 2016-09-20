@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.feitianmao.app.utils.MyUtils;
@@ -16,13 +15,16 @@ import static android.view.View.OnClickListener;
 /**
  * Created by Administrator on 2016/8/15 0015.
  */
-public abstract class BaseFragment extends Fragment implements OnClickListener{
+public abstract class BaseFragment1 extends Fragment implements OnClickListener{
 
     protected MyUtils utils;
     protected LayoutInflater inflater;
     private int resLayout;
     protected Bundle savedInstanceState;// bundle对象
     private Unbinder unbinder;
+
+
+
 
     public int getLayoutRes() {
         return resLayout;

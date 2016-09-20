@@ -1,4 +1,4 @@
-package cn.feitianmao.app.adapter;
+package cn.feitianmao.app.callback;
 
 import android.view.View;
 import android.widget.BaseAdapter;

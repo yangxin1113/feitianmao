@@ -124,7 +124,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/bt_guanzhu"
+                        android:background="@color/bg_color1"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:layout_alignBottom="@+id/tv_qianming">
@@ -132,12 +132,12 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
                             android:src="@drawable/icon_guanzhu1" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
                             android:text="关注"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_dimens_14" />
