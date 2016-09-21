@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_saerch"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginLeft="12dp"

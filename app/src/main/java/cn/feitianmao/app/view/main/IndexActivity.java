@@ -106,6 +106,7 @@ public class IndexActivity extends BaseFragmentActivity {
 
     @Override
     protected void setInitData() {
+        requestContactSMSPermission();
         setFragments();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.framelayout, mHomeFragment).commitAllowingStateLoss();
@@ -144,7 +145,7 @@ public class IndexActivity extends BaseFragmentActivity {
                 addOrShowFragment(3);
                 break;
             case R.id.ll_ask:
-                requestContactSMSPermission();
+
 
                 break;
         }
@@ -336,7 +337,7 @@ public class IndexActivity extends BaseFragmentActivity {
     @PermissionYes(101)
     private void getMultiYes() {
         Toast.makeText(IndexActivity.this, "获取SD卡权限成功", Toast.LENGTH_SHORT).show();
-        showItemActivity(AskQueActivity.class);
+
     }
 
     @PermissionNo(101)

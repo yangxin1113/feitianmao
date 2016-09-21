@@ -8,18 +8,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.ViewPagerAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
-import cn.feitianmao.app.view.home.HomeFragment;
 
 
 /**
- * 我的关注
+ * 我的回答
  * Created by Administrator on 2016/7/28 0028.
  */
-public class GuanZhuActivity extends BaseFragmentActivity {
+public class MyAnswersActivity extends BaseFragmentActivity {
 
     @BindView(R.id.iv_left)
     ImageView ivleft;
@@ -30,7 +28,7 @@ public class GuanZhuActivity extends BaseFragmentActivity {
 
     @Override
     protected void init(Bundle arg0) {
-        setContentView(R.layout.activity_guanzhu);
+        setContentView(R.layout.activity_my_answers);
 
     }
 
@@ -42,9 +40,8 @@ public class GuanZhuActivity extends BaseFragmentActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new GuanzhuWentiFragment(), "问题");
-        adapter.addFragment(new GuanzhuHuatiFragment(), "话题");
-        adapter.addFragment(new GuanzhuYonghuFragment(), "用户");
+        adapter.addFragment(new TimeSortFragment(), "按时间排序");
+        adapter.addFragment(new ZantongSortFragment(), "按赞同数排序");
         viewPager.setAdapter(adapter);
     }
 

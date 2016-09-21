@@ -101,4 +101,6 @@ public class FriendsListFragment extends BaseFragment {
             }
         });
     }
+
+
 }

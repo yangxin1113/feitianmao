@@ -208,53 +208,65 @@ ADDED from AndroidManifest.xml:96:9
 	android:name
 		ADDED from AndroidManifest.xml:97:13
 activity#cn.feitianmao.app.view.me.LoginActivity
+ADDED from AndroidManifest.xml:103:9
+	android:name
+		ADDED from AndroidManifest.xml:103:19
+activity#cn.feitianmao.app.view.me.RegisterActivity
+ADDED from AndroidManifest.xml:104:9
+	android:name
+		ADDED from AndroidManifest.xml:104:19
+activity#cn.feitianmao.app.view.me.SetPwdActivity
 ADDED from AndroidManifest.xml:105:9
 	android:name
 		ADDED from AndroidManifest.xml:105:19
-activity#cn.feitianmao.app.view.me.RegisterActivity
+activity#cn.feitianmao.app.view.main.AskQueActivity
 ADDED from AndroidManifest.xml:106:9
 	android:name
 		ADDED from AndroidManifest.xml:106:19
-activity#cn.feitianmao.app.view.me.SetPwdActivity
+activity#cn.feitianmao.app.view.home.AnswerActivity
 ADDED from AndroidManifest.xml:107:9
 	android:name
 		ADDED from AndroidManifest.xml:107:19
-activity#cn.feitianmao.app.view.main.AskQueActivity
+activity#cn.feitianmao.app.view.me.AchievedActivity
 ADDED from AndroidManifest.xml:108:9
 	android:name
 		ADDED from AndroidManifest.xml:108:19
-activity#cn.feitianmao.app.view.home.AnswerActivity
+activity#cn.feitianmao.app.view.me.GuanZhuActivity
 ADDED from AndroidManifest.xml:109:9
 	android:name
 		ADDED from AndroidManifest.xml:109:19
-activity#cn.feitianmao.app.view.me.AchievedActivity
+activity#cn.feitianmao.app.view.me.ShoucangActivity
 ADDED from AndroidManifest.xml:110:9
 	android:name
 		ADDED from AndroidManifest.xml:110:19
-activity#cn.feitianmao.app.view.me.GuanZhuActivity
+activity#cn.feitianmao.app.view.me.ShezhiActivity
 ADDED from AndroidManifest.xml:111:9
 	android:name
 		ADDED from AndroidManifest.xml:111:19
-activity#cn.feitianmao.app.view.me.ShoucangActivity
+activity#cn.feitianmao.app.view.me.XiaoxiActivity
 ADDED from AndroidManifest.xml:112:9
 	android:name
 		ADDED from AndroidManifest.xml:112:19
-activity#cn.feitianmao.app.view.me.ShezhiActivity
+activity#cn.feitianmao.app.view.me.CaoGaoActivity
 ADDED from AndroidManifest.xml:113:9
 	android:name
 		ADDED from AndroidManifest.xml:113:19
-activity#cn.feitianmao.app.view.me.XiaoxiActivity
+activity#cn.feitianmao.app.view.me.FriendsActivity
 ADDED from AndroidManifest.xml:114:9
 	android:name
 		ADDED from AndroidManifest.xml:114:19
-activity#cn.feitianmao.app.view.me.CaoGaoActivity
+activity#cn.feitianmao.app.view.me.MyAnswersActivity
 ADDED from AndroidManifest.xml:115:9
 	android:name
 		ADDED from AndroidManifest.xml:115:19
-activity#cn.feitianmao.app.view.me.FriendsActivity
+activity#cn.feitianmao.app.view.me.ShoucangFileActivity
 ADDED from AndroidManifest.xml:116:9
 	android:name
 		ADDED from AndroidManifest.xml:116:19
+activity#cn.feitianmao.app.view.me.MyTiwenActivity
+ADDED from AndroidManifest.xml:117:9
+	android:name
+		ADDED from AndroidManifest.xml:117:19
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:appcompat-v7:23.1.1:20:5

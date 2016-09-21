@@ -14,7 +14,7 @@ import cn.feitianmao.app.base.BaseFragmentActivity;
 
 
 /**
- * 我的成就
+ * 好友列表
  * Created by Administrator on 2016/7/28 0028.
  */
 public class FriendsActivity extends BaseFragmentActivity {

@@ -17,7 +17,7 @@
         android:orientation="horizontal"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="11dp">
 
         <cn.feitianmao.app.widget.CircleImageView
             android:id="@+id/iv_head"
@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/tv_time"
             android:layout_toLeftOf="@+id/tv_timetext"
             android:layout_width="wrap_content"
@@ -46,12 +46,12 @@
             android:textSize="@dimen/text_dimens_14"
             android:textColor="@color/text_color2"
             android:layout_centerVertical="true"
-            />
+            />-->
         <TextView
             android:id="@+id/tv_timetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="小时前"
+            android:text="3小时前"
             android:textSize="@dimen/text_dimens_14"
             android:textColor="@color/text_color2"
             android:layout_alignParentRight="true"
@@ -61,7 +61,7 @@
 
     <TextView
         android:id="@+id/tv_question"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,21 +71,44 @@
         android:textStyle="bold" />
 
 
-    <TextView
-        android:layout_below="@+id/tv_question"
-        android:id="@+id/tv_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="你最想分享的事是什么？打扫打扫的范德萨的法案是飞洒发生的的范德萨范德萨范德萨发放大师傅的"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:lineSpacingExtra="3dp"
-        android:textColor="@color/text_gray5"
-        android:textSize="@dimen/text_dimens_14"
-         />
+        android:orientation="horizontal"
+        android:layout_marginTop="9dp">
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@+id/iv_topic_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="你最想分享的事是什么？打扫打扫的范德萨的法案是飞洒发生的的范德萨范德萨范德萨发放大师傅的"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/text_gray5"
+            android:textSize="@dimen/text_dimens_14"
+            />
+
+        <cn.feitianmao.app.widget.RoundImageView
+
+            android:id="@+id/iv_topic_img"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/viewpager1"
+            android:layout_marginTop="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            app:type="round"
+            app:border_radius="1dp"
+            android:layout_marginRight="15dp"/>
+
+        </RelativeLayout>
+
+
+
 
     <LinearLayout
         android:layout_below="@+id/tv_content"
@@ -93,8 +116,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginLeft="15dp"
         android:gravity="center">
         <TextView
@@ -126,8 +149,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/dian"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"/>
 
         <TextView
             android:id="@+id/tv_talkcount"

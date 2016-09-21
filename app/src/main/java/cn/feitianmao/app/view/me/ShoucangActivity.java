@@ -14,13 +14,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.feitianmao.app.R;
-import cn.feitianmao.app.adapter.CaogaoAdapter;
 import cn.feitianmao.app.adapter.ShoucangAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
-import cn.feitianmao.app.bean.CaogaoData;
 import cn.feitianmao.app.bean.ShoucangData;
-import cn.feitianmao.app.callback.CaogaoClickListenner;
-import cn.feitianmao.app.callback.ShoucangClickListenner;
+import cn.feitianmao.app.callback.ItemClickListenner;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.widget.FullyLinearLayoutManager;
 import cn.feitianmao.app.widget.ListItemDecoration;
@@ -82,16 +79,20 @@ public class ShoucangActivity extends BaseFragmentActivity {
     }
 
     private void itemOnClickListenner() {
-        shoucangAdapter.setShoucangClickListenner(new ShoucangClickListenner() {
+        shoucangAdapter.setItemClickListenner(new ItemClickListenner() {
 
             @Override
             public void onItemClick(View view, int position) {
-
+                LSUtils.showToast(getApplicationContext(),"点击");
+                showItemActivity(ShoucangFileActivity.class);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-
+                LSUtils.showToast(getApplicationContext(),"长按");
+                showItemActivity(ShoucangFileActivity.class);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
     }

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="好友列表"
+            android:text="我的回答"
             android:textColor="@color/white"
             android:textSize="@dimen/text_dimens_18" />
     </RelativeLayout>

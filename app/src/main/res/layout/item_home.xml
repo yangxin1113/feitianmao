@@ -180,4 +180,9 @@
 
     <ImageView
         style="@style/line_thin" />
+    <!--<View
+        android:layout_below="@+id/line1"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="@color/main_bg"/>-->
 </LinearLayout>

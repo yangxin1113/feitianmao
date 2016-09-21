@@ -100,8 +100,6 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
-
-
         <activity android:name=".view.me.LoginActivity"></activity>
         <activity android:name=".view.me.RegisterActivity"></activity>
         <activity android:name=".view.me.SetPwdActivity"></activity>
@@ -114,6 +112,10 @@
         <activity android:name=".view.me.XiaoxiActivity"></activity>
         <activity android:name=".view.me.CaoGaoActivity"></activity>
         <activity android:name=".view.me.FriendsActivity"></activity>
+        <activity android:name=".view.me.MyAnswersActivity"></activity>
+        <activity android:name=".view.me.ShoucangFileActivity"></activity>
+        <activity android:name=".view.me.MyTiwenActivity"></activity>
+        <activity android:name=".view.home.SearchActivity"></activity>
 
     </application>
 

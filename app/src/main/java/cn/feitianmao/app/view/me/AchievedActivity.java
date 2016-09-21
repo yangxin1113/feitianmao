@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
 import cn.feitianmao.app.widget.CircleImageView;
@@ -143,11 +142,11 @@ public class AchievedActivity extends BaseFragmentActivity {
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.ll_huida:
-                showItemActivity(FriendsActivity.class);
+                showItemActivity(MyAnswersActivity.class);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.ll_tiwen:
-                showItemActivity(FriendsActivity.class);
+                showItemActivity(MyTiwenActivity.class);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
 

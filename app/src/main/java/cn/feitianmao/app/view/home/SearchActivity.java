@@ -1,4 +1,4 @@
-package cn.feitianmao.app.view.me;
+package cn.feitianmao.app.view.home;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,21 +8,20 @@ import android.view.View;
 import android.widget.ImageView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.ViewPagerAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
-import cn.feitianmao.app.view.home.HomeFragment;
+import cn.feitianmao.app.view.me.GuanzhuHuatiFragment;
+import cn.feitianmao.app.view.me.GuanzhuWentiFragment;
+import cn.feitianmao.app.view.me.GuanzhuYonghuFragment;
 
 
 /**
  * 我的关注
  * Created by Administrator on 2016/7/28 0028.
  */
-public class GuanZhuActivity extends BaseFragmentActivity {
+public class SearchActivity extends BaseFragmentActivity {
 
-    @BindView(R.id.iv_left)
-    ImageView ivleft;
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
@@ -30,7 +29,7 @@ public class GuanZhuActivity extends BaseFragmentActivity {
 
     @Override
     protected void init(Bundle arg0) {
-        setContentView(R.layout.activity_guanzhu);
+        setContentView(R.layout.activity_search);
 
     }
 
@@ -50,16 +49,16 @@ public class GuanZhuActivity extends BaseFragmentActivity {
 
     @Override
     protected void initEvent() {
-        ivleft.setOnClickListener(this);
+        //ivleft.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_left:
+            /*case R.id.iv_left:
                 onKeyDown(KeyEvent.KEYCODE_BACK, null);
-                break;
+                break;*/
 
         }
     }

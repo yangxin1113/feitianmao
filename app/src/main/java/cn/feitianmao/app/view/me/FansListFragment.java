@@ -17,7 +17,7 @@ import cn.feitianmao.app.callback.GuanzhuYonghuClickListenner;
 import cn.feitianmao.app.utils.LSUtils;
 
 /**
- * 我关注的问题
+ * 粉丝列表
  * Created by Administrator on 2016/8/29 0029.
  */
 public class FansListFragment extends BaseFragment {

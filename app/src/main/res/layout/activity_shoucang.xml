@@ -23,7 +23,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@drawable/icon_fanhui_w"
-            android:layout_marginLeft="15dp"/>
+            android:padding="12dp"/>
 
         <TextView
             android:id="@+id/tv_title"
