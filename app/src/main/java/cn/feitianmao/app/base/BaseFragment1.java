@@ -23,8 +23,7 @@ public abstract class BaseFragment1 extends Fragment implements OnClickListener{
     protected Bundle savedInstanceState;// bundle对象
     private Unbinder unbinder;
 
-
-
+    protected boolean isVisible;
 
     public int getLayoutRes() {
         return resLayout;
@@ -236,6 +235,27 @@ public abstract class BaseFragment1 extends Fragment implements OnClickListener{
     }
 */
 
+    /**
+     * 在这里实现Fragment数据的缓加载.
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
 
+    protected void onVisible(){
+        lazyLoad();
+    }
 
+    protected abstract void lazyLoad();
+
+    protected void onInvisible(){}
 }

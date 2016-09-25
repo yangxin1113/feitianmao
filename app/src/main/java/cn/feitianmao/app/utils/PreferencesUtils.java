@@ -171,4 +171,7 @@ public class PreferencesUtils {
         SharedPreferences settings = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         return settings.getBoolean(key, defaultValue);
     }
+
+
+
 }

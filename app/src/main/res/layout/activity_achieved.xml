@@ -164,7 +164,7 @@
             <LinearLayout
                 android:id="@+id/ll_lan"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="45dp"
                 android:layout_below="@+id/iv_head"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -196,7 +196,7 @@
                 
                 <View
                     android:layout_width="1px"
-                    android:layout_height="18dp"
+                    android:layout_height="25dp"
                     android:background="#40ffffff"></View>
 
                 <LinearLayout
@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_shoucang_w"
-                        android:layout_marginBottom="1dp"/>
+                        android:layout_marginTop="2dp"/>
 
                     <TextView
                         android:id="@+id/tv_shoucang"
@@ -225,7 +225,7 @@
 
                 <View
                     android:layout_width="1px"
-                    android:layout_height="18dp"
+                    android:layout_height="25dp"
                     android:background="#40ffffff"></View>
 
                 <LinearLayout

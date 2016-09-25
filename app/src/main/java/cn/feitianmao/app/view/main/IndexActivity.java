@@ -1,30 +1,19 @@
 package cn.feitianmao.app.view.main;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.StringCallback;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.PermissionNo;
-import com.yanzhenjie.permission.PermissionYes;
-import com.yanzhenjie.permission.Rationale;
-import com.yanzhenjie.permission.RationaleListener;
 
 
 import org.json.JSONException;
@@ -45,7 +34,7 @@ import cn.feitianmao.app.view.application.MyApplication;
 import cn.feitianmao.app.view.me.MeFragment;
 import cn.feitianmao.app.view.find.FindFragment;
 import cn.feitianmao.app.view.home.HomeFragment;
-import cn.feitianmao.app.view.tuijian.TuijainFragment;
+import cn.feitianmao.app.view.tuijian.TuijianFragment;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -106,14 +95,13 @@ public class IndexActivity extends BaseFragmentActivity {
 
     @Override
     protected void setInitData() {
-        requestContactSMSPermission();
         setFragments();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.framelayout, mHomeFragment).commitAllowingStateLoss();
         oldIndex = 0;
-        LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
-        loadApis();
-        LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
+        //LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
+        //loadApis();
+        //LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
     }
 
     @Override
@@ -145,8 +133,8 @@ public class IndexActivity extends BaseFragmentActivity {
                 addOrShowFragment(3);
                 break;
             case R.id.ll_ask:
-
-
+                showItemActivity(AskQueActivity.class);
+                overridePendingTransition(R.anim.bottom_in_600, R.anim.top_out_600);
                 break;
         }
     }
@@ -205,7 +193,7 @@ public class IndexActivity extends BaseFragmentActivity {
         mHomeFragment = new HomeFragment();
         mMeFragment = new MeFragment();
         fragmentList.add(mHomeFragment);
-        fragmentList.add(new TuijainFragment());
+        fragmentList.add(new TuijianFragment());
         fragmentList.add(new FindFragment());
         fragmentList.add(mMeFragment);
 
@@ -322,59 +310,5 @@ public class IndexActivity extends BaseFragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
-    /**
-     * 申请联系人、短信、权限。
-     */
-    private void requestContactSMSPermission() {
-        AndPermission.with(this)
-                .requestCode(101)
-                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .rationale(rationaleListener)
-                .send();
-    }
-
-    @PermissionYes(101)
-    private void getMultiYes() {
-        Toast.makeText(IndexActivity.this, "获取SD卡权限成功", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @PermissionNo(101)
-    private void getMultiNo() {
-        Toast.makeText(IndexActivity.this, "获取SD卡权限失败", Toast.LENGTH_SHORT).show();
-    }
-
-    private RationaleListener rationaleListener = new RationaleListener() {
-        @Override
-        public void showRequestPermissionRationale(int requestCode, final Rationale rationale) {
-            new AlertDialog.Builder(IndexActivity.this)
-                    .setTitle("友好提醒")
-                    .setMessage("您已拒绝过SD卡权限，没有SD卡权限正常使用提问功能获取图片！")
-                    .setPositiveButton("好，给你", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            rationale.resume();
-                        }
-                    })
-                    .setNegativeButton("我拒绝", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            rationale.cancel();
-                        }
-                    }).show();
-        }
-    };
-
-
-   @Override
-   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-       // 这个Activity中有Fragment，这句话不能注释，否则Fragment讲接受不到获取权限的通知。
-       super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-       AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-   }
 
 }

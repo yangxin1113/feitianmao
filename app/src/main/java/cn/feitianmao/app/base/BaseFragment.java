@@ -24,6 +24,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
     protected Bundle savedInstanceState;// bundle对象
     private Unbinder unbinder;
 
+
     public int getLayoutRes() {
         return resLayout;
     }
@@ -233,7 +234,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
         super.onPause();
     }
 */
-
 
 
 }

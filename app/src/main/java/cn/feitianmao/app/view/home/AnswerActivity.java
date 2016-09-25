@@ -109,7 +109,6 @@ public class AnswerActivity extends BaseFragmentActivity {
         llShoucang.setOnClickListener(this);
         llFenxaing.setOnClickListener(this);
         llPinglun.setOnClickListener(this);
-
     }
 
     @Override

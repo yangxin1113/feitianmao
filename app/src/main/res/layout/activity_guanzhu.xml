@@ -45,6 +45,7 @@
         app:tabTextColor="@color/text_gray1"
         app:tabGravity="fill"
         app:tabMode="fixed"
+
         />
 
     <View style="@style/line_thin" />

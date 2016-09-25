@@ -36,7 +36,7 @@ public class GuanzhuWentiFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        setLayoutRes(R.layout.fragment_wenti);
+        setLayoutRes(R.layout.activity_huati_detail);
     }
 
     @Override

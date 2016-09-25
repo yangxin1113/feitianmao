@@ -76,7 +76,7 @@ public class AskQueActivity extends BaseFragmentActivity implements CropHandler 
 
     @Override
     protected void setInitData() {
-        //StatusBarUtil.setStatusBarColor(AskQueActivity.this,  R.color.white);//设置状态栏颜色
+        StatusBarUtil.setStatusBarColor(AskQueActivity.this,  R.color.white);//设置状态栏颜色
     }
 
     @Override
@@ -99,6 +99,8 @@ public class AskQueActivity extends BaseFragmentActivity implements CropHandler 
                 onKeyDown(KeyEvent.KEYCODE_BACK, null);
                 break;
             case R.id.tv_right:
+                finish();
+                overridePendingTransition(R.anim.bottom_out,R.anim.top_in_600);
                 break;
 
         }

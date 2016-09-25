@@ -54,11 +54,11 @@ public class BaseApplication extends Application{
                     .setCacheMode(CacheMode.NO_CACHE)
 
                             //可以全局统一设置缓存时间,默认永不过期,具体使用方法看 github 介绍
-                    .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)
+                    .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE);
 
                             //如果不想让框架管理cookie,以下不需要
 //                .setCookieStore(new MemoryCookieStore())                //cookie使用内存缓存（app退出后，cookie消失）
-                    .setCookieStore(new PersistentCookieStore());     //cookie持久化存储，如果cookie不过期，则一直有效
+                    //.setCookieStore(new PersistentCookieStore());     //cookie持久化存储，如果cookie不过期，则一直有效
 
                             //可以设置https的证书,以下几种方案根据需要自己设置
 //                    .setCertificates()                                  //方法一：信任所有证书（选一种即可）

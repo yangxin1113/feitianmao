@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 
@@ -50,6 +51,7 @@ import cn.feitianmao.app.utils.FileUtil;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.MyUtils;
 import cn.feitianmao.app.utils.SaveListObject;
+import cn.feitianmao.app.utils.StatusBarUtil;
 import cn.feitianmao.app.utils.StringConverter;
 import cn.feitianmao.app.utils.UploadManager;
 import cn.feitianmao.app.view.application.MyApplication;
@@ -64,6 +66,7 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
 import okhttp3.Call;
+import okhttp3.Cookie;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -115,7 +118,8 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
 
     @Override
     protected void setInitData() {
-        LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
+        StatusBarUtil.setStatusBarColor(LoginActivity.this, R.color.white);//设置状态栏颜色
+        //LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
     }
 
     @Override
@@ -178,9 +182,9 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                        //intent.putExtra("userInfo",s);
-                        //cookie=response.header("Set-Cookie");
-                        //LSUtils.i("zyx", response.header("Set-Cookie"));
+                        intent.putExtra("userInfo",s);
+                         //List<String> cookies=response.headers("Set-Cookie");
+                         //LSUtils.i("Set-Cookie", response.header("Set-Cookie"));
                         try {
                             JSONObject json = new JSONObject(s);
                             LSUtils.showToast(getApplicationContext(), json.get("alert").toString());

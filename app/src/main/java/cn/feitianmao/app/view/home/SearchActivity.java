@@ -1,13 +1,19 @@
 package cn.feitianmao.app.view.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.ViewPagerAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
@@ -15,17 +21,23 @@ import cn.feitianmao.app.view.me.GuanzhuHuatiFragment;
 import cn.feitianmao.app.view.me.GuanzhuWentiFragment;
 import cn.feitianmao.app.view.me.GuanzhuYonghuFragment;
 
+import static android.widget.TextView.*;
+
 
 /**
  * 我的关注
  * Created by Administrator on 2016/7/28 0028.
  */
-public class SearchActivity extends BaseFragmentActivity {
+public class SearchActivity extends BaseFragmentActivity implements OnEditorActionListener{
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
 
     @Override
     protected void init(Bundle arg0) {
@@ -49,20 +61,18 @@ public class SearchActivity extends BaseFragmentActivity {
 
     @Override
     protected void initEvent() {
-        //ivleft.setOnClickListener(this);
-
+        tvRight.setOnClickListener(this);
+        etSearch.setOnEditorActionListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case R.id.iv_left:
+            case R.id.tv_right:
                 onKeyDown(KeyEvent.KEYCODE_BACK, null);
-                break;*/
-
+                break;
         }
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -73,4 +83,20 @@ public class SearchActivity extends BaseFragmentActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            // 当按了搜索之后关闭软键盘
+            ((InputMethodManager) etSearch.getContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                    SearchActivity.this.getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+            return true;
+        }
+        return false;
+    }
+
+
+
 }

@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipelayout"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/text_bottom_true"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        android:background="@color/colorPrimaryDark"
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        />
+
+    <View style="@style/line_thin" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_bg"></View>
+    <View style="@style/line_thin" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        />
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_topic"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                ></android.support.v7.widget.RecyclerView>
-
-
-
-        </LinearLayout>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-</FrameLayout>
+</LinearLayout>

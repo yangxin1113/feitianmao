@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.HomeAdapter;
 import cn.feitianmao.app.base.BaseFragment;
+import cn.feitianmao.app.base.BaseFragment1;
 import cn.feitianmao.app.bean.HomeBean;
 import cn.feitianmao.app.callback.HomeClickListenner;
 import cn.feitianmao.app.utils.LSUtils;
@@ -48,7 +49,7 @@ import static android.support.v7.widget.RecyclerView.VERTICAL;
 /**
  * Created by Administrator on 2016/8/29 0029.
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment1 {
 
     @BindView(R.id.vp_guide)
     public ViewPager mViewPager;
@@ -69,10 +70,14 @@ public class HomeFragment extends BaseFragment {
     private HomeBean homeDatas = null;
     private HomeAdapter homeAdapter;
     private FullyLinearLayoutManager mLayoutManager;
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
 
     @Override
     protected void init() {
         setLayoutRes(R.layout.fragment_home);
+        isPrepared = true;
+        lazyLoad();
     }
 
 
@@ -95,6 +100,7 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+
     @Override
     protected void initEvent() {
         //RecycleView中item布局中每个控件的点击事件
@@ -106,6 +112,7 @@ public class HomeFragment extends BaseFragment {
         final String HOME_URL = ((MyApplication) getActivity().getApplication()).getApis().get("Host").toString() +
                 ((MyApplication) getActivity().getApplication()).getApis().get("Question").toString();
         OkHttpUtils.post(HOME_URL)
+                //.addCookies(OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
@@ -195,6 +202,9 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void showhead(View view, int position) {
                 LSUtils.showToast(getContext(), "点击了我头像");
+                Intent i = new Intent(getActivity(), OhtersActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
 
             @Override
@@ -214,5 +224,12 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-
+    @Override
+    protected void lazyLoad() {
+        if(!isPrepared || !isVisible) {
+            return;
+        }
+        //填充各控件的数据
+        setInitData();
+    }
 }

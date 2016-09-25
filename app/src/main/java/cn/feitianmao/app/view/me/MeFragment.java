@@ -300,7 +300,6 @@ public class MeFragment extends BaseFragment {
         });
     }
 
-
     /**
      * 申请联系人、短信、权限。
      */

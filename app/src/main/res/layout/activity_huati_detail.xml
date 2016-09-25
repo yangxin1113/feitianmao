@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_fanhui_w"
+            android:padding="12dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="话题详情"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_dimens_18" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <cn.feitianmao.app.widget.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/lena"
+            app:border_color="@color/white"
+            app:border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_head"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/iv_head"
+            android:layout_toRightOf="@+id/iv_head"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="守望先锋  (OverWatch)"
+                android:textColor="@color/text_nomal"
+                android:textSize="@dimen/text_dimens_16"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_qianming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1525人关注"
+                android:textColor="@color/text_gray1"
+                android:textSize="@dimen/text_dimens_14"
+                android:layout_marginTop="6dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_guanzhu"
+            android:layout_width="67dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_gaunzhu1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_alignBottom="@+id/tv_qianming">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/icon_guanzhu1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关注"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_dimens_14" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_nomal"
+            android:textSize="@dimen/text_dimens_14"
+            android:lineSpacingExtra="3dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:text="\t\t洒落到敬爱是佛的释迦佛is都怕发生的非常矛盾时考虑将充分的快速将GVif哦度法搜跌破【阿撒范德萨是短发是废话多撒楼房的恐怕搜if将盛大批发商及地方谁打谁发的撒发生打发士大夫"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="21dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_xiala"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显示全部"
+                android:textColor="@color/text_color5"
+                android:textSize="@dimen/text_dimens_12"
+                android:layout_marginLeft="8dp"/>
+            </LinearLayout>
+
+
+</LinearLayout>
+    <View style="@style/line_thin" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/line_color3"
+        app:tabSelectedTextColor="@color/text_nomal"
+        app:tabTextColor="@color/text_gray1"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+
+        />
+
+    <View style="@style/line_thin" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/main_bg"></View>
+    <View style="@style/line_thin" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        />
+
+
+</LinearLayout>
