@@ -13,6 +13,7 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 import cn.feitianmao.app.utils.MyUtils;
+import cn.feitianmao.app.utils.Parse;
 
 import static android.view.View.OnClickListener;
 
@@ -24,6 +25,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
     protected MyUtils utils;
     protected boolean isToken = false;// 是否检测更新
     protected boolean isUserMapNull = false;// 是否已登录
+    protected Parse parse;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -31,6 +33,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
         ButterKnife.bind(this);
         /*isUserMapNull = isUserMapNull();
         isToken = isToken();*/
+        parse = Parse.getInstance();
         setInitData();
         initEvent();
 

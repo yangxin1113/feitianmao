@@ -74,6 +74,7 @@
     <string name="registered_error_zh_">注册失败，请重试...</string>
     <string name="registered_ok_zh">注册成功！</string>
     <string name="please_login_zh_">请登录...</string>
+    <string name="has_user">用户已存在，请登录...</string>
 
     <string name="submission_zh_">提交中...</string>
     <string name="submite_zh">提交</string>

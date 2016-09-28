@@ -38,6 +38,7 @@ public class MyApplication extends BaseApplication{
 
     private static MyApplication myApplication = null;
     private Map<String, Object> apis;// apis
+    private Map<String, Object> userInfo;// 用户名
     //oss阿里云存储
     private static final String accessKeyId = "1B7sjWW5nwg6srnv";
     private static final String accessKeySecret = "qLcYJD8sUnehCXeVY6hjbrsGFyIyEX";
@@ -141,5 +142,34 @@ public class MyApplication extends BaseApplication{
                             true), apis);
         }
         this.apis = apis;
+    }
+
+    /**
+     * 用户信息
+     * @return
+     */
+    public Map<String, Object> getUserInfo(){
+        if(userInfo == null){
+            File file = MyUtils.getInstance().getCache(getApplicationContext(),
+                    Contants.USER_PATH_PRIVATE, Contants.USERINFO, true);
+            userInfo = (Map<String, Object>) SaveListObject.getInstance()
+                    .openObject(file);
+        }
+        return userInfo;
+    }
+
+    public void setUserInfo(Map<String, Object> userInfo) {
+        if (userInfo == null) {
+            MyUtils.getInstance()
+                    .getCache(getApplicationContext(),
+                            Contants.USER_PATH_PRIVATE, Contants.USERINFO,
+                            true).delete();
+        } else {
+            SaveListObject.getInstance().saveObject(
+                    MyUtils.getInstance().getCache(getApplicationContext(),
+                            Contants.USER_PATH_PRIVATE, Contants.USERINFO,
+                            true), userInfo);
+        }
+        this.userInfo = userInfo;
     }
 }

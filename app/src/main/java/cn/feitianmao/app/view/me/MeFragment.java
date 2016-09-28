@@ -1,6 +1,7 @@
 package cn.feitianmao.app.view.me;
 
 import android.Manifest;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
@@ -30,6 +33,7 @@ import com.yanzhenjie.permission.Rationale;
 import com.yanzhenjie.permission.RationaleListener;
 
 import java.io.File;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +42,9 @@ import cn.feitianmao.app.base.BaseFragment;
 import cn.feitianmao.app.http.UpLoadListener;
 import cn.feitianmao.app.utils.FileUtil;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.utils.Parse;
 import cn.feitianmao.app.utils.UploadManager;
+import cn.feitianmao.app.view.application.MyApplication;
 import cn.feitianmao.app.widget.CircleImageView;
 import cn.feitianmao.app.widget.MyTitleBar;
 
@@ -83,6 +89,8 @@ public class MeFragment extends BaseFragment {
     TextView tvShezhi;
     @BindView(R.id.main)
     LinearLayout main;
+    @BindView(R.id.tv_qianming)
+    TextView tvQianming;
 
     @BindView(R.id.ll_chengjiu)
     RelativeLayout llChengjiu;
@@ -112,7 +120,7 @@ public class MeFragment extends BaseFragment {
     @Override
     protected void init() {
         setLayoutRes(R.layout.fragment_me);
-
+        parse = Parse.getInstance();
     }
 
     @Override
@@ -140,7 +148,7 @@ public class MeFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_login:
-                Intent i = new Intent(getActivity(), LoginActivity.class);
+                Intent i = new Intent(getActivity(), LoginActivity1.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
@@ -150,28 +158,43 @@ public class MeFragment extends BaseFragment {
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.ll_xiaoxi:
-                requestContactSMSPermission();
-                break;
-            case R.id.ll_chengjiu:
-                i = new Intent(getActivity(), AchievedActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                break;
-            case R.id.ll_guanzhu:
-                i = new Intent(getActivity(), GuanZhuActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                break;
-            case R.id.ll_shoucang:
-                i = new Intent(getActivity(), ShoucangActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
                 break;
+            case R.id.ll_chengjiu:
+                if(TextUtils.isEmpty(tvNick.getText())){
+                    LSUtils.showToast(getContext(),"请登录");
+                }else {
+                    i = new Intent(getActivity(), AchievedActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
+                break;
+            case R.id.ll_guanzhu:
+                if(TextUtils.isEmpty(tvNick.getText())){
+                    LSUtils.showToast(getContext(),"请登录");
+                }else {
+                    i = new Intent(getActivity(), GuanZhuActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
+                break;
+            case R.id.ll_shoucang:
+                if(TextUtils.isEmpty(tvNick.getText())){
+                    LSUtils.showToast(getContext(),"请登录");
+                }else {
+                    i = new Intent(getActivity(), ShoucangActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
+                break;
             case R.id.ll_caogao:
-                i = new Intent(getActivity(), CaoGaoActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                if(TextUtils.isEmpty(tvNick.getText())){
+                    LSUtils.showToast(getContext(),"请登录");
+                }else {
+                    i = new Intent(getActivity(), CaoGaoActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
                 break;
             case R.id.ll_shezhi:
                 i = new Intent(getActivity(), ShezhiActivity.class);
@@ -300,55 +323,30 @@ public class MeFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 申请联系人、短信、权限。
-     */
-    private void requestContactSMSPermission() {
-        AndPermission.with(this)
-                .requestCode(101)
-                .permission(Manifest.permission.WRITE_CONTACTS,
-                        Manifest.permission.READ_SMS,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .rationale(rationaleListener)
-                .send();
-    }
-
-    @PermissionYes(101)
-    private void getMultiYes() {
-        Toast.makeText(getActivity(), "获取联系人、短信、SD卡权限成功", Toast.LENGTH_SHORT).show();
-    }
-
-    @PermissionNo(101)
-    private void getMultiNo() {
-        Toast.makeText(getActivity(), "获取联系人、短信、SD卡权限失败", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // 这个Fragment所在的Activity的onRequestPermissionsResult()如果重写了，不能删除super.onRes...
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    public void onResume() {
+        super.onResume();
+        setUserInfo(((MyApplication) getActivity().getApplication()).getUserInfo());
     }
 
-    private RationaleListener rationaleListener = new RationaleListener() {
-        @Override
-        public void showRequestPermissionRationale(int requestCode, final Rationale rationale) {
-            new AlertDialog.Builder(getContext())
-                    .setTitle("友好提醒")
-                    .setMessage("您已拒绝过定位权限，没有定位权限无法为您推荐附近妹子，请把定位权限赐给我吧！")
-                    .setPositiveButton("好，给你", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            rationale.resume();
-                        }
-                    })
-                    .setNegativeButton("我拒绝", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            rationale.cancel();
-                        }
-                    }).show();
+    public void setUserInfo(Map<String, Object> userInfo){
+        if(userInfo != null){
+            String user_head = parse.isNull(userInfo.get("avator"));
+           if(!user_head.equals("") || user_head != null){
+               Picasso.with(getContext()).load(parse.isNull(userInfo.get("avator").toString().replace("http://flycat.oss-cn-hangzhou.aliyuncs.com/",""))).into(iv_head);
+           }
+            String user_name = parse.isNull(userInfo.get("name"));
+            if(user_name != null){
+                llLogined.setVisibility(View.VISIBLE);
+                tv_login.setVisibility(View.GONE);
+                tvNick.setText(parse.isNull(userInfo.get("name")));
+                tvQianming.setText(parse.isNull(userInfo.get("signature")));
+            }else {
+                llLogined.setVisibility(View.GONE);
+                tv_login.setVisibility(View.VISIBLE);
+            }
+
         }
-    };
+
+    }
 }

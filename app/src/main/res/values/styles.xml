@@ -48,4 +48,11 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+
+    <!--选项卡新颜色字体-->
+    <style name="SmallTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

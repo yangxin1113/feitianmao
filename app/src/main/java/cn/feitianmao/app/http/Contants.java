@@ -14,5 +14,6 @@ public class Contants {
 
     /** 用户信息文件 */
     public static final String CONFIG_APIS = "Apis";
+    public static final String USERINFO = "UserInfo";
 
 }

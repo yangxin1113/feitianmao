@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.feitianmao.app.utils.MyUtils;
+import cn.feitianmao.app.utils.Parse;
 
 import static android.view.View.OnClickListener;
 
@@ -23,7 +24,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
     private int resLayout;
     protected Bundle savedInstanceState;// bundle对象
     private Unbinder unbinder;
-
+    protected Parse parse;
 
     public int getLayoutRes() {
         return resLayout;
@@ -52,6 +53,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener{
             this.inflater = inflater;
             View view = inflater.inflate(resLayout, container, false);
             unbinder =  ButterKnife.bind(this, view);
+
             setInitData();
             initEvent();
             return view;

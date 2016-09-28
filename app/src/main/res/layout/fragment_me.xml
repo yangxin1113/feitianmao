@@ -47,7 +47,7 @@
                     android:id="@+id/tv_nick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="神奇的五花肉"
+                    android:text=""
                     android:textColor="@color/text_nomal"
                     android:textSize="@dimen/text_dimens_16"
                     android:textStyle="bold"/>
@@ -59,9 +59,10 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_qianming"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="一句话怎么介绍自己"
+                        android:text=""
                         android:textColor="@color/text_gray1"
                         android:textSize="@dimen/text_dimens_12" />
 

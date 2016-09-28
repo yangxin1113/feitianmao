@@ -8,15 +8,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lzy.okhttputils.OkHttpUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
+import cn.feitianmao.app.callback.StringDialogCallback;
+import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.RegulaUtils;
 import cn.feitianmao.app.utils.StatusBarUtil;
+import cn.feitianmao.app.view.application.MyApplication;
 import cn.feitianmao.app.widget.CircleImageView;
 import cn.feitianmao.app.widget.imgandtext.HtmlTextView;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/9/10 0010.
@@ -70,10 +77,11 @@ public class AnswerActivity extends BaseFragmentActivity {
     LinearLayout llBottom;
 
     private RegulaUtils regulaUtils; //提取字符串中的数字
-
+    private int topicId;
     @Override
     protected void init(Bundle arg0) {
         setContentView(R.layout.activity_answer);
+        topicId = getIntent().getIntExtra("topicId",0);
     }
 
     @Override
@@ -85,7 +93,7 @@ public class AnswerActivity extends BaseFragmentActivity {
         llShoucang.setTag(false);
         llFenxaing.setTag(false);
         llPinglun.setTag(false);
-
+        getData(topicId);
         String html = "下面是图片了 " +
                 "<img src='http://www.qqpk.cn/Article/UploadFiles/201411/20141116135722282.jpg'/>" +
                 "这也是图片" +
@@ -169,6 +177,61 @@ public class AnswerActivity extends BaseFragmentActivity {
                 }
                 break;
         }
+    }
+
+
+    private void getData(int topicId) {
+        final String HUATI_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
+                ((MyApplication)getApplication()).getApis().get("QuestionDetail").toString();
+
+        OkHttpUtils.get(HUATI_URL)
+                .params("quesid",String.valueOf("57dfc83facdbc472ec70b68c"))
+                .execute(new StringDialogCallback(AnswerActivity.this) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        //Intent intent = new Intent(getActivity(), IndexActivity.class);
+                        //intent.putExtra("userInfo",s);
+                        //List<String> cookies=response.headers("Set-Cookie");
+                        LSUtils.i("huati", s);
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+
+        /*OkHttpUtils.post()
+                .url(LOGIN_URL)
+                .params(params)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+                        LSUtils.showToast(getApplicationContext(), s);
+                        *//*GsonBuilder gb = new GsonBuilder();
+                        gb.registerTypeAdapter(String.class, new StringConverter());
+                        Gson json = gb.create();*//*
+                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                        //intent.putExtra("userInfo",s);
+
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            LSUtils.showToast(getApplicationContext(), json.get("alert").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        startActivityForResult(intent,USER_LOGIN );
+
+                    }
+                });*/
+
     }
 
     @Override

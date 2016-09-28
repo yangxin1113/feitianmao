@@ -1,5 +1,6 @@
 package cn.feitianmao.app.view.me;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,18 +10,34 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lzy.okhttputils.OkHttpUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.ShoucangAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
+import cn.feitianmao.app.bean.FavoriteList;
 import cn.feitianmao.app.bean.ShoucangData;
 import cn.feitianmao.app.callback.ItemClickListenner;
+import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.utils.PreferencesUtils;
+import cn.feitianmao.app.view.application.MyApplication;
+import cn.feitianmao.app.view.main.IndexActivity;
 import cn.feitianmao.app.widget.FullyLinearLayoutManager;
 import cn.feitianmao.app.widget.ListItemDecoration;
+import okhttp3.Call;
+import okhttp3.Response;
 
 import static android.support.v7.widget.RecyclerView.VERTICAL;
 
@@ -41,7 +58,7 @@ public class ShoucangActivity extends BaseFragmentActivity {
     RecyclerView rvCaogao;
 
     private ShoucangAdapter shoucangAdapter;
-    private List<ShoucangData> shoucangDatas;
+    private List<FavoriteList> shoucangDatas;
     private FullyLinearLayoutManager mLayoutManager;
 
     @Override
@@ -98,17 +115,6 @@ public class ShoucangActivity extends BaseFragmentActivity {
     }
 
 
-    public void getData() {
-        shoucangDatas = new ArrayList<ShoucangData>();
-        for(int i=0; i<10; i++){
-            ShoucangData shoucangData = new ShoucangData();
-            shoucangData.setId(i);
-            shoucangData.setShoucang("守望先锋" + i);
-            shoucangData.setContent("啥大事发生地方的水果卡卡将更好的风景谁更好的撒娇发");
-            shoucangData.setAnswercount(i*3+1*2);
-            shoucangDatas.add(shoucangData);
-        }
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -120,4 +126,37 @@ public class ShoucangActivity extends BaseFragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+    //登录
+    private void getData() {
+        final String LOGIN_URL = ((MyApplication) getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getApplication()).getApis().get("Favorite").toString();
+
+        OkHttpUtils.post(LOGIN_URL)
+                .headers("cookies", PreferencesUtils.getString(getApplicationContext(), "Cookies"))
+                .execute(new StringDialogCallback(ShoucangActivity.this) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+
+
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            JSONObject array = json.getJSONObject("data");
+                            JSONArray array1 = array.getJSONArray("favoriteList");
+                            LSUtils.i("favorite", array1.get(0).toString());
+                            Gson gson = new Gson();
+                            shoucangDatas = gson.fromJson(array1.toString(), new TypeToken<List<FavoriteList>>(){}.getType());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+
+    }
 }

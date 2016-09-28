@@ -1,5 +1,6 @@
 package cn.feitianmao.app.view.me;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -8,10 +9,25 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lzy.okhttputils.OkHttpUtils;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
+
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
+import cn.feitianmao.app.callback.StringDialogCallback;
+import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.utils.PreferencesUtils;
+import cn.feitianmao.app.view.application.MyApplication;
+import cn.feitianmao.app.view.main.IndexActivity;
 import cn.feitianmao.app.widget.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Response;
 
 
 /**
@@ -36,8 +52,6 @@ public class AchievedActivity extends BaseFragmentActivity {
     TextView tvFans;
     @BindView(R.id.ll_account)
     LinearLayout llAccount;
-    @BindView(R.id.tv_login)
-    TextView tvLogin;
     @BindView(R.id.v_line)
     View vLine;
     @BindView(R.id.tv_zantong)
@@ -87,7 +101,7 @@ public class AchievedActivity extends BaseFragmentActivity {
     @Override
     protected void init(Bundle arg0) {
         setContentView(R.layout.activity_achieved);
-
+        getData();
     }
 
     @Override
@@ -154,6 +168,50 @@ public class AchievedActivity extends BaseFragmentActivity {
     }
 
 
+    //用户信息
+    private void getData() {
+        final String USERINFO_URL = ((MyApplication) getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getApplication()).getApis().get("UserInfo").toString();
+
+        OkHttpUtils.post(USERINFO_URL)
+                //.headers("cookies", PreferencesUtils.getString(getApplicationContext(), "Cookies"))
+                .execute(new StringDialogCallback(AchievedActivity.this) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            setUserInfo(json.getJSONObject("data"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+
+    }
+
+    private void setUserInfo(JSONObject data) {
+        try {
+            //Picasso.with(getContext()).load(parse.isNull(userInfo.get("avator").toString().replace("http://flycat.oss-cn-hangzhou.aliyuncs.com/",""))).into(iv_head);
+            Picasso.with(getApplicationContext()).load(parse.isNull(data.getString("avator")).toString().replace("http://flycat.oss-cn-hangzhou.aliyuncs.com/","")).into(ivHead);
+            tvNick.setText(data.getString("name"));
+            tvZantong.setText(data.getString("praise_count"));
+            tvShoucang.setText(data.getString("keep_count"));
+            tvFenxaing.setText(data.getString("share_count"));
+            tvDongtaicount.setText(data.getString("dyncount"));
+            tvHuidacount.setText(data.getString("answer_count"));
+            tvTiwencount.setText(data.getString("ask_count"));
+            tvFriends.setText(data.getString("concern_count"));
+            tvFans.setText(data.getString("be_concern_count"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -163,5 +221,4 @@ public class AchievedActivity extends BaseFragmentActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }

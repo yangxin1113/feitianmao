@@ -1,8 +1,10 @@
 package cn.feitianmao.app.view.me;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,13 +13,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lzy.okhttputils.OkHttpUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
+
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.base.BaseFragmentActivity;
+import cn.feitianmao.app.callback.StringDialogCallback;
+import cn.feitianmao.app.utils.PreferencesUtils;
 import cn.feitianmao.app.utils.RegulaUtils;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.view.application.MyApplication;
+import cn.feitianmao.app.view.main.IndexActivity;
 import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/7/28 0028.
@@ -67,21 +80,19 @@ public class RegisterActivity extends BaseFragmentActivity {
 
             case R.id.bt_next:
                 if(isnext()){
+
                     Bundle bundle = new Bundle();
                     bundle.putString("phone", ed_phone.getText().toString());
 
                     if(title.equals("注册")){
-                        showItemActivity(bundle,SetPwdActivity.class);
+                        if(isUserExit()) {
+                            showItemActivity(bundle, SetPwdActivity.class);
+                        }
                     }
                     else{
-                        if(isUserExit()){
                             showItemActivity(bundle,ForgetPwdActivity.class);
-                        }
 
                     }
-
-
-
                 }
                 break;
             case R.id.iv_check:
@@ -122,6 +133,46 @@ public class RegisterActivity extends BaseFragmentActivity {
     }
 
     /**
+     *  判断用户是否存在
+     *
+     * @return
+     */
+    private boolean isUserExit() {
+        final boolean[] isExit = {false};
+        final String LOGIN_URL = ((MyApplication) getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getApplication()).getApis().get("VerifyPhone").toString();
+        OkHttpUtils.post(LOGIN_URL)
+                .params("phone", ed_phone.getText().toString())
+                .execute(new StringDialogCallback(RegisterActivity.this) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            if (json.getBoolean("status") == true) {
+                                LSUtils.showToast(getApplicationContext(), json.getString("alert"));
+                                isExit[0] = true;
+                            } else {
+                                LSUtils.showToast(getApplicationContext(), json.getString("alert"));
+                                isExit[0] = false;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+        return isExit[0];
+    }
+
+
+
+
+    /**
      * 输入内容不符合,下一步不可点击
      *
      */
@@ -132,9 +183,11 @@ public class RegisterActivity extends BaseFragmentActivity {
             if(!RegulaUtils.getInstance().isMobileNO(s.toString())){
                 bt_next.setBackgroundResource(R.color.unable_press_bg);
                 bt_next.setTextColor(getResources().getColor(R.color.unable_press_text));
+
             }else{
                 bt_next.setBackgroundResource(R.drawable.bt_single);
                 bt_next.setTextColor(getResources().getColor(R.color.white));
+
             }
         }
 
@@ -153,27 +206,4 @@ public class RegisterActivity extends BaseFragmentActivity {
 
     };
 
-    //判断用户是否存在
-    private boolean isUserExit() {
-        final String ISEXIST_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
-                ((MyApplication)getApplication()).getApis().get("VerifyPhone").toString();
-        LSUtils.i("dsa",ed_phone.getText().toString()+ISEXIST_URL);
-        boolean isExit = false;
-        /*OkHttpUtils.post()
-                .url(ISEXIST_URL)
-                .addParams("phone", ed_phone.getText().toString())
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int i) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String s, int i) {
-                        LSUtils.showToast(getApplicationContext(), s);
-                    }
-                });*/
-        return isExit;
-    }
 }

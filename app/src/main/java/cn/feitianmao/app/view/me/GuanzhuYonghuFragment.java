@@ -8,6 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lzy.okhttputils.OkHttpUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +27,11 @@ import cn.feitianmao.app.bean.Question;
 import cn.feitianmao.app.bean.YonghuData;
 import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
 import cn.feitianmao.app.callback.GuanzhuYonghuClickListenner;
+import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.view.application.MyApplication;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * 我关注的问题
@@ -54,7 +64,7 @@ public class GuanzhuYonghuFragment extends BaseFragment {
         getTopicData();
         guanzhuYonghuAdapter = new GuanzhuYonghuAdapter(getContext(), yonghuDatas);
         rvYonghu.setAdapter(guanzhuYonghuAdapter);
-
+        yongHu(1);
     }
 
     private void getTopicData() {
@@ -107,5 +117,40 @@ public class GuanzhuYonghuFragment extends BaseFragment {
 
             }
         });
+    }
+
+
+    //
+    private void yongHu(int page) {
+        final String YONGHU_URL = ((MyApplication) getActivity().getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getActivity().getApplication()).getApis().get("Personaluser").toString();
+
+        OkHttpUtils.post(YONGHU_URL)
+                .params("uid", "me")
+                .params("page", String.valueOf(page))
+                .execute(new StringDialogCallback(getActivity()) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            if(json.getBoolean("status")){
+                                JSONArray array = json.getJSONArray("data");
+                                if(array!=null || array.equals("")){
+                                    LSUtils.i("zz",s);
+                                }else {
+                                    LSUtils.showToast(getContext(),json.getString("alert"));
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        LSUtils.i("huati", s);
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
     }
 }

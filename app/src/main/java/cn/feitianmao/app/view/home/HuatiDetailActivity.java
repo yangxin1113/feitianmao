@@ -45,7 +45,7 @@ public class HuatiDetailActivity extends BaseFragmentActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HotFragment(), "最热");
         adapter.addFragment(new NewFragment(), "最新");
-        adapter.addFragment(new WaitFragment(), "待回答");
+        adapter.addFragment(new HotFragment(), "待回答");
         viewPager.setAdapter(adapter);
     }
 

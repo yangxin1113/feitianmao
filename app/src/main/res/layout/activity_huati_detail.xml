@@ -158,13 +158,13 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         app:tabIndicatorColor="@color/line_color3"
         app:tabSelectedTextColor="@color/text_nomal"
         app:tabTextColor="@color/text_gray1"
         app:tabGravity="fill"
         app:tabMode="fixed"
-
+        app:tabTextAppearance="@style/SmallTabLayoutTextAppearance"
         />
 
     <View style="@style/line_thin" />

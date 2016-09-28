@@ -62,9 +62,9 @@
     <SinaWeibo
         Id="1"
         SortId="1"
-        AppKey="568898243"
-        AppSecret="38a4f8204cc784f81f9f0daaf31e02e3"
-        RedirectUrl="http://www.sharesdk.cn"
+        AppKey="1008697005"
+        AppSecret="74f9934f70a9381db1c83347125876a0"
+        RedirectUrl="http://www.feitianmao.cn/"
         ShareByAppClient="true"
         Enable="true" />
 
@@ -124,8 +124,8 @@
 	<QQ
         Id="7"
         SortId="7"
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
+        AppId="1105578054"
+        AppKey="9C1NJsXiUs6x2WjS"
         ShareByAppClient="true"
         Enable="true" />
     

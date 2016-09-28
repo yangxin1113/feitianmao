@@ -11,26 +11,29 @@ import java.util.List;
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.GuanzhuHuatiAdapter;
+import cn.feitianmao.app.adapter.GuanzhuWentiAdapter;
 import cn.feitianmao.app.base.BaseFragment;
 import cn.feitianmao.app.bean.HuatiData;
+import cn.feitianmao.app.bean.Question;
 import cn.feitianmao.app.callback.GuanzhuHuatiClickListenner;
+import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
 import cn.feitianmao.app.utils.LSUtils;
 
 /**
- * 我关注的问题
+ * 话题详情 待回答
  * Created by Administrator on 2016/8/29 0029.
  */
 public class WaitFragment extends BaseFragment {
 
-    @BindView(R.id.rv_huati_detail)
-    RecyclerView rvHuatiDetail;
-    private List<HuatiData> huatiDatas = null;
-    private GuanzhuHuatiAdapter guanzhuHuatiAdapter;
+    @BindView(R.id.rv_wenti)
+    RecyclerView rvWenti;
+    private List<Question> questionDatas = null;
+    private GuanzhuWentiAdapter guanzhuWentiAdapter;
 
 
     @Override
     protected void init() {
-        setLayoutRes(R.layout.fragment_huati_detail);
+        setLayoutRes(R.layout.fragment_wenti);
     }
 
     @Override
@@ -42,24 +45,22 @@ public class WaitFragment extends BaseFragment {
     protected void setInitData() {
 
         //设置LinearLayoutManager布局管理器，实现ListView效果
-        rvHuatiDetail.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvWenti.setLayoutManager(new LinearLayoutManager(getActivity()));
         getTopicData();
-        guanzhuHuatiAdapter = new GuanzhuHuatiAdapter(getContext(), huatiDatas);
-        rvHuatiDetail.setAdapter(guanzhuHuatiAdapter);
+        guanzhuWentiAdapter = new GuanzhuWentiAdapter(getContext(), questionDatas);
+        rvWenti.setAdapter(guanzhuWentiAdapter);
 
     }
 
     private void getTopicData() {
-        huatiDatas = new ArrayList<HuatiData>();
-        for (int i = 0; i < 10; i++) {
-            HuatiData huatiData = new HuatiData();
-            huatiData.setName("三金");
-            huatiData.setId(i);
-            huatiData.setIsGuanzhu(0);
-            huatiData.setQianming("人生如逆旅，我亦是行人");
-            huatiData.setGuanzhucount(i * 3 + 111);
-            huatiData.setQuestioncount(i * 6 + 111);
-            huatiDatas.add(huatiData);
+        questionDatas = new ArrayList<Question>();
+        for(int i=0; i<10; i++){
+            Question question = new Question();
+            question.setQuestion("的发生地方的三个地方公司的");
+            question.setId(i);
+            question.setGuanzhucount(i*2+20);
+            question.setAnswercount(i * 1 + 100);
+            questionDatas.add(question);
         }
     }
 
@@ -73,30 +74,26 @@ public class WaitFragment extends BaseFragment {
     }
 
 
+
     /**
      * 接口回调实现RecyclerView的item布局中每个控件的点击事件
      */
     private void itemOnClickListenner() {
-        guanzhuHuatiAdapter.setGuanzhuHuatiClickListenner(new GuanzhuHuatiClickListenner() {
+        guanzhuWentiAdapter.setGuzhuWentiClickListenner(new GuanzhuWentiClickListenner() {
 
             @Override
-            public void showHuati(View view, int position) {
-                LSUtils.showToast(getContext(), "话题");
+            public void showQuestion(View view, int position) {
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getQuestion());
             }
 
             @Override
-            public void showTopic(View view, int position) {
-                LSUtils.showToast(getContext(), "topic");
+            public void showAnswer(View view, int position) {
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getAnswercount());
             }
 
             @Override
-            public void showGuanzhucount(View view, int position) {
-                LSUtils.showToast(getContext(), "关注数");
-            }
-
-            @Override
-            public void showWenticount(View view, int position) {
-                LSUtils.showToast(getContext(), "问题数");
+            public void showGuanzhu(View view, int position) {
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getGuanzhucount());
             }
         });
     }

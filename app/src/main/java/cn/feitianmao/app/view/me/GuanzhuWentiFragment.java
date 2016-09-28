@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.lzy.okhttputils.OkHttpUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,11 @@ import cn.feitianmao.app.base.BaseFragment;
 
 import cn.feitianmao.app.bean.Question;
 import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
+import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.view.application.MyApplication;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * 我关注的问题
@@ -36,7 +42,7 @@ public class GuanzhuWentiFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        setLayoutRes(R.layout.activity_huati_detail);
+        setLayoutRes(R.layout.fragment_wenti);
     }
 
     @Override
@@ -52,7 +58,7 @@ public class GuanzhuWentiFragment extends BaseFragment {
         getTopicData();
         guanzhuWentiAdapter = new GuanzhuWentiAdapter(getContext(), questionDatas);
         rvWenti.setAdapter(guanzhuWentiAdapter);
-
+        wenTi(1);
     }
 
     private void getTopicData() {
@@ -101,5 +107,30 @@ public class GuanzhuWentiFragment extends BaseFragment {
         });
     }
 
+
+    //
+    private void wenTi(int page) {
+        final String WEN_URL = ((MyApplication) getActivity().getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getActivity().getApplication()).getApis().get("Personalquestion").toString();
+
+        OkHttpUtils.post(WEN_URL)
+                .params("uid","me")
+                .params("page",String.valueOf(page))
+                .execute(new StringDialogCallback(getActivity()) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        //Intent intent = new Intent(getActivity(), IndexActivity.class);
+                        //intent.putExtra("userInfo",s);
+                        //List<String> cookies=response.headers("Set-Cookie");
+                        LSUtils.i("huati", s);
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+    }
 
 }

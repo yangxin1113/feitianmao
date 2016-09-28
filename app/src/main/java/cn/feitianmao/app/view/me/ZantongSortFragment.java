@@ -8,6 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lzy.okhttputils.OkHttpUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +23,12 @@ import cn.feitianmao.app.adapter.MyAnswersAdapter;
 import cn.feitianmao.app.base.BaseFragment;
 import cn.feitianmao.app.bean.MyAnswerData;
 import cn.feitianmao.app.callback.ItemClickListenner;
+import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.utils.PreferencesUtils;
+import cn.feitianmao.app.view.application.MyApplication;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * 按时间排序
@@ -51,7 +61,7 @@ public class ZantongSortFragment extends BaseFragment {
         getTopicData();
         myAnswersAdapter = new MyAnswersAdapter(getContext(), myAnswerDatas);
         rvAnswer.setAdapter(myAnswersAdapter);
-
+        getData();
     }
 
     private void getTopicData() {
@@ -98,11 +108,29 @@ public class ZantongSortFragment extends BaseFragment {
         });
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    //用户信息
+    private void getData() {
+        final String ANSWERS_URL = ((MyApplication) getActivity().getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getActivity().getApplication()).getApis().get("UserAnswer").toString();
+
+        OkHttpUtils.post(ANSWERS_URL)
+                .headers("cookies", PreferencesUtils.getString(getActivity(), "Cookies"))
+                .execute(new StringDialogCallback(getActivity()) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            LSUtils.i("UserInfo",s);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+
     }
 }

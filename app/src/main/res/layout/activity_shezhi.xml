@@ -233,13 +233,14 @@
             <View style="@style/line_thin" />
 
             <TextView
+                android:id="@+id/tv_loginout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="退出登录"
                 android:textSize="@dimen/text_dimens_16"
                 android:gravity="center"
                 android:textColor="@color/text_gray6"
-                android:background="@color/white"/>
+                android:background="@drawable/select_bg"/>
 
             <View style="@style/line_thin" />
 

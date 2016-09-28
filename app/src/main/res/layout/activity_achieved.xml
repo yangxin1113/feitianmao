@@ -138,20 +138,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/iv_head"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_toEndOf="@+id/iv_head"
-                android:layout_toRightOf="@+id/iv_head"
-                android:text="登录/注册"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_dimens_16"
-                android:visibility="gone" />
-
             <View
                 android:id="@+id/v_line"
                 android:layout_width="match_parent"

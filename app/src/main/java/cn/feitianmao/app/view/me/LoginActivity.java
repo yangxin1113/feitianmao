@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.FileCallback;
 import com.lzy.okhttputils.callback.StringCallback;
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +52,7 @@ import cn.feitianmao.app.http.UpLoadListener;
 import cn.feitianmao.app.utils.FileUtil;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.MyUtils;
+import cn.feitianmao.app.utils.PreferencesUtils;
 import cn.feitianmao.app.utils.SaveListObject;
 import cn.feitianmao.app.utils.StatusBarUtil;
 import cn.feitianmao.app.utils.StringConverter;
@@ -102,7 +105,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     private static final int MSG_USERID_FOUND = 1;
     private static final int MSG_LOGIN = 2;
     private static final int MSG_AUTH_CANCEL = 3;
-    private static final int MSG_AUTH_ERROR= 4;
+    private static final int MSG_AUTH_ERROR = 4;
     private static final int MSG_AUTH_COMPLETE = 5;
 
     //登录
@@ -119,7 +122,6 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     @Override
     protected void setInitData() {
         StatusBarUtil.setStatusBarColor(LoginActivity.this, R.color.white);//设置状态栏颜色
-        //LSUtils.i("zyx",OkHttpUtils.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
     }
 
     @Override
@@ -136,19 +138,19 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_left:
                 onKeyDown(KeyEvent.KEYCODE_BACK, null);
                 break;
             case R.id.tv_right:
                 Bundle bundle = new Bundle();
-                bundle.putString("title","注册");
+                bundle.putString("title", "注册");
                 showItemActivity(bundle, RegisterActivity.class);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.tv_lost_pwd:
                 bundle = new Bundle();
-                bundle.putString("title","忘记密码");
+                bundle.putString("title", "忘记密码");
                 showItemActivity(bundle, RegisterActivity.class);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
@@ -161,6 +163,12 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                 break;
             case R.id.ll_qq:
                 authorize(new QQ(this));
+                /*params = new HashMap<String, String>();
+                params.put("key", "wedq");
+                params.put("username", "三金");
+                params.put("avator", "http://flycat.oss-cn-hangzhou.aliyuncs.com/CDN/image/android_1474957555580.jpg");
+                params.put("type", "Android");
+                signUp(params);*/
                 break;
             case R.id.ll_weixin:
                 authorize(new Wechat(this));
@@ -173,25 +181,32 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
 
     //登录
     private void login(Map<String, String> params) {
-         final String LOGIN_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
-                 ((MyApplication)getApplication()).getApis().get("UserLogin").toString();
-
+        final String LOGIN_URL = ((MyApplication) getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getApplication()).getApis().get("UserLogin").toString();
+        if (TextUtils.isEmpty(params.get("username")) || TextUtils.isEmpty(params.get("password"))) {
+            LSUtils.showToast(getApplicationContext(), "请输入用户名或密码！");
+            return;
+        }
         OkHttpUtils.post(LOGIN_URL)
                 .params(params)
                 .execute(new StringDialogCallback(LoginActivity.this) {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                        intent.putExtra("userInfo",s);
-                         //List<String> cookies=response.headers("Set-Cookie");
-                         //LSUtils.i("Set-Cookie", response.header("Set-Cookie"));
+                        PreferencesUtils.putString(getApplicationContext(), "cookies", response.header("Set-Cookie"));
                         try {
                             JSONObject json = new JSONObject(s);
-                            LSUtils.showToast(getApplicationContext(), json.get("alert").toString());
+                            if (json.getBoolean("status") == true) {
+                                LSUtils.showToast(getApplicationContext(), json.getString("alert"));
+                                setUserInfo(json.getJSONObject("data").getJSONObject("userInfo"));
+                                startActivityForResult(intent, USER_LOGIN);
+                            } else {
+                                LSUtils.showToast(getApplicationContext(), json.getString("alert"));
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        startActivityForResult(intent,USER_LOGIN );
+
                     }
 
                     @Override
@@ -200,41 +215,25 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                     }
                 });
 
-        /*OkHttpUtils.post()
-                .url(LOGIN_URL)
-                .params(params)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int i) {
+    }
 
-                    }
-
-                    @Override
-                    public void onResponse(String s, int i) {
-                        LSUtils.showToast(getApplicationContext(), s);
-                        *//*GsonBuilder gb = new GsonBuilder();
-                        gb.registerTypeAdapter(String.class, new StringConverter());
-                        Gson json = gb.create();*//*
-                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                        //intent.putExtra("userInfo",s);
-
-                        try {
-                            JSONObject json = new JSONObject(s);
-                            LSUtils.showToast(getApplicationContext(), json.get("alert").toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        startActivityForResult(intent,USER_LOGIN );
-
-                    }
-                });*/
-
+    /**
+     * 将用户信息到本地
+     *
+     * @param data
+     */
+    private void setUserInfo(JSONObject data) throws JSONException {
+        Gson gson = new Gson();
+        Type type = new TypeToken<Map<String, Object>>() {
+        }.getType();
+        Map<String, Object> UserInfo = gson.fromJson(data.toString(), type);
+        ((MyApplication) getApplication()).setUserInfo(UserInfo);
+        LSUtils.i("UserInfo", (parse.isNull(((MyApplication) getApplication()).getUserInfo().get("name"))));
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
             overridePendingTransition(R.anim.left_in, R.anim.right_out);
             return true;
@@ -243,7 +242,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     }
 
     private void authorize(Platform plat) {
-        if(plat.isValid()) {
+        if (plat.isValid()) {
             String userId = plat.getDb().getUserId();
             if (!TextUtils.isEmpty(userId)) {
                 UIHandler.sendEmptyMessage(MSG_USERID_FOUND, this);
@@ -269,8 +268,8 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
         params.put("username", platform.getDb().getUserName());
         params.put("avator", platform.getDb().getUserIcon());
         params.put("type", "Android");
-        /*System.out.println("------User Name ---------" + platform.getDb().getUserName());
-        System.out.println("------User ID ---------" + platform.getDb().getUserId());
+        System.out.println("------User Name ---------" + platform.getDb().getUserName());
+        /*System.out.println("------User ID ---------" + platform.getDb().getUserId());
         System.out.println("------UserIcon ---------" + platform.getDb().getUserIcon());
         System.out.println("------Token ---------" + platform.getDb().getToken());
         System.out.println("------UserGender ---------" + platform.getDb().getUserGender());
@@ -280,7 +279,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
         System.out.println("------ExpiresTime ---------" + platform.getDb().getExpiresTime());
         System.out.println("------PlatformVersion ---------" + platform.getDb().getPlatformVersion());*/
         System.out.println("------Name ---------" + platform.getName());
-
+        //signUp(params);
         /*Intent i = new Intent(LoginActivity.this, IndexActivity.class);
         i.putExtra("key", platform.getDb().getUserId());
         i.putExtra("username", platform.getDb().getUserId());
@@ -311,7 +310,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     }
 
     public boolean handleMessage(Message msg) {
-        switch(msg.what) {
+        switch (msg.what) {
             case MSG_USERID_FOUND: {
                 LSUtils.i("MSG_USERID_FOUND", R.string.userid_found + (String) msg.obj);
             }
@@ -337,7 +336,7 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
             break;
             case MSG_AUTH_COMPLETE: {
                 //Toast.makeText(this, R.string.auth_complete+(String)msg.obj, Toast.LENGTH_SHORT).show();
-                LSUtils.i( "MSG_AUTH_COMPLETE",R.string.auth_complete+(String)msg.obj);
+                LSUtils.i("MSG_AUTH_COMPLETE", R.string.auth_complete + (String) msg.obj);
                 System.out.println("--------MSG_AUTH_COMPLETE-------");
 
             }
@@ -347,20 +346,18 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     }
 
 
-
     /**
      * 输入框为空时,登录按钮不可点击
-     *
      */
     private TextWatcher watcher = new TextWatcher() {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             ColorStateList csl = null;
-            if(TextUtils.isEmpty(s.toString())){
+            if (TextUtils.isEmpty(s.toString())) {
                 bt_login.setBackgroundResource(R.color.unable_press_bg);
                 bt_login.setTextColor(getResources().getColor(R.color.unable_press_text));
-            }else{
+            } else {
                 bt_login.setBackgroundResource(R.drawable.bt_single);
                 bt_login.setTextColor(getResources().getColor(R.color.white));
             }
@@ -383,8 +380,6 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
     };
 
 
-
-
     /**
      * 第三方登录上传信息至服务器
      */
@@ -404,29 +399,11 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
                         super.onError(call, response, e);
                     }
                 });
-        /*OkHttpUtils//
-                .get()//
-                .url(avator_url)//
-                .build()//
-                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), "userIcon.jpg")//
-                {
 
-                    @Override
-                    public void onError(Call call, Exception e, int i) {
-
-                    }
-
-                    @Override
-                    public void onResponse(File file, int i) {
-                        Log.e("path", "onResponse :" + file.getAbsolutePath());
-                        uploadHead(file.getAbsolutePath());
-                    }
-                });*/
     }
 
     //第三方头像上传至阿里云存储并注册
     private void uploadHead(final String path) {
-
 
         UploadManager.getInstance().uploadImage(path);
         UploadManager.getInstance().setUpLoadListener(new UpLoadListener() {
@@ -439,7 +416,8 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
             public void upLoadSuccess(Object result, String uploadPath) {
                 LSUtils.d("zzz", " uploadPath:" + uploadPath);
                 params.put("avator", uploadPath);
-                signUp();
+                signUp(params);
+
             }
 
             @Override
@@ -456,42 +434,24 @@ public class LoginActivity  extends BaseFragmentActivity implements Handler.Call
         });
     }
 
-    private void signUp() {
-        final String SIGNUP_URL = ((MyApplication)getApplication()).getApis().get("Host").toString()+
-                ((MyApplication)getApplication()).getApis().get("WxUserLogin").toString();
+    private void signUp(final Map<String, String> params) {
 
+        final String SIGNUP_URL = ((MyApplication) getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getApplication()).getApis().get("WxUserLogin").toString();
+        LSUtils.i("注册", "第三方");
         OkHttpUtils.post(SIGNUP_URL)
                 .params(params)
                 .execute(new StringDialogCallback(LoginActivity.this) {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         LSUtils.i("signup", s);
-                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                        LSUtils.showToast(getApplicationContext(),"微信登录");
+                        //Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                        //LSUtils.showToast(getApplicationContext(),"微信登录");
                         //intent.putExtra("username","微信登录");
-                        startActivityForResult(intent, OTHER_LOGIN);
-                        LSUtils.i("zzz", response.header("HEAD_KEY_SET_COOKIE ").toString());
+                        //startActivityForResult(intent, OTHER_LOGIN);
+                        //LSUtils.i("zzz", response.header("HEAD_KEY_SET_COOKIE ").toString());
                     }
                 });
-        /*OkHttpUtils.post()
-                .url(SIGNUP_URL)
-                .params(params)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int i) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String s, int i) {
-                        LSUtils.i("signup", s);
-                        Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-                        intent.putExtra("username","微信登录");
-                        startActivityForResult(intent, OTHER_LOGIN);
-
-                    }
-                });*/
     }
 
     @Override

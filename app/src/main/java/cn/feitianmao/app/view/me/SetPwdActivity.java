@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.callback.StringCallback;
 
 import org.json.JSONObject;
 
@@ -32,6 +34,7 @@ import cn.feitianmao.app.view.application.MyApplication;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/8/31 0031.
@@ -118,6 +121,7 @@ public class SetPwdActivity extends BaseFragmentActivity {
             case R.id.bt_submit:
                 if (isNext()){
                     SMSSDK.submitVerificationCode("86", tv_phone.getText().toString(), ed_code.getText().toString());//对验证码进行验证->回调函数
+
                 }
                 break;
             case R.id.bt_code:
@@ -303,20 +307,14 @@ public class SetPwdActivity extends BaseFragmentActivity {
         params.put("password", ed_pwd1.getText().toString());
         params.put("again", ed_pwd2.getText().toString());
         params.put("from", "Android");
-        /*OkHttpUtils.post()
-                .url(REG_URL)
+
+        OkHttpUtils.post(REG_URL)
                 .params(params)
-                .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e, int i) {
+                    public void onSuccess(String s, Call call, Response response) {
 
                     }
-
-                    @Override
-                    public void onResponse(String s, int i) {
-                        LSUtils.showToast(getApplicationContext(),s);
-                    }
-                });*/
+                });
     }
 }

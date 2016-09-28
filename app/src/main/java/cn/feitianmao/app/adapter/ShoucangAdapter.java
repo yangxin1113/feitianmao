@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.feitianmao.app.R;
+import cn.feitianmao.app.bean.FavoriteList;
 import cn.feitianmao.app.bean.ShoucangData;
 import cn.feitianmao.app.callback.ItemClickListenner;
 
@@ -21,10 +22,10 @@ import static android.view.View.OnClickListener;
  */
 public class ShoucangAdapter extends RecyclerView.Adapter<ShoucangAdapter.MyViewHolder> {
     private Context context;
-    private List<ShoucangData> data;
+    private List<FavoriteList> data;
     private ItemClickListenner itemClickListenner;
 
-    public ShoucangAdapter(Context context, List<ShoucangData> data){
+    public ShoucangAdapter(Context context, List<FavoriteList> data){
         this.context = context;
         this.data = data;
 
@@ -46,11 +47,11 @@ public class ShoucangAdapter extends RecyclerView.Adapter<ShoucangAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int i) {
-        holder.tv_shoucang.setText(data.get(i).getShoucang());
+        holder.tv_shoucang.setText(data.get(i).getFavorites_name());
 
-        holder.tv_content.setText(data.get(i).getContent());
+        holder.tv_content.setText(data.get(i).getFavorites_content());
 
-        holder.tv_answercount.setText(data.get(i).getAnswercount()+"");
+        holder.tv_answercount.setText(data.get(i).getFavorite_count()+"");
 
         if(itemClickListenner != null){
             holder.itemView.setOnClickListener(new OnClickListener() {

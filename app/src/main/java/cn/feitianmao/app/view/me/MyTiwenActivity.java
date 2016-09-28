@@ -10,6 +10,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lzy.okhttputils.OkHttpUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +25,12 @@ import cn.feitianmao.app.adapter.GuanzhuWentiAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
 import cn.feitianmao.app.bean.Question;
 import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
+import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.utils.PreferencesUtils;
+import cn.feitianmao.app.view.application.MyApplication;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * 我的提问
@@ -58,6 +68,7 @@ public class MyTiwenActivity extends BaseFragmentActivity {
         getTopicData();
         guanzhuWentiAdapter = new GuanzhuWentiAdapter(MyTiwenActivity.this, questionDatas);
         rvTiwen.setAdapter(guanzhuWentiAdapter);
+        getData();
     }
 
     private void getTopicData() {
@@ -116,5 +127,30 @@ public class MyTiwenActivity extends BaseFragmentActivity {
         });
     }
 
+    //用户信息
+    private void getData() {
+        final String QUESTION_URL = ((MyApplication)getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getApplication()).getApis().get("UserQuestion").toString();
+
+        OkHttpUtils.post(QUESTION_URL)
+                .headers("cookies", PreferencesUtils.getString(MyTiwenActivity.this, "Cookies"))
+                .execute(new StringDialogCallback(MyTiwenActivity.this) {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            JSONObject json = new JSONObject(s);
+                            LSUtils.i("UserInfo",s);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                    }
+                });
+
+    }
 
 }
