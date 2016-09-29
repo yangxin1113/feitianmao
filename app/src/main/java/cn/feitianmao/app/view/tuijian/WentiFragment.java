@@ -54,13 +54,7 @@ public class WentiFragment extends BaseFragment {
         huatiDatas = new ArrayList<HuatiData>();
         for (int i = 0; i < 10; i++) {
             HuatiData huatiData = new HuatiData();
-            huatiData.setName("三金");
-            huatiData.setId(i);
-            huatiData.setIsGuanzhu(0);
-            huatiData.setQianming("人生如逆旅，我亦是行人");
-            huatiData.setGuanzhucount(i*3+111);
-            huatiData.setQuestioncount(i*6+111);
-            huatiDatas.add(huatiData);
+
         }
     }
 

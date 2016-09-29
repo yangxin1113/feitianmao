@@ -6,8 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okhttputils.OkHttpUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,18 +23,22 @@ import java.util.Map;
 import butterknife.BindView;
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.GuanzhuHuatiAdapter;
+import cn.feitianmao.app.adapter.GuanzhuWentiAdapter;
 import cn.feitianmao.app.adapter.GuanzhuYonghuAdapter;
 import cn.feitianmao.app.base.BaseFragment;
 import cn.feitianmao.app.base.BaseFragment1;
 import cn.feitianmao.app.bean.HuatiData;
+import cn.feitianmao.app.bean.WentiData;
 import cn.feitianmao.app.bean.YonghuData;
 import cn.feitianmao.app.callback.GuanzhuHuatiClickListenner;
 import cn.feitianmao.app.callback.GuanzhuYonghuClickListenner;
 import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.PreferencesUtils;
+import cn.feitianmao.app.utils.StringConverter;
 import cn.feitianmao.app.view.application.MyApplication;
 import cn.feitianmao.app.view.main.IndexActivity;
+import cn.feitianmao.app.widget.ListItemDecoration;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -40,9 +49,9 @@ import okhttp3.Response;
 public class GuanzhuHuatiFragment extends BaseFragment1 {
 
 
-    @BindView(R.id.rv_yonghu)
-    RecyclerView rvYonghu;
-    private List<HuatiData> huatiDatas = null;
+    @BindView(R.id.rv_huati)
+    RecyclerView rvHuati;
+    private List<HuatiData> huatiDatas = new ArrayList<HuatiData>();
     private GuanzhuHuatiAdapter guanzhuHuatiAdapter;
 
 
@@ -53,24 +62,24 @@ public class GuanzhuHuatiFragment extends BaseFragment1 {
 
     @Override
     protected void init() {
-        setLayoutRes(R.layout.fragment_yonghu);
+        setLayoutRes(R.layout.fragment_huati);
         isPrepared = true;
         lazyLoad();
     }
 
     @Override
     protected void initEvent() {
-        itemOnClickListenner();
+        //itemOnClickListenner();
     }
 
     @Override
     protected void setInitData() {
 
         //设置LinearLayoutManager布局管理器，实现ListView效果
-        rvYonghu.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getTopicData();
-        guanzhuHuatiAdapter = new GuanzhuHuatiAdapter(getContext(), huatiDatas);
-        rvYonghu.setAdapter(guanzhuHuatiAdapter);
+        rvHuati.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+       /* guanzhuHuatiAdapter = new GuanzhuHuatiAdapter(getContext(), huatiDatas);
+        rvHuati.setAdapter(guanzhuHuatiAdapter);*/
 
     }
 
@@ -80,20 +89,6 @@ public class GuanzhuHuatiFragment extends BaseFragment1 {
             return;
         }
         huaTi();
-    }
-
-    private void getTopicData() {
-        huatiDatas = new ArrayList<HuatiData>();
-        for (int i = 0; i < 10; i++) {
-            HuatiData huatiData = new HuatiData();
-            huatiData.setName("三金");
-            huatiData.setId(i);
-            huatiData.setIsGuanzhu(0);
-            huatiData.setQianming("人生如逆旅，我亦是行人");
-            huatiData.setGuanzhucount(i*3+111);
-            huatiData.setQuestioncount(i*6+111);
-            huatiDatas.add(huatiData);
-        }
     }
 
 
@@ -145,10 +140,45 @@ public class GuanzhuHuatiFragment extends BaseFragment1 {
                 .execute(new StringDialogCallback(getActivity()) {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        //Intent intent = new Intent(getActivity(), IndexActivity.class);
-                        //intent.putExtra("userInfo",s);
-                        //List<String> cookies=response.headers("Set-Cookie");
-                        LSUtils.i("huati", s);
+                        JSONObject json = null;
+                        JSONArray array = null;
+                        try {
+                            json = new JSONObject(s);
+                            if(json.getBoolean("status")){
+                                GsonBuilder gb = new GsonBuilder();
+                                gb.registerTypeAdapter(String.class, new StringConverter());
+                                Gson gson = gb.create();
+
+                                json = new JSONObject(s);
+                                array = json.getJSONArray("data");
+
+                                if (huatiDatas != null || huatiDatas.size() == 0){
+                                    try {
+                                        huatiDatas = gson.fromJson(array.toString(), new TypeToken<List<HuatiData>>(){}.getType());
+                                    } catch (JsonSyntaxException e) {
+                                        //e.printStackTrace();
+                                        LSUtils.i("错误","gson解析错误");
+                                    }
+                                }else {
+                                    List<HuatiData> more = gson.fromJson(array.toString(), new TypeToken<List<HuatiData>>(){}.getType());
+                                    huatiDatas.addAll(more);
+                                }
+
+                                if(guanzhuHuatiAdapter==null){
+                                    guanzhuHuatiAdapter = new GuanzhuHuatiAdapter(getContext(), huatiDatas);
+                                    rvHuati.setAdapter(guanzhuHuatiAdapter);
+                                }else{
+                                    guanzhuHuatiAdapter.notifyDataSetChanged();
+                                }
+                                rvHuati.addItemDecoration(new ListItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+                                rvHuati.setFocusable(false);
+                            }else {
+                                LSUtils.showToast(getContext(),json.getString("alert"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        itemOnClickListenner();
 
                     }
 

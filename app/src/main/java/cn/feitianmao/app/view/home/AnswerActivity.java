@@ -132,14 +132,14 @@ public class AnswerActivity extends BaseFragmentActivity {
             case R.id.tv_qianming:
                 break;
             case R.id.ll_guanzhu:
-                if(llGuanzhu.getTag() == true){
+                if(llGuanzhu.getTag().equals(true)){
                     llGuanzhu.setTag(true);
                 }else {
                     llGuanzhu.setTag(false);
                 }
                 break;
             case R.id.ll_zantong:
-                if(llZantong.getTag() == false){
+                if(llZantong.getTag().equals(false)){
                     ivZantong.setImageDrawable(ContextCompat.getDrawable(AnswerActivity.this, R.drawable.icon_zantong_selected));
                     tvZantong.setTextColor(ContextCompat.getColor(AnswerActivity.this, R.color.text_color4));
                     tvZantong.setText("赞同("+(regulaUtils.getDigit(tvZantong.getText().toString())+1+"")+")");
@@ -152,7 +152,7 @@ public class AnswerActivity extends BaseFragmentActivity {
                 }
                 break;
             case R.id.ll_shoucang:
-                if(llShoucang.getTag() == false){
+                if(llShoucang.getTag().equals(false)){
                     ivShoucang.setImageDrawable(ContextCompat.getDrawable(AnswerActivity.this, R.drawable.icon_shoucang_selected));
                     tvShoucang.setTextColor(ContextCompat.getColor(AnswerActivity.this, R.color.text_color4));
                     llShoucang.setTag(true);
@@ -163,14 +163,14 @@ public class AnswerActivity extends BaseFragmentActivity {
                 }
                 break;
             case R.id.ll_fenxaing:
-                if(llFenxaing.getTag() == true){
+                if(llFenxaing.getTag().equals(false)){
                     llFenxaing.setTag(true);
                 }else {
                     llFenxaing.setTag(false);
                 }
                 break;
             case R.id.ll_pinglun:
-                if(llPinglun.getTag() == true){
+                if(llPinglun.getTag().equals(false)){
                     llPinglun.setTag(true);
                 }else {
                     llPinglun.setTag(false);

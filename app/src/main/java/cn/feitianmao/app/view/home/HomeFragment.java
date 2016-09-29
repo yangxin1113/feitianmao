@@ -259,8 +259,9 @@ public class HomeFragment extends BaseFragment1 {
         homeAdapter.setHomeClickListenner(new HomeClickListenner() {
             @Override
             public void showTopic(View view, int position) {
-                LSUtils.showToast(getContext(), "点击了我" + homeDatas.get(position).getTopic());
+                String topicId= homeDatas.get(position).get_id();
                 Intent i = new Intent(getActivity(), HuatiDetailActivity.class);
+                i.putExtra("topicId",topicId);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }

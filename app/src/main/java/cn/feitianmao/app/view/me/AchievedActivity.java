@@ -138,6 +138,7 @@ public class AchievedActivity extends BaseFragmentActivity {
             case R.id.ll_account:
                 showItemActivity(FriendsActivity.class);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
                 break;
             case R.id.ll_zantong:
                 showItemActivity(FriendsActivity.class);
@@ -175,6 +176,7 @@ public class AchievedActivity extends BaseFragmentActivity {
 
         OkHttpUtils.post(USERINFO_URL)
                 //.headers("cookies", PreferencesUtils.getString(getApplicationContext(), "Cookies"))
+                .params("uid","me")
                 .execute(new StringDialogCallback(AchievedActivity.this) {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {

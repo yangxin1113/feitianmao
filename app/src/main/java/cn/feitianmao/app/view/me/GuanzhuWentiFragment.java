@@ -9,7 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okhttputils.OkHttpUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +26,19 @@ import butterknife.BindView;
 
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.GuanzhuWentiAdapter;
+import cn.feitianmao.app.adapter.HomeAdapter1;
 import cn.feitianmao.app.base.BaseFragment;
 
+import cn.feitianmao.app.base.BaseFragment1;
+import cn.feitianmao.app.bean.HomeData;
 import cn.feitianmao.app.bean.Question;
+import cn.feitianmao.app.bean.WentiData;
 import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
 import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
+import cn.feitianmao.app.utils.StringConverter;
 import cn.feitianmao.app.view.application.MyApplication;
+import cn.feitianmao.app.widget.ListItemDecoration;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -32,22 +46,28 @@ import okhttp3.Response;
  * 我关注的问题
  * Created by Administrator on 2016/8/29 0029.
  */
-public class GuanzhuWentiFragment extends BaseFragment {
+public class GuanzhuWentiFragment extends BaseFragment1 {
 
     @BindView(R.id.rv_wenti)
     RecyclerView rvWenti;
-    private List<Question> questionDatas = null;
+    private List<WentiData> questionDatas = new ArrayList<WentiData>();
     private GuanzhuWentiAdapter guanzhuWentiAdapter;
 
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
+    private int page = 1;
+    boolean isLoading;
 
     @Override
     protected void init() {
         setLayoutRes(R.layout.fragment_wenti);
+        isPrepared = true;
+        lazyLoad();
     }
 
     @Override
     protected void initEvent() {
-        itemOnClickListenner();
+
     }
 
     @Override
@@ -55,22 +75,19 @@ public class GuanzhuWentiFragment extends BaseFragment {
 
         //设置LinearLayoutManager布局管理器，实现ListView效果
        rvWenti.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getTopicData();
-        guanzhuWentiAdapter = new GuanzhuWentiAdapter(getContext(), questionDatas);
-        rvWenti.setAdapter(guanzhuWentiAdapter);
-        wenTi(1);
+
+        /*guanzhuWentiAdapter = new GuanzhuWentiAdapter(getContext(), questionDatas);
+        rvWenti.setAdapter(guanzhuWentiAdapter);*/
+        //wenTi(1);
+
     }
 
-    private void getTopicData() {
-        questionDatas = new ArrayList<Question>();
-        for(int i=0; i<10; i++){
-            Question question = new Question();
-            question.setQuestion("的发生地方的三个地方公司的");
-            question.setId(i);
-            question.setGuanzhucount(i*2+20);
-            question.setAnswercount(i*1+100);
-            questionDatas.add(question);
+    @Override
+    protected void lazyLoad() {
+        if(!isPrepared || !isVisible) {
+            return;
         }
+        wenTi(1);
     }
 
 
@@ -92,17 +109,17 @@ public class GuanzhuWentiFragment extends BaseFragment {
 
             @Override
             public void showQuestion(View view, int position) {
-                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getQuestion());
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getTitle());
             }
 
             @Override
             public void showAnswer(View view, int position) {
-                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getAnswercount());
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getAnswer());
             }
 
             @Override
             public void showGuanzhu(View view, int position) {
-                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getGuanzhucount());
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getConcern());
             }
         });
     }
@@ -119,10 +136,45 @@ public class GuanzhuWentiFragment extends BaseFragment {
                 .execute(new StringDialogCallback(getActivity()) {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        //Intent intent = new Intent(getActivity(), IndexActivity.class);
-                        //intent.putExtra("userInfo",s);
-                        //List<String> cookies=response.headers("Set-Cookie");
-                        LSUtils.i("huati", s);
+                        JSONObject json = null;
+                        JSONArray array = null;
+                        try {
+                            json = new JSONObject(s);
+                            if(json.getBoolean("status")){
+                                GsonBuilder gb = new GsonBuilder();
+                                gb.registerTypeAdapter(String.class, new StringConverter());
+                                Gson gson = gb.create();
+
+                                    json = new JSONObject(s);
+                                    array = json.getJSONArray("data");
+
+                                if (questionDatas != null || questionDatas.size() == 0){
+                                    try {
+                                        questionDatas = gson.fromJson(array.toString(), new TypeToken<List<WentiData>>(){}.getType());
+                                    } catch (JsonSyntaxException e) {
+                                        //e.printStackTrace();
+                                        LSUtils.i("错误","gson解析错误");
+                                    }
+                                }else {
+                                    List<WentiData> more = gson.fromJson(array.toString(), new TypeToken<List<WentiData>>(){}.getType());
+                                    questionDatas.addAll(more);
+                                }
+
+                                if(guanzhuWentiAdapter==null){
+                                    guanzhuWentiAdapter = new GuanzhuWentiAdapter(getContext(), questionDatas);
+                                    rvWenti.setAdapter(guanzhuWentiAdapter);
+                                }else{
+                                    guanzhuWentiAdapter.notifyDataSetChanged();
+                                }
+                                rvWenti.addItemDecoration(new ListItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+                                rvWenti.setFocusable(false);
+                            }else {
+                                LSUtils.showToast(getContext(),json.getString("alert"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        itemOnClickListenner();
 
                     }
 

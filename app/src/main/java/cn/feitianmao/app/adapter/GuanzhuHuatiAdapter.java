@@ -57,19 +57,19 @@ public class GuanzhuHuatiAdapter extends RecyclerView.Adapter<GuanzhuHuatiAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int i) {
 
-        Picasso.with(context).load("http://m.tiebaimg.com/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=ae08424fffe3488ff7f14b1e133e9234&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Fb58f8c5494eef01f8786fce0e7fe9925bc317d01.jpg").into(holder.iv_huati);
+        Picasso.with(context).load(data.get(i).getTopic_images()).into(holder.iv_huati);
         holder.iv_huati.setTag(i);
         holder.iv_huati.setOnClickListener(mOnClickListener);
-        holder.tv_topic.setText(data.get(i).getName());
+        holder.tv_topic.setText(data.get(i).getTopic_name());
         holder.tv_topic.setTag(i);
         holder.tv_topic.setOnClickListener(mOnClickListener);
-        holder.tv_guanzhucount.setText(data.get(i).getGuanzhucount()+"");
+        holder.tv_guanzhucount.setText(data.get(i).getFollow_count()+"");
         holder.tv_guanzhucount.setTag(i);
         holder.tv_guanzhucount.setOnClickListener(mOnClickListener);
-        holder.tv_questioncount.setText(data.get(i).getQuestioncount()+"");
+        holder.tv_questioncount.setText(data.get(i).getQues_count()+"");
         holder.tv_questioncount.setTag(i);
         holder.tv_questioncount.setOnClickListener(mOnClickListener);
-        if (data.get(i).getIsGuanzhu() == 1){
+        if (data.get(i).getIs_cancel() == 0){
             holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu0));
             holder.iv_guanzhu.setVisibility(View.GONE);
             holder.tv_guanzhu.setText("已关注");
@@ -78,20 +78,20 @@ public class GuanzhuHuatiAdapter extends RecyclerView.Adapter<GuanzhuHuatiAdapte
             holder.iv_guanzhu.setVisibility(View.VISIBLE);
             holder.tv_guanzhu.setText("关注");
         }
-        final int isGuanzhu =data.get(i).getIsGuanzhu();
+        final int isGuanzhu =data.get(i).getIs_cancel();
         holder.ll_guanzhu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isGuanzhu == 1){
+                if(isGuanzhu == 0){
                     holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu1));
                     holder.iv_guanzhu.setVisibility(View.VISIBLE);
                     holder.tv_guanzhu.setText("关注");
-                    data.get(i).setIsGuanzhu(0);
+                    data.get(i).setIs_cancel(1);
                 }else {
                     holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu0));
                     holder.iv_guanzhu.setVisibility(View.GONE);
                     holder.tv_guanzhu.setText("已关注");
-                    data.get(i).setIsGuanzhu(1);
+                    data.get(i).setIs_cancel(0);
                 }
 
             }

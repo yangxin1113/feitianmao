@@ -12,6 +12,7 @@ import java.util.List;
 
 import cn.feitianmao.app.R;
 import cn.feitianmao.app.bean.Question;
+import cn.feitianmao.app.bean.WentiData;
 import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
 
 import static android.view.View.OnClickListener;
@@ -22,10 +23,10 @@ import static android.view.View.OnClickListener;
  */
 public class GuanzhuWentiAdapter extends RecyclerView.Adapter<GuanzhuWentiAdapter.MyViewHolder> {
     private Context context;
-    private List<Question> data;
+    private List<WentiData> data;
     private GuanzhuWentiClickListenner guzhuWntiClickListenner;
 
-    public GuanzhuWentiAdapter(Context context, List<Question> data){
+    public GuanzhuWentiAdapter(Context context, List<WentiData> data){
         this.context = context;
         this.data = data;
 
@@ -48,13 +49,13 @@ public class GuanzhuWentiAdapter extends RecyclerView.Adapter<GuanzhuWentiAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int i) {
-        holder.tv_question.setText(data.get(i).getQuestion());
+        holder.tv_question.setText(data.get(i).getTitle());
         holder.tv_question.setTag(i);
         holder.tv_question.setOnClickListener(mOnClickListener);
-        holder.tv_guanzhucount.setText(data.get(i).getGuanzhucount()+"");
+        holder.tv_guanzhucount.setText(data.get(i).getConcern()+"");
         holder.ll_guanzhu.setTag(i);
         holder.ll_guanzhu.setOnClickListener(mOnClickListener);
-        holder.tv_answercount.setText(data.get(i).getAnswercount()+"");
+        holder.tv_answercount.setText(data.get(i).getAnswer()+"");
         holder.ll_answer.setTag(i);
         holder.ll_answer.setOnClickListener(mOnClickListener);
 

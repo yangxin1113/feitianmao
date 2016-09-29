@@ -36,7 +36,7 @@ public class TuijianFragment extends BaseFragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new WentiFragment(), "问题");
-        adapter.addFragment(new WentiFragment(), "话题");
+        adapter.addFragment(new TuijianHuatiFragment(), "话题");
         adapter.addFragment(new WentiFragment(), "达人榜");
         viewPager.setAdapter(adapter);
     }

@@ -97,7 +97,7 @@ public class RegisterActivity extends BaseFragmentActivity {
                 break;
             case R.id.iv_check:
                 LSUtils.showToast(getApplicationContext(),"zzzz");
-                if(iv_check.getTag() == false){
+                if(iv_check.getTag().equals(false)){
                     iv_check.setImageResource(R.drawable.icon_tongyi_selected);
                     iv_check.setTag(true);
                 }else {
@@ -125,7 +125,7 @@ public class RegisterActivity extends BaseFragmentActivity {
         if(!RegulaUtils.getInstance().isMobileNO(ed_phone.getText().toString())){
             LSUtils.showToast(getApplicationContext(), getResources().getString(R.string.input_phone_no_error_zh));
             isNext = false;
-        }else if(iv_check.getTag() == false){
+        }else if(iv_check.getTag().equals(false)){
             LSUtils.showToast(getApplicationContext(),getResources().getString(R.string.please_agree_agreement_zh_));
             isNext = false;
         }

@@ -10,8 +10,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okhttputils.OkHttpUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,13 +29,18 @@ import cn.feitianmao.app.R;
 import cn.feitianmao.app.adapter.GuanzhuWentiAdapter;
 import cn.feitianmao.app.base.BaseFragmentActivity;
 import cn.feitianmao.app.bean.Question;
+import cn.feitianmao.app.bean.WentiData;
 import cn.feitianmao.app.callback.GuanzhuWentiClickListenner;
 import cn.feitianmao.app.callback.StringDialogCallback;
 import cn.feitianmao.app.utils.LSUtils;
 import cn.feitianmao.app.utils.PreferencesUtils;
+import cn.feitianmao.app.utils.StringConverter;
 import cn.feitianmao.app.view.application.MyApplication;
+import cn.feitianmao.app.widget.ListItemDecoration;
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static com.lzy.okhttputils.OkHttpUtils.getContext;
 
 /**
  * 我的提问
@@ -46,7 +56,7 @@ public class MyTiwenActivity extends BaseFragmentActivity {
     TextView tvTitle;
     @BindView(R.id.iv_top)
     RelativeLayout ivTop;
-    private List<Question> questionDatas = null;
+    private List<WentiData> questionDatas = new ArrayList<WentiData>();
     private GuanzhuWentiAdapter guanzhuWentiAdapter;
 
     @Override
@@ -65,23 +75,13 @@ public class MyTiwenActivity extends BaseFragmentActivity {
 
         //设置LinearLayoutManager布局管理器，实现ListView效果
         rvTiwen.setLayoutManager(new LinearLayoutManager(MyTiwenActivity.this));
-        getTopicData();
-        guanzhuWentiAdapter = new GuanzhuWentiAdapter(MyTiwenActivity.this, questionDatas);
-        rvTiwen.setAdapter(guanzhuWentiAdapter);
-        getData();
+
+        /*guanzhuWentiAdapter = new GuanzhuWentiAdapter(MyTiwenActivity.this, questionDatas);
+        rvTiwen.setAdapter(guanzhuWentiAdapter);*/
+
     }
 
-    private void getTopicData() {
-        questionDatas = new ArrayList<Question>();
-        for (int i = 0; i < 10; i++) {
-            Question question = new Question();
-            question.setQuestion("的发生地方的三个地方公司的");
-            question.setId(i);
-            question.setGuanzhucount(i * 2 + 20);
-            question.setAnswercount(i * 1 + 100);
-            questionDatas.add(question);
-        }
-    }
+
 
 
     @Override
@@ -112,37 +112,73 @@ public class MyTiwenActivity extends BaseFragmentActivity {
 
             @Override
             public void showQuestion(View view, int position) {
-                LSUtils.showToast(MyTiwenActivity.this, "点击了我" + questionDatas.get(position).getQuestion());
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getTitle());
             }
 
             @Override
             public void showAnswer(View view, int position) {
-                LSUtils.showToast(MyTiwenActivity.this, "点击了我" + questionDatas.get(position).getAnswercount());
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getAnswer());
             }
 
             @Override
             public void showGuanzhu(View view, int position) {
-                LSUtils.showToast(MyTiwenActivity.this, "点击了我" + questionDatas.get(position).getGuanzhucount());
+                LSUtils.showToast(getContext(), "点击了我" + questionDatas.get(position).getConcern());
             }
         });
     }
 
-    //用户信息
-    private void getData() {
-        final String QUESTION_URL = ((MyApplication)getApplication()).getApis().get("Host").toString() +
-                ((MyApplication) getApplication()).getApis().get("UserQuestion").toString();
 
-        OkHttpUtils.post(QUESTION_URL)
-                .headers("cookies", PreferencesUtils.getString(MyTiwenActivity.this, "Cookies"))
+    //
+    private void wenTi(int page) {
+        final String WEN_URL = ((MyApplication) getApplication()).getApis().get("Host").toString() +
+                ((MyApplication) getApplication()).getApis().get("Personalquestion").toString();
+
+        OkHttpUtils.post(WEN_URL)
+                .params("uid","me")
+                .params("page",String.valueOf(page))
                 .execute(new StringDialogCallback(MyTiwenActivity.this) {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        JSONObject json = null;
+                        JSONArray array = null;
                         try {
-                            JSONObject json = new JSONObject(s);
-                            LSUtils.i("UserInfo",s);
+                            json = new JSONObject(s);
+                            if(json.getBoolean("status")){
+                                GsonBuilder gb = new GsonBuilder();
+                                gb.registerTypeAdapter(String.class, new StringConverter());
+                                Gson gson = gb.create();
+
+                                json = new JSONObject(s);
+                                array = json.getJSONArray("data");
+
+                                if (questionDatas != null || questionDatas.size() == 0){
+                                    try {
+                                        questionDatas = gson.fromJson(array.toString(), new TypeToken<List<WentiData>>(){}.getType());
+                                    } catch (JsonSyntaxException e) {
+                                        //e.printStackTrace();
+                                        LSUtils.i("错误","gson解析错误");
+                                    }
+                                }else {
+                                    List<WentiData> more = gson.fromJson(array.toString(), new TypeToken<List<WentiData>>(){}.getType());
+                                    questionDatas.addAll(more);
+                                }
+
+                                if(guanzhuWentiAdapter==null){
+                                    guanzhuWentiAdapter = new GuanzhuWentiAdapter(getContext(), questionDatas);
+                                    rvTiwen.setAdapter(guanzhuWentiAdapter);
+                                }else{
+                                    guanzhuWentiAdapter.notifyDataSetChanged();
+                                }
+                                rvTiwen.addItemDecoration(new ListItemDecoration(MyTiwenActivity.this, LinearLayoutManager.VERTICAL));
+                                rvTiwen.setFocusable(false);
+                            }else {
+                                LSUtils.showToast(getContext(),json.getString("alert"));
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
 
                     @Override
@@ -150,7 +186,5 @@ public class MyTiwenActivity extends BaseFragmentActivity {
                         super.onError(call, response, e);
                     }
                 });
-
     }
-
 }

@@ -43,7 +43,7 @@
         android:background="@color/white">
 
         <cn.feitianmao.app.widget.CircleImageView
-            android:id="@+id/iv_head"
+            android:id="@+id/iv_topic_img"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_centerVertical="true"
@@ -56,15 +56,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/iv_head"
+            android:layout_alignTop="@+id/iv_topic_img"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/iv_head"
-            android:layout_toRightOf="@+id/iv_head"
+            android:layout_toEndOf="@+id/iv_topic_img"
+            android:layout_toRightOf="@+id/iv_topic_img"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_nick"
+                android:id="@+id/tv_topic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="守望先锋  (OverWatch)"
@@ -73,7 +73,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tv_qianming"
+                android:id="@+id/tv_guanzhucount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1525人关注"
@@ -118,6 +118,7 @@
         >
 
         <TextView
+            android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_nomal"
@@ -130,6 +131,7 @@
             android:text="\t\t洒落到敬爱是佛的释迦佛is都怕发生的非常矛盾时考虑将充分的快速将GVif哦度法搜跌破【阿撒范德萨是短发是废话多撒楼房的恐怕搜if将盛大批发商及地方谁打谁发的撒发生打发士大夫"/>
 
         <LinearLayout
+            android:id="@+id/ll_showmore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

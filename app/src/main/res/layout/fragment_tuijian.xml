@@ -10,13 +10,13 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/white"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/text_bottom_true"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabSelectedTextColor="@color/text_color3"
+        app:tabTextColor="@color/text_bottom_false"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        android:background="@color/colorPrimaryDark"
-        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        android:background="@color/white"
+        app:tabTextAppearance="@style/SmallTabLayoutTextAppearance"
         />
 
     <View style="@style/line_thin" />

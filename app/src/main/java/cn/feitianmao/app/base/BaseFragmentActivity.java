@@ -80,7 +80,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
      */
     public void showItemActivity(Class<?> cls) {
         Intent intent = new Intent();
-        intent.setClass(this, cls);
+        intent = intent.setClass(this, cls);
         startActivity(intent);
         //overridePendingTransition(enterAnim, exitAnim);
         // overridePendingTransition(R.anim.push_out, R.anim.scale_out);

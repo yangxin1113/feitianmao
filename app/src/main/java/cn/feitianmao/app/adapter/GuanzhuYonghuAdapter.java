@@ -58,16 +58,16 @@ public class GuanzhuYonghuAdapter extends RecyclerView.Adapter<GuanzhuYonghuAdap
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int i) {
 
-        Picasso.with(context).load("https://flycat.oss-cn-hangzhou.aliyuncs.com/web/Images/Center/tx.png").into(holder.iv_head);
+        Picasso.with(context).load(data.get(i).getAvator()).into(holder.iv_head);
         holder.iv_head.setTag(i);
         holder.iv_head.setOnClickListener(mOnClickListener);
         holder.tv_nick.setText(data.get(i).getName());
         holder.tv_nick.setTag(i);
         holder.tv_nick.setOnClickListener(mOnClickListener);
-        holder.tv_qianming.setText(data.get(i).getQianming());
+        holder.tv_qianming.setText(data.get(i).getSignature());
         holder.tv_qianming.setTag(i);
         holder.tv_qianming.setOnClickListener(mOnClickListener);
-        if (data.get(i).getIsGuanzhu() == 1){
+        if (data.get(i).getIs_cancel() == 0){
             holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu0));
             holder.iv_guanzhu.setVisibility(View.GONE);
             holder.tv_guanzhu.setText("已关注");
@@ -76,20 +76,20 @@ public class GuanzhuYonghuAdapter extends RecyclerView.Adapter<GuanzhuYonghuAdap
             holder.iv_guanzhu.setVisibility(View.VISIBLE);
             holder.tv_guanzhu.setText("关注");
         }
-        final int isGuanzhu =data.get(i).getIsGuanzhu();
+        final int isGuanzhu =data.get(i).getIs_cancel();
         holder.ll_guanzhu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isGuanzhu == 1){
+                if(isGuanzhu == 0){
                     holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu1));
                     holder.iv_guanzhu.setVisibility(View.VISIBLE);
                     holder.tv_guanzhu.setText("关注");
-                    data.get(i).setIsGuanzhu(0);
+                    data.get(i).setIs_cancel(1);
                 }else {
                     holder.ll_guanzhu.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_gaunzhu0));
                     holder.iv_guanzhu.setVisibility(View.GONE);
                     holder.tv_guanzhu.setText("已关注");
-                    data.get(i).setIsGuanzhu(1);
+                    data.get(i).setIs_cancel(0);
                 }
 
             }
